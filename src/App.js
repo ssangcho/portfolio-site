@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import heartMp4 from './assets/videos/Airbnb_heartORIGINAL.mp4';
 import motionLogicMp4 from './assets/videos/MotionLogic_02_delivery.mp4';
 import heartLottieData from './assets/lottie/Heart_opt1_400.json';
+import toggleLottieData from './assets/lottie/Arbnb_Toggle3_400.json';
 import { ReactComponent as Logo } from './SanPavicon.svg';
 import './App.css';
 
@@ -72,6 +73,49 @@ function HeartToggle() {
 }
 
 
+function ToggleComponent() {
+  const [isOn, setIsOn] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const animRef = useRef(null);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    import('lottie-web').then((lottie) => {
+      animRef.current = lottie.default.loadAnimation({
+        container: containerRef.current,
+        renderer: 'svg',
+        loop: false,
+        autoplay: false,
+        animationData: toggleLottieData,
+      });
+      animRef.current.goToAndStop(0, true);
+    });
+    return () => { animRef.current?.destroy(); };
+  }, []);
+
+  const handleClick = () => {
+    if (isPlaying || !animRef.current) return;
+    setIsPlaying(true);
+
+    if (!isOn) {
+      animRef.current.playSegments([0, 30], true);
+    } else {
+      animRef.current.playSegments([30, 61], true);
+    }
+
+    animRef.current.addEventListener('complete', () => {
+      setIsOn(!isOn);
+      setIsPlaying(false);
+    }, { once: true });
+  };
+
+  return (
+    <div className="lottie-toggle" onClick={handleClick}>
+      <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
+    </div>
+  );
+}
+
 function TimingNote({ label, ms, desc, sub }) {
   return (
     <div className="tn-row">
@@ -101,7 +145,52 @@ function App() {
       </header>
 
       <main className="case-study">
-        <h2 className="case-title">01_WISHLIST HEART</h2>
+
+        <h2 className="case-title">01_LANGUAGE TOGGLE</h2>
+        <p className="case-subtitle">Confirmation through motion</p>
+        <hr className="case-divider" />
+
+        <section className="section">
+          <div className="text">
+            <h3>Challenge</h3>
+            <p>
+              The toggle animates. But the modal closes immediately after — the motion never lands.
+              The confirmation disappears before the user can read it.
+            </p>
+          </div>
+          <div className="card">
+            <div style={{ width: 200, height: 200, background: '#f5f5f5', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: 80, height: 40, background: '#8c8c8c', borderRadius: 20 }} />
+            </div>
+          </div>
+        </section>
+
+        <section className="section">
+          <div className="text">
+            <h3>Solution</h3>
+            <p>The same toggle — but the checkmark stays visible. The motion completes before anything closes.</p>
+          </div>
+          <div className="card-wrap">
+            <div className="card">
+              <ToggleComponent />
+            </div>
+            <p className="try-it"><span className="arrow">↑</span> Try it <span className="arrow">↑</span></p>
+          </div>
+        </section>
+
+        <section className="section--full">
+          <h3 className="section-label">Motion Logic</h3>
+          <p className="section-desc">The checkmark doesn't just confirm — it arrives with the toggle, making the two feel like one action. 500ms total: long enough to read, short enough to feel instant.</p>
+          <div className="timing-notes">
+            <TimingNote label="MOVE"    ms={500} desc="Circle travels ease-out. Decelerates into position — feels like it lands, not stops." />
+            <TimingNote label="ROTATE"  ms={300} desc="180° spin starts 100ms in. Overlaps with movement — single fluid gesture." sub />
+            <TimingNote label="CHECK"   ms={517} desc="Draw-on starts with rotation, completes last. Confirmation arrives at the end, where attention lands." sub />
+          </div>
+        </section>
+
+        <hr className="case-divider" style={{ margin: '80px 0 48px' }} />
+
+        <h2 className="case-title">02_WISHLIST HEART</h2>
         <p className="case-subtitle">Redesigning the save moment</p>
         <hr className="case-divider" />
 
