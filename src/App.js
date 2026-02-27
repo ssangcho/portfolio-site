@@ -3,7 +3,7 @@ import heartMp4 from './assets/videos/Airbnb_heartORIGINAL.mp4';
 import motionLogicMp4 from './assets/videos/MotionLogic_02_delivery.mp4';
 import heartLottieData from './assets/lottie/Heart_opt1_400.json';
 import toggleLottieData from './assets/lottie/Arbnb_Toggle3_400.json';
-import { ReactComponent as Logo } from './SanPavicon.svg';
+import { ReactComponent as Logo } from './assets/images/SanPavicon.svg';
 import './App.css';
 
 function HeartToggle() {
