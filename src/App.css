@@ -68,6 +68,34 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
   height: auto;
 }
 
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.nav-brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.nav-brand-name {
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #6a6a6a;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+.nav-brand-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
 .nav-links {
   display: flex;
   gap: 28px;
@@ -131,7 +159,7 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
   display: flex;
   align-items: center;
   gap: 64px;
-  margin-bottom: 64px;
+  margin-bottom: 32px;
 }
 
 .text {
@@ -165,10 +193,16 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
   box-shadow: var(--card-shadow);
 }
 
+
 .media {
+  width: 430px;
+  height: 430px;
+  object-fit: contain;
+}
+
+.media--challenge {
   width: 400px;
   height: 400px;
-  object-fit: contain;
 }
 
 .lottie-toggle {
@@ -184,11 +218,17 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
 }
 
 .lottie-heart {
-  width: 150px;
-  height: 150px;
+  width: 135px;
+  height: 135px;
   cursor: pointer;
   transition: transform 150ms ease-out;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.22));
+}
+
+.toggle-interactive {
+  width: 150px;
+  height: 150px;
+  cursor: pointer;
 }
 
 .lottie-heart:hover {
@@ -487,6 +527,75 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
   box-shadow: var(--card-shadow);
 }
 
+/* ─── Block Challenge ─── */
+.block-challenge {
+  width: 100%;
+  background: #fafafa;
+  border-radius: 16px;
+  padding: 48px;
+  margin-bottom: 64px;
+}
+
+.block-solution {
+  width: 100%;
+  border: 1px solid #d0ceca;
+  border-radius: 16px;
+  padding: 48px;
+  margin-bottom: 64px;
+}
+
+.case-divider-thick {
+  border: none;
+  border-top: 1px solid #e8e5e1;
+  box-shadow: 0 3px 0 #e8e5e1;
+  margin: 240px auto 200px;
+  width: 70%;
+}
+
+.section-inner {
+  display: flex;
+  align-items: center;
+  gap: 64px;
+}
+
+/* ─── Toggle Compare ─── */
+.toggle-compare {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  width: 100%;
+  margin-bottom: 80px;
+}
+
+.compare-block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.compare-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.compare-desc {
+  font-size: var(--sm);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.compare-label-inline {
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
 /* ─── Timing Notes ─── */
 .timing-notes {
   display: flex;
@@ -547,4 +656,74 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
   color: var(--text-secondary);
   line-height: 1.6;
   margin: 0;
+}
+
+/* ─── Responsive (Mobile) ─── */
+@media (max-width: 768px) {
+  .nav {
+    padding: 16px 24px;
+  }
+
+  .hero {
+    padding: 96px 24px 32px;
+  }
+
+  .case-study {
+    padding: 32px 24px 80px;
+  }
+
+  .section-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+  .card {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  .card-wrap .card {
+    width: 100%;
+  }
+
+  .media {
+    width: 100%;
+    height: auto;
+  }
+
+  .media--challenge {
+    width: 100%;
+    height: auto;
+  }
+
+  .block-challenge,
+  .block-solution {
+    padding: 24px;
+  }
+
+  .section--full {
+    margin-top: 64px;
+    margin-bottom: 40px;
+  }
+
+  .case-divider-thick {
+    margin: 80px auto 60px;
+    width: 90%;
+  }
+
+  .tn-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .tn-tag {
+    width: 160px;
+  }
+
+  .card-wrap {
+    align-self: center;
+  }
 }
