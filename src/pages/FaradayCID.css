@@ -1,0 +1,576 @@
+/* ── Google Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&display=swap');
+
+/* ── Body override when CID is active ── */
+body.cid-active {
+  background: #000;
+  overflow: hidden;
+  margin: 0;
+}
+
+/* ══════════════════════════════════════
+   ROOT / TOKENS
+   ══════════════════════════════════════ */
+/* Remove tap/focus highlights on all CID interactive elements */
+.cid-root *:focus { outline: none; }
+.cid-root *:focus-visible { outline: none; }
+.cid-root button { -webkit-tap-highlight-color: transparent; }
+
+.cid-root {
+  /* Duration tokens */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 400ms;
+
+  /* Easing tokens */
+  --ease-standard: cubic-bezier(0, 0, 0.2, 1);
+
+  /* Stagger tokens */
+  --stagger-step: 40ms;
+
+  /* Color tokens (from Figma) */
+  --cid-bg: #1A1A1E;
+  --cid-card-bg: #2A2B2E;
+  --cid-card-bg-hover: #323236;
+  --cid-card-bg-active: #3A3A3E;
+  --cid-pill-bg: #222326;
+  --cid-pill-text: #C9C9D1;
+  --cid-pill-bg-active: #C9C9D1;
+  --cid-pill-text-active: #1a1a1a;
+  --cid-pill-secondary-bg: #404144;
+  --cid-text-primary: #ffffff;
+  --cid-text-secondary: #B3B3B3;
+  --cid-text-muted: #555555;
+  --cid-tab-indicator: #ffffff;
+  --cid-divider: #333333;
+
+  /* Spacing tokens */
+  --cid-card-radius: 6px;
+  --cid-card-gap: 12px;
+  --cid-padding: 16px;
+
+  /* Font */
+  --cid-font: 'Rubik', sans-serif;
+
+  /* Typography scale (Figma 1600px → web ratio) */
+  --cid-font-xs: 10px;   /* fine print, explainer labels */
+  --cid-font-sm: 11px;   /* pill labels, capsule buttons */
+  --cid-font-base: 12px; /* card titles, status text, action buttons */
+  --cid-font-md: 13px;   /* tabs, toggle buttons, pill controls */
+  --cid-font-lg: 14px;   /* placeholder screens, emphasis */
+
+  /* Icon size tokens */
+  --cid-icon-sm: 14px;   /* inline / header icons */
+  --cid-icon-md: 20px;   /* footer / toggle button icons */
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  font-family: var(--cid-font);
+  overflow: hidden;
+}
+
+/* ══════════════════════════════════════
+   SHELL
+   ══════════════════════════════════════ */
+.cid-shell {
+  height: 95vh;
+  aspect-ratio: 5 / 8;
+  max-height: 960px;
+  display: flex;
+  flex-direction: column;
+  background: var(--cid-bg);
+  overflow: hidden;
+  position: relative;
+  border-radius: 20px;
+}
+
+/* ── Static bars (PNG images) ── */
+.cid-status-bar,
+.cid-launcher-bar,
+.cid-climate-bar {
+  width: 100%;
+  height: auto;
+  display: block;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.cid-status-bar {
+  padding: 12px 0 8px;
+}
+
+/* ── Content area ── */
+.cid-content-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 var(--cid-padding);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.cid-content-area::-webkit-scrollbar {
+  display: none;
+}
+
+/* ══════════════════════════════════════
+   TAB BAR
+   ══════════════════════════════════════ */
+.cid-tab-bar {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 var(--cid-padding);
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--cid-divider);
+}
+
+.cid-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--cid-text-muted);
+  font-family: var(--cid-font);
+  font-size: var(--cid-font-md);
+  font-weight: 400;
+  padding: 14px 0;
+  cursor: pointer;
+  text-align: center;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.cid-tab--active {
+  color: var(--cid-text-primary);
+  font-weight: 500;
+}
+
+.cid-tab-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: var(--cid-tab-indicator);
+  border-radius: 1px;
+}
+
+/* ══════════════════════════════════════
+   CARD SYSTEM
+   ══════════════════════════════════════ */
+.cid-card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto 1fr;
+  grid-auto-rows: auto;
+  grid-auto-flow: dense;
+  gap: var(--cid-card-gap);
+  padding: 12px 0;
+}
+
+.cid-card {
+  background: var(--cid-card-bg);
+  border-radius: var(--cid-card-radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+}
+
+/* Compact card — single-line content like Odometer */
+.cid-card--compact {
+  grid-column: span 2;
+  padding: 12px 16px;
+}
+
+/* Size variants */
+.cid-card--full {
+  grid-column: 1 / -1;
+}
+
+.cid-card--half {
+  grid-column: span 2;
+}
+
+.cid-card--quarter {
+  grid-column: span 1;
+  aspect-ratio: 358 / 312;
+}
+
+.cid-card--quarter .cid-card__title {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  font-size: var(--cid-font-lg);
+  line-height: 1.3;
+}
+
+/* Tall card: spans 2 rows (e.g., Drive Modes) */
+.cid-card--tall {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+/* Card header */
+.cid-card__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cid-card__header--spread {
+  justify-content: space-between;
+}
+
+.cid-card__title {
+  font-size: var(--cid-font-md);
+  font-weight: 400;
+  color: var(--cid-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cid-card__chevron {
+  color: var(--cid-text-muted);
+  font-size: var(--cid-font-lg);
+  flex-shrink: 0;
+}
+
+/* Card status (bottom label) */
+.cid-card__footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.cid-card__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cid-card__status {
+  font-size: var(--cid-font-sm);
+  color: var(--cid-text-secondary);
+  margin-left: auto;
+}
+
+/* ══════════════════════════════════════
+   PILL / TOGGLE CONTROLS
+   ══════════════════════════════════════ */
+.cid-pill-group {
+  display: flex;
+  gap: 0;
+  background: var(--cid-pill-bg);
+  border-radius: 999px;
+  padding: 4px;
+}
+
+.cid-pill {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--cid-pill-text);
+  font-family: var(--cid-font);
+  font-size: var(--cid-font-md);
+  font-weight: 400;
+  cursor: pointer;
+  text-align: center;
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.cid-pill--active {
+  background: var(--cid-pill-bg-active);
+  color: var(--cid-pill-text-active);
+  font-weight: 500;
+}
+
+/* ── Sliding pill (Eco / Comfort / Sport) ──
+ * Figma: track 676×96, active fill 214.67×80
+ * Track padding = (96−80)/2 = 8px → scaled to web
+ */
+.cid-sliding-pill-track {
+  display: flex;
+  position: relative;
+  background: var(--cid-pill-bg);
+  border-radius: 999px;
+  padding: 3px;
+}
+
+.cid-sliding-pill-active {
+  position: absolute;
+  top: 3px;
+  left: 0;
+  height: calc(100% - 6px);
+  background: var(--cid-pill-bg-active);
+  border-radius: 999px;
+  z-index: 0;
+}
+
+.cid-sliding-pill-label {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  padding: 8px 0;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--cid-text-secondary);
+  font-family: var(--cid-font);
+  font-size: var(--cid-font-sm);
+  font-weight: 400;
+  cursor: pointer;
+  text-align: center;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+
+.cid-sliding-pill-label--active {
+  color: var(--cid-pill-text-active);
+  font-weight: 400;
+}
+
+/* ── Secondary row wrapper (split capsule + explainer) ──
+ * Figma: capsule 676×96 hug, explainer 32×32, gap 15
+ */
+.cid-pill-row-secondary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ── Split capsule (Hyper | Launch) ── */
+.cid-split-capsule {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  background: var(--cid-pill-secondary-bg);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.cid-split-capsule__btn {
+  padding: 8px 0;
+  border: none;
+  background: transparent;
+  color: var(--cid-text-secondary);
+  font-family: var(--cid-font);
+  font-size: var(--cid-font-sm);
+  font-weight: 400;
+  cursor: pointer;
+  text-align: center;
+  transition: color var(--duration-fast) var(--ease-standard);
+  min-width: 0;
+}
+
+.cid-split-capsule__btn--active {
+  color: var(--cid-pill-text-active);
+  font-weight: 400;
+}
+
+/* Divider wrapper: flex-based, sits between the two buttons */
+.cid-split-capsule__divider-wrap {
+  flex-shrink: 0;
+  width: 2px;
+  display: flex;
+  align-items: stretch;
+}
+
+/* Divider: same color as card background — looks like external cut */
+.cid-split-capsule__divider {
+  width: 2px;
+  height: 100%;
+  background: var(--cid-card-bg);
+}
+
+/* Explainer button — Figma: 32/756 = 4.2% of card width ≈ 14px */
+.cid-explainer-btn {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.cid-explainer-btn img {
+  width: 100%;
+  height: 100%;
+}
+
+/* ══════════════════════════════════════
+   TOGGLE BUTTONS (left/right, Off/On/Auto)
+   ══════════════════════════════════════ */
+.cid-toggle-group {
+  display: flex;
+  gap: 8px;
+}
+
+.cid-toggle-btn {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: 999px;
+  border: none;
+  background: var(--cid-card-bg-active);
+  color: var(--cid-text-secondary);
+  font-family: var(--cid-font);
+  font-size: var(--cid-font-md);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast) var(--ease-standard);
+}
+
+.cid-toggle-btn--active {
+  background: var(--cid-active-pill-bg);
+  color: var(--cid-active-pill-text);
+}
+
+/* Action button (e.g., Fold Mirrors) */
+.cid-action-btn {
+  width: 100%;
+  padding: 10px 0;
+  border-radius: 999px;
+  border: none;
+  background: var(--cid-card-bg-active);
+  color: var(--cid-text-secondary);
+  font-family: var(--cid-font);
+  font-size: var(--cid-font-base);
+  cursor: pointer;
+  text-align: center;
+}
+
+/* ══════════════════════════════════════
+   DRIVER DISPLAYS (brightness slider)
+   ══════════════════════════════════════ */
+.cid-brightness-track {
+  width: 100%;
+  height: 36px;
+  background: var(--cid-pill-bg);
+  border-radius: 999px;
+  cursor: pointer;
+  touch-action: none;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  margin-top: auto;
+}
+
+/* Fixed brightness icon on the left */
+.cid-brightness-icon-inside {
+  width: var(--cid-icon-sm);
+  height: var(--cid-icon-sm);
+  flex-shrink: 0;
+  opacity: 0.5;
+  pointer-events: none;
+  margin: 0 6px;
+}
+
+/* Inner pill — right of icon, width controlled by flex */
+.cid-brightness-fill {
+  height: 100%;
+  min-width: 36px;
+  background: #303134;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 3px;
+  pointer-events: none;
+}
+
+/* Empty space to the right */
+.cid-brightness-empty {
+  pointer-events: none;
+}
+
+/* Grip handle (3 vertical lines) — right edge of inner pill */
+.cid-brightness-grip {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #404144;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.cid-grip-line {
+  width: 1.5px;
+  height: 10px;
+  background: #C9C9D1;
+  border-radius: 1px;
+}
+
+/* ══════════════════════════════════════
+   SVG ICONS
+   ══════════════════════════════════════ */
+.cid-icon {
+  display: block;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.cid-icon--sm {
+  width: var(--cid-icon-sm);
+  height: var(--cid-icon-sm);
+}
+
+.cid-icon--md {
+  width: var(--cid-icon-md);
+  height: var(--cid-icon-md);
+}
+
+/* ══════════════════════════════════════
+   PLACEHOLDER
+   ══════════════════════════════════════ */
+.cid-placeholder-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--cid-text-muted);
+  font-size: var(--cid-font-lg);
+}
+
+.cid-placeholder-icon {
+  background: var(--cid-text-muted);
+  border-radius: 6px;
+  opacity: 0.3;
+}
+
+/* ══════════════════════════════════════
+   AUTO-PLAY INDICATOR
+   ══════════════════════════════════════ */
+.cid-autoplay-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff4444;
+  animation: cid-pulse 1.5s ease-in-out infinite;
+  z-index: 100;
+}
+
+@keyframes cid-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
