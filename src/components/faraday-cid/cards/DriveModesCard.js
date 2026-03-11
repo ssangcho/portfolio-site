@@ -2,7 +2,8 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import CIDCard from '../CIDCard';
 import { QUICK_CARDS } from '../../../data/cidContent';
-import { duration, easing } from '../motionTokens';
+import { transitions } from '../motionTokens';
+import { useCIDState } from '../CIDStateContext';
 import explainerSvg from '../../../assets/faraday/quick_svg/Explainer Button.svg';
 
 const data = QUICK_CARDS.driveModes;
@@ -20,10 +21,11 @@ const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
 const DIVIDER_MIN = 30;
 const DIVIDER_MAX = 70;
 
-const pillTransition = { duration: duration.normal, ease: easing.standard };
+const pillTransition = transitions.pillSlide;
 
 function DriveModesCard() {
-  const [active, setActive] = useState(data.activeMode);
+  const { driveMode: active, setDriveMode: setActive } = useCIDState();
+  const [energySaver, setEnergySaver] = useState(false);
   const containerRef = useRef(null);
   const pillRefs = useRef({});
   const [indicator, setIndicator] = useState({ x: 0, width: 0 });
@@ -77,30 +79,41 @@ function DriveModesCard() {
       <div className="cid-pill-row-secondary">
         <div className="cid-split-capsule">
           {/* Hyper: occupies left portion up to divider */}
-          <motion.button
-            className={`cid-split-capsule__btn ${active === 'Hyper' ? 'cid-split-capsule__btn--active' : ''}`}
-            onClick={() => setActive('Hyper')}
+          <motion.div
+            className="cid-split-capsule__btn"
             animate={{ flex: dividerPct }}
             transition={pillTransition}
           >
             Hyper
-          </motion.button>
-          {/* Animated divider */}
+          </motion.div>
           <div className="cid-split-capsule__divider-wrap">
             <div className="cid-split-capsule__divider" />
           </div>
-          {/* Launch: occupies right portion after divider */}
-          <motion.button
-            className={`cid-split-capsule__btn ${active === 'Launch' ? 'cid-split-capsule__btn--active' : ''}`}
-            onClick={() => setActive('Launch')}
+          <motion.div
+            className="cid-split-capsule__btn"
             animate={{ flex: 100 - dividerPct }}
             transition={pillTransition}
           >
             Launch
-          </motion.button>
+          </motion.div>
         </div>
         <button className="cid-explainer-btn">
           <img src={explainerSvg} alt="Info" />
+        </button>
+      </div>
+
+      {/* ── Energy Saver toggle ── */}
+      <div className="cid-energy-saver">
+        <span className="cid-energy-saver__label">Energy Saver</span>
+        <button
+          className={`cid-energy-saver__toggle ${energySaver ? 'cid-energy-saver__toggle--on' : ''}`}
+          onClick={() => setEnergySaver(!energySaver)}
+        >
+          <motion.div
+            className="cid-energy-saver__thumb"
+            animate={{ x: energySaver ? 18 : 0 }}
+            transition={pillTransition}
+          />
         </button>
       </div>
     </CIDCard>

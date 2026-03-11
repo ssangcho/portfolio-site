@@ -168,7 +168,16 @@ Footer (선택)
 - Framer Motion
 - Lottie (lottie-web, lottie-react)
 - Pure CSS (변수 기반)
-- 배포: 미설정 (별도 Git repo: github.com/ssangcho/portfolio-site)
+- 배포: Vercel (별도 Git repo: github.com/ssangcho/portfolio-site)
+
+### Git Branch 전략
+
+| Branch | 역할 | 배포 |
+|--------|------|------|
+| `master` | Live 배포 — 현재 공개 중. 깨지면 안 됨 | Vercel 자동 배포 |
+| `dev` | 작업 브랜치 — WIP 백업용. 자유롭게 push | 배포 안 됨 |
+
+> `dev`에서 작업 → 완성 후 `master`로 merge → 자동 배포
 
 ### 추가 필요
 - **React Router** — 랜딩/케이스 페이지 분리

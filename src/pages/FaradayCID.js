@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import CIDShell from '../components/faraday-cid/CIDShell';
+import { CIDStateProvider } from '../components/faraday-cid/CIDStateContext';
 import QuickControls from '../components/faraday-cid/screens/QuickControls';
 import DoorsScreen from '../components/faraday-cid/screens/DoorsScreen';
 import EnergyScreen from '../components/faraday-cid/screens/EnergyScreen';
@@ -87,16 +88,18 @@ function FaradayCID() {
   const ScreenComponent = screens[activeTab] || PlaceholderScreen;
 
   return (
-    <div className="cid-root">
-      {autoPlay && <div className="cid-autoplay-dot" />}
-      <div ref={shellRef} style={{ transform: `scale(${scale})` }}>
-        <CIDShell activeTab={activeTab} onTabChange={setActiveTab} contentRef={contentRef}>
-          <AnimatePresence mode="wait">
-            <ScreenComponent key={activeTab} />
-          </AnimatePresence>
-        </CIDShell>
+    <CIDStateProvider>
+      <div className="cid-root">
+        {autoPlay && <div className="cid-autoplay-dot" />}
+        <div ref={shellRef} style={{ zoom: scale }}>
+          <CIDShell activeTab={activeTab} onTabChange={setActiveTab} contentRef={contentRef}>
+            <AnimatePresence mode="wait">
+              <ScreenComponent key={activeTab} />
+            </AnimatePresence>
+          </CIDShell>
+        </div>
       </div>
-    </div>
+    </CIDStateProvider>
   );
 }
 

@@ -1,4 +1,5 @@
 import CIDCardGrid from '../CIDCardGrid';
+import RangeBanner from '../cards/RangeBanner';
 import DriveModesCard from '../cards/DriveModesCard';
 import OdometerCard from '../cards/OdometerCard';
 import MirrorAdjustCard from '../cards/MirrorAdjustCard';
@@ -14,6 +15,8 @@ import DisplaySleepCard from '../cards/DisplaySleepCard';
 
 function QuickControls() {
   return (
+    <>
+    <RangeBanner />
     <CIDCardGrid dense>
       {/* Row 1-2: Drive Modes spans 2 rows, Odometer + Mirror Adjust stack right */}
       <DriveModesCard />
@@ -35,6 +38,7 @@ function QuickControls() {
       <RearDisplayCard />
       <DisplaySleepCard />
     </CIDCardGrid>
+    </>
   );
 }
 

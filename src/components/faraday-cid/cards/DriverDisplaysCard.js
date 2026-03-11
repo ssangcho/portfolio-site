@@ -1,17 +1,19 @@
-import { useState, useRef, useCallback } from 'react';
+import { useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import CIDCard from '../CIDCard';
 import { QUICK_CARDS } from '../../../data/cidContent';
-import { duration, easing } from '../motionTokens';
-import brightnessSvg from '../../../assets/faraday/quick_svg/brightness.svg';
+import { transitions } from '../motionTokens';
+import { useCIDState } from '../CIDStateContext';
+import brightnessLow from '../../../assets/faraday/quick_svg/brightness.svg';
+import brightnessHigh from '../../../assets/faraday/quick_svg/brightness_high.svg';
 
 const data = QUICK_CARDS.driverDisplays;
-const sliderTransition = { duration: duration.normal, ease: easing.standard };
-const MIN_PCT = 10;
-const MAX_PCT = 85;
+const sliderTransition = transitions.sliderSnap;
+const MIN_PCT = 5;
+const MAX_PCT = 100;
 
 function DriverDisplaysCard() {
-  const [pct, setPct] = useState(40);
+  const { brightness: pct, setBrightness: setPct } = useCIDState();
   const trackRef = useRef(null);
   const dragging = useRef(false);
 
@@ -44,7 +46,30 @@ function DriverDisplaysCard() {
         onPointerMove={onMove}
         onPointerUp={onUp}
       >
-        <img src={brightnessSvg} alt="Brightness" className="cid-brightness-icon-inside" />
+        <div style={{ position: 'relative', width: 'var(--cid-icon-sm)', height: 'var(--cid-icon-sm)', flexShrink: 0, margin: '0 6px' }}>
+          <img
+            src={brightnessLow}
+            alt=""
+            className="cid-icon"
+            style={{
+              width: '100%', height: '100%',
+              position: 'absolute', top: 0, left: 0,
+              opacity: 1 - (pct / MAX_PCT),
+              transition: 'opacity 0.15s linear',
+            }}
+          />
+          <img
+            src={brightnessHigh}
+            alt=""
+            className="cid-icon"
+            style={{
+              width: '100%', height: '100%',
+              position: 'absolute', top: 0, left: 0,
+              opacity: pct / MAX_PCT,
+              transition: 'opacity 0.15s linear',
+            }}
+          />
+        </div>
         <motion.div
           className="cid-brightness-fill"
           animate={{ flex: pct }}

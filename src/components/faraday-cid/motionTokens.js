@@ -1,45 +1,64 @@
 /* ── Faraday CID Motion Token System ──
  *
- * All motion in the CID uses these tokens.
+ * 3-Layer Motion Hierarchy + "Precision meets Luxury" character.
  * Framer Motion uses seconds; CSS uses milliseconds.
- * Keep both in sync.
  *
- * Rationale: NHTSA recommends in-vehicle glance time under 2 seconds.
- * Total transition budget: 400ms max.
+ * NHTSA budget: single glance ≤ 2s → total transition ≤ ~430ms (21.5%)
+ * Spec: motion-choreography-spec.md
  */
 
+// ── Duration ──────────────────────────────────────────
 export const duration = {
-  fast: 0.15,     // 150ms — content exit, quick state changes
-  normal: 0.3,    // 300ms — indicator slide, content enter
-  slow: 0.4,      // 400ms — max transition budget
+  instant:  0.05,   //  50ms — feedback snap
+  fast:     0.15,   // 150ms — exit, quick feedback
+  control:  0.20,   // 200ms — precision control interactions
+  normal:   0.25,   // 250ms — indicator slide
+  refined:  0.40,   // 400ms — luxury content enter, relaxed
+  dissolve: 0.35,   // 350ms — luxury icon dissolve (+50ms hold)
+  slow:     0.40,   // 400ms — max navigation budget
 };
 
+// ── Easing ────────────────────────────────────────────
 export const easing = {
-  standard: [0, 0, 0.2, 1],  // Material-style decelerate
+  // Base (MD3-derived)
+  standard:    [0.2, 0, 0, 1],     // element visible throughout
+  decelerate:  [0, 0, 0, 1],       // entering screen
+  accelerate:  [0.3, 0, 1, 1],     // leaving screen
+  linear:      [0, 0, 1, 1],       // opacity/color only
+
+  // Faraday Character — Precision (high-tech, instant response)
+  precision:       [0.0, 0, 0, 1],       // instant start, smooth stop
+  precisionSnap:   [0, 0, 0.2, 0.8],     // micro-settle at endpoint
+
+  // Faraday Character — Refinement (luxury, gentle glide)
+  refinement:      [0.05, 0.7, 0.1, 1],  // emphasized decelerate
+  refinementFade:  [0.1, 0, 0.4, 1],     // subtle ease on opacity
 };
 
+// ── Stagger ───────────────────────────────────────────
 export const stagger = {
-  step: 0.04,       // 40ms per card
-  stepDense: 0.025, // 25ms for screens with many cards (12+)
+  navigation: 0.06,   // 60ms — refined card cascade, visible entrance
+  dense:      0.05,   // 50ms — 12+ cards, relaxed pace
 };
 
-// Pre-composed transition presets
+// ── Pre-composed Transitions ──────────────────────────
 export const transitions = {
-  contentExit: {
-    duration: duration.fast,
-    ease: easing.standard,
-  },
-  contentEnter: {
-    duration: duration.normal,
-    ease: easing.standard,
-  },
-  indicatorSlide: {
-    duration: duration.normal,
-    ease: easing.standard,
-  },
+  // Layer 1: Navigation
+  contentExit:    { duration: duration.fast,    ease: easing.accelerate },
+  contentEnter:   { duration: duration.refined, ease: easing.refinement },
+  indicatorSlide: { duration: duration.normal,  ease: easing.standard },
+
+  // Layer 2: Control — Precision tone
+  pillSlide:      { duration: duration.control, ease: easing.precision },
+  modeSwitch:     { duration: duration.control, ease: easing.precision },
+  sliderSnap:     { duration: duration.fast,    ease: easing.precisionSnap },
+
+  // Layer 3: Feedback — Refinement tone
+  iconDissolve:   { duration: duration.dissolve, ease: easing.refinementFade },
+  stateChange:    { duration: duration.fast,     ease: easing.linear },
 };
 
-// Framer Motion variants for cards
+// ── Framer Motion Variants ────────────────────────────
 export const cardVariants = {
   hidden: {
     opacity: 0,

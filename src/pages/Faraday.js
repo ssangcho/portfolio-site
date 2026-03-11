@@ -2,7 +2,7 @@ import { useState, useRef, useCallback } from 'react';
 import Nav from '../components/Nav';
 import { faraday } from '../data/siteContent';
 import cidInterior from '../assets/faraday/CID_screenshot.jpg';
-import cidDoors from '../assets/faraday/cid-doors.jpg';
+import cidDoors from '../assets/faraday/door.png';
 import './Faraday.css';
 
 /* ─── Context Image with Parallax ─── */

@@ -9,7 +9,7 @@ function CIDCardGrid({ children, dense }) {
         hidden: {},
         visible: {
           transition: {
-            staggerChildren: dense ? stagger.stepDense : stagger.step,
+            staggerChildren: dense ? stagger.dense : stagger.navigation,
           },
         },
         exit: {},

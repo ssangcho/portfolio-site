@@ -11,10 +11,29 @@ body.cid-active {
 /* ══════════════════════════════════════
    ROOT / TOKENS
    ══════════════════════════════════════ */
-/* Remove tap/focus highlights on all CID interactive elements */
+/* Remove ALL visual feedback on interactive elements (tap, focus, selection) — clean for screen capture */
 .cid-root *:focus { outline: none; }
 .cid-root *:focus-visible { outline: none; }
-.cid-root button { -webkit-tap-highlight-color: transparent; }
+.cid-root * {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.cid-root button,
+.cid-root [role="button"],
+.cid-root input,
+.cid-root div[style*="cursor"] {
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+.cid-root button:active,
+.cid-root button:focus,
+.cid-root button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
 
 .cid-root {
   /* Duration tokens */
@@ -80,9 +99,8 @@ body.cid-active {
    SHELL
    ══════════════════════════════════════ */
 .cid-shell {
-  height: 95vh;
-  aspect-ratio: 5 / 8;
-  max-height: 960px;
+  width: 600px;
+  height: 960px;
   display: flex;
   flex-direction: column;
   background: var(--cid-bg);
@@ -161,6 +179,131 @@ body.cid-active {
 }
 
 /* ══════════════════════════════════════
+   RANGE BANNER
+   ══════════════════════════════════════ */
+.cid-range-banner {
+  padding: 16px 0 12px;
+}
+
+.cid-range-banner__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.cid-range-banner__left {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.cid-range-banner__label {
+  font-size: var(--cid-font-md);
+  color: var(--cid-text-secondary);
+}
+
+.cid-range-banner__value {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.cid-range-banner__number {
+  font-size: 48px;
+  font-weight: 300;
+  color: var(--cid-text-primary);
+  line-height: 1;
+}
+
+.cid-range-banner__unit {
+  font-size: var(--cid-font-md);
+  font-weight: 300;
+  color: var(--cid-text-secondary);
+}
+
+.cid-range-banner__right {
+  display: flex;
+  gap: 16px;
+  padding-bottom: 4px;
+}
+
+.cid-range-banner__col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.cid-range-banner__info-label {
+  font-size: var(--cid-font-sm);
+  color: #C9C9D1;
+}
+
+.cid-range-banner__info-value {
+  font-size: var(--cid-font-sm);
+  color: #C9C9D1;
+}
+
+.cid-range-banner__info-sub {
+  font-size: 9px;
+  color: #898987;
+  margin-top: -2px;
+}
+
+/* Progress bar */
+.cid-range-banner__bar-track {
+  width: 100%;
+  height: 4px;
+  background: #303134;
+  border-radius: 2px;
+  position: relative;
+  overflow: visible;
+}
+
+.cid-range-banner__bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #34A853, #4CAF50);
+  border-radius: 2px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.cid-range-banner__bar-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  margin-right: -4px;
+}
+
+.cid-range-banner__bar-glow {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 100%;
+  background: linear-gradient(270deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 100%);
+  pointer-events: none;
+}
+
+.cid-range-banner__bar-target {
+  position: absolute;
+  top: -2px;
+  width: 2px;
+  height: 8px;
+  background: #8AB4F8;
+  border-radius: 1px;
+  transform: translateX(-50%);
+}
+
+/* ══════════════════════════════════════
    CARD SYSTEM
    ══════════════════════════════════════ */
 .cid-card-grid {
@@ -181,12 +324,31 @@ body.cid-active {
   flex-direction: column;
   gap: 12px;
   min-height: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Long-press wipe — background-only layer behind card content */
+.cid-wipe-mask {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 0;
+}
+
+/* Card content sits above wipe */
+.cid-card__header,
+.cid-card__footer {
+  position: relative;
+  z-index: 1;
 }
 
 /* Compact card — single-line content like Odometer */
 .cid-card--compact {
   grid-column: span 2;
-  padding: 12px 16px;
+  padding: 16px;
+  justify-content: center;
 }
 
 /* Size variants */
@@ -215,6 +377,17 @@ body.cid-active {
 .cid-card--tall {
   grid-column: span 2;
   grid-row: span 2;
+  gap: 0;           /* manual spacing for cross-row alignment */
+}
+
+/* Drive Modes: align internal sections with adjacent cards in row-1 & row-2
+   title ↔ Odometer, pills ↔ Mirror Adjust title, capsule ↔ mirror icons */
+.cid-card--tall .cid-card__header {
+  margin-bottom: 28px;
+}
+
+.cid-card--tall .cid-sliding-pill-track {
+  margin-bottom: 17px;
 }
 
 /* Card header */
@@ -346,6 +519,45 @@ body.cid-active {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+/* ── Energy Saver toggle ── */
+.cid-energy-saver {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 1px; /* align toggle end with capsule end (explainer 14px + gap 10px) */
+  margin-top: 18px; /* match Mirror Adjust icons→Fold Mirrors gap */
+}
+
+.cid-energy-saver__label {
+  font-size: var(--cid-font-md);
+  color: var(--cid-text-primary);
+  font-weight: 400;
+}
+
+.cid-energy-saver__toggle {
+  width: 44px;
+  height: 26px;
+  border-radius: 13px;
+  background: #222326;
+  border: none;
+  padding: 3px;
+  cursor: pointer;
+  position: relative;
+  transition: background 200ms ease;
+  flex-shrink: 0;
+}
+
+.cid-energy-saver__toggle--on {
+  background: #404144;
+}
+
+.cid-energy-saver__thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #C9C9D1;
 }
 
 /* ── Split capsule (Hyper | Launch) ── */
@@ -573,4 +785,722 @@ body.cid-active {
 @keyframes cid-pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.3; }
+}
+
+/* ══════════════════════════════════════
+   DOORS SCREEN
+   ══════════════════════════════════════ */
+.doors-screen {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  height: 100%;
+  padding-bottom: 12px;
+}
+
+/* Action bar — 4 pill buttons in a row */
+.doors-action-bar {
+  display: flex;
+  gap: 8px;
+  padding: 12px 0;
+}
+
+.doors-action-pill-wrap {
+  flex: 1;
+  cursor: pointer;
+}
+
+.doors-action-pill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 11px 0;
+  border-radius: 999px;
+  border: none;
+  background: #404144;
+  color: #C9C9D1;
+  font-family: var(--cid-font);
+  font-size: var(--cid-font-sm);
+  font-weight: 400;
+  overflow: hidden;
+}
+
+.doors-action-pill__icon {
+  font-size: 10px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.doors-action-pill__svg {
+  width: 14px;
+  height: 14px;
+  filter: brightness(0) invert(0.7);
+}
+
+.doors-action-pill--dim .doors-action-pill__svg {
+  filter: brightness(0) invert(0.3);
+}
+
+.doors-action-pill--active .doors-action-pill__svg {
+  filter: brightness(0) invert(0.1);
+}
+
+.doors-action-pill__label {
+  position: relative;
+  z-index: 1;
+}
+
+/* Wipe overlay — same pattern as DoorLocksCard */
+.doors-action-pill__wipe {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: 0;
+}
+
+/* Vehicle area — dark box container */
+.doors-vehicle-area {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  background: #2A2B2E;
+  border-radius: 16px;
+}
+
+/* Top-down car image */
+.doors-car-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 80%;
+  width: auto;
+  object-fit: contain;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Radial ring — same size & position as circle, all controls inside */
+.doors-radial-ring {
+  --ring-size: 490px;
+  --ring-x: 0px;   /* + = right, - = left */
+  --ring-y: -17px;   /* + = down,  - = up   */
+  position: absolute;
+  width: var(--ring-size);
+  height: var(--ring-size);
+  top: 50%;
+  left: 50%;
+  transform: translate(
+    calc(-50% + var(--ring-x)),
+    calc(-50% + var(--ring-y))
+  );
+  z-index: 2;
+}
+
+/* Circle background — fills the ring */
+.doors-circle-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #222326;
+  opacity: 0.5;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Door control — positioned relative to radial ring center */
+.doors-ctrl {
+  position: absolute;
+  z-index: 2;
+}
+
+/* ── Radial positions — % relative to 460px ring ──
+   Center = 50%, 50%. Buttons along/outside the edge.
+   cos/sin from center, mirror pairs symmetric.
+*/
+
+/* Frunk — 0° (12 o'clock) */
+.doors-ctrl--frunk {
+  top: -6%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* FL Pop — ~320° */
+.doors-ctrl--fl-pop {
+  top: 18%;
+  left: 2%;
+}
+/* FL Close — ~295° */
+.doors-ctrl--fl-close {
+  top: 30%;
+  left: -6%;
+}
+
+/* FR Pop — ~40° — mirror of FL Pop */
+.doors-ctrl--fr-pop {
+  top: 18%;
+  right: 2%;
+}
+/* FR Close — ~65° — mirror of FL Close */
+.doors-ctrl--fr-close {
+  top: 30%;
+  right: -6%;
+}
+
+/* RL Close — ~245° — mirror of RR Close */
+.doors-ctrl--rl-close {
+  bottom: 30%;
+  left: -6%;
+}
+/* RL Pop — ~220° — mirror of RR Pop */
+.doors-ctrl--rl-pop {
+  bottom: 18%;
+  left: 2%;
+}
+
+/* RR Close — ~115° — mirror of RL Close */
+.doors-ctrl--rr-close {
+  bottom: 30%;
+  right: -6%;
+}
+/* RR Pop — ~140° — mirror of RL Pop */
+.doors-ctrl--rr-pop {
+  bottom: 18%;
+  right: 2%;
+}
+
+/* Trunk/Liftgate — 180° (6 o'clock) */
+.doors-ctrl--trunk-icon {
+  bottom: -6%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Charge port — rear-right, smaller than other door buttons */
+.doors-ctrl--charge-port {
+  bottom: 2%;
+  right: 23%;
+}
+
+.doors-ctrl--charge-port .doors-btn {
+  padding: 6px 14px;
+  font-size: 9px;
+}
+
+.doors-ctrl--charge-port .doors-btn__svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* ── Door pill button ── */
+.doors-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px 22px;
+  border-radius: 999px;
+  background: #404144;
+  color: #C9C9D1;
+  font-family: var(--cid-font);
+  font-size: var(--cid-font-sm);
+  font-weight: 400;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: center;
+}
+
+.doors-btn--off {
+  background: #333438;
+  color: #646669;
+}
+
+.doors-btn__icon {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.doors-btn__svg {
+  width: 16px;
+  height: 16px;
+  filter: brightness(0) invert(0.55);
+}
+
+.doors-btn__label {
+  position: relative;
+  z-index: 1;
+}
+
+.doors-btn__wipe {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: 0;
+}
+
+/* ── Icon tile (Frunk / Trunk) — circle ── */
+/* Default (inactive) — mid-gray, visible against dark bg */
+.doors-icon-tile {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #353538;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Active (open) — brighter */
+.doors-icon-tile--active {
+  background: #404144;
+}
+
+.doors-icon-tile--active .doors-icon-tile__svg {
+  filter: brightness(0) invert(0.85);
+}
+
+.doors-icon-tile__wipe {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: 0;
+}
+
+.doors-icon-tile__svg {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(0.55);
+  position: relative;
+  z-index: 1;
+}
+
+/* ══════════════════════════════════════
+   ENERGY SCREEN
+   ══════════════════════════════════════ */
+.energy-screen {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  height: 100%;
+}
+
+/* ── Range section ── */
+.energy-range {
+  padding: 12px 0 6px;
+}
+
+.energy-range__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+.energy-range__left {
+  display: flex;
+  flex-direction: column;
+}
+
+.energy-range__label {
+  font-size: 18px;
+  color: var(--cid-text-secondary);
+  margin-bottom: -2px;
+}
+
+.energy-range__value {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.energy-range__number {
+  font-size: 72px;
+  font-weight: 300;
+  color: var(--cid-text-primary);
+  line-height: 1;
+}
+
+.energy-range__unit {
+  font-size: var(--cid-font-lg);
+  font-weight: 300;
+  color: var(--cid-text-secondary);
+}
+
+.energy-range__right {
+  padding-bottom: 8px;
+}
+
+.energy-range__target {
+  font-size: var(--cid-font-sm);
+  color: #898987;
+}
+
+/* Progress bar */
+.energy-range__bar-track {
+  width: 100%;
+  height: 6px;
+  background: #303134;
+  border-radius: 3px;
+  position: relative;
+  overflow: visible;
+}
+
+.energy-range__bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #34A853, #4CAF50);
+  border-radius: 3px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.energy-range__bar-target {
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.3);
+}
+
+/* Target pill row */
+.energy-range__target-pill-row {
+  position: relative;
+  margin-top: 8px;
+  width: 0;
+}
+
+.energy-range__target-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #C9C9D1;
+  color: #1a1a1a;
+  font-family: var(--cid-font);
+  font-size: var(--cid-font-sm);
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+/* Triangle pointer on top of pill */
+.energy-range__target-pill::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #C9C9D1;
+}
+
+.energy-range__target-arrow {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.energy-range__target-label {
+  line-height: 1;
+}
+
+/* ── Charging section — 2 columns ── */
+.energy-charging {
+  display: flex;
+  min-height: 0;
+  margin-top: 4px;
+}
+
+.energy-charging__left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6px;
+}
+
+.energy-charging__bolt-icon {
+  flex-shrink: 0;
+  margin-bottom: 4px;
+}
+
+.energy-charging__bolt-icon--active {
+  animation: boltPulse 3s ease-in-out infinite;
+}
+
+@keyframes boltPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.energy-charging__title {
+  font-size: 19px;
+  font-weight: 400;
+  color: var(--cid-text-primary);
+  margin: 6px 0 0;
+}
+
+.energy-charging__sub {
+  font-size: var(--cid-font-sm);
+  color: #898987;
+  margin-bottom: 0;
+}
+
+.energy-charging__stop {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  margin-top: 4px;
+  border-radius: 999px;
+  border: none;
+  background: #C9C9D1;
+  color: #1a1a1a;
+  font-family: var(--cid-font);
+  font-size: var(--cid-font-sm);
+  font-weight: 400;
+  cursor: pointer;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.energy-charging__stop-label {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Start Charging state — dark pill, light text */
+.energy-charging__stop--off {
+  background: #404144;
+  color: #C9C9D1;
+}
+
+.energy-charging__stop-wipe {
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  z-index: 0;
+}
+
+.energy-charging__right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.energy-charging__car-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 260px;
+}
+
+.energy-charging__car {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* Pulse SVG overlay — sits exactly on top of car image */
+.energy-charging__pulse-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Charging pulse — subtle glow at charge port */
+.energy-charging__pulse-dot {
+  fill: #4CAF50;
+  filter: blur(8px);
+  animation: chargePulse 3s ease-in-out infinite;
+}
+
+@keyframes chargePulse {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.35; }
+}
+
+/* ── Bottom cards — 2 columns ── */
+.energy-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.energy-card {
+  border: 1px solid #404144;
+  border-radius: var(--cid-card-radius);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.energy-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.energy-card__title {
+  font-size: var(--cid-font-sm);
+  font-weight: 400;
+  color: #898987;
+}
+
+.energy-card__desc {
+  font-size: var(--cid-font-xs);
+  color: #898987;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Toggle */
+.energy-card__toggle {
+  width: 44px;
+  height: 26px;
+  border-radius: 13px;
+  background: #404144;
+  border: none;
+  padding: 3px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.energy-card__toggle--on {
+  background: #4CAF50;
+}
+
+.energy-card__thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #C9C9D1;
+}
+
+/* Stepper */
+.energy-card__stepper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: #353538;
+  border-radius: 999px;
+  padding: 3px;
+  margin-top: auto;
+}
+
+.energy-card__stepper-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: #4A4A4E;
+  color: #A0A0A0;
+  font-family: var(--cid-font);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.energy-card__stepper-val {
+  flex: 1;
+  text-align: center;
+  font-size: var(--cid-font-sm);
+  color: #A0A0A0;
+  font-weight: 400;
+}
+
+/* ── Current Charging Session ── */
+.energy-session {
+  background: var(--cid-card-bg);
+  border-radius: var(--cid-card-radius);
+  padding: 14px;
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+.energy-session__title {
+  font-size: var(--cid-font-md);
+  font-weight: 500;
+  color: var(--cid-text-primary);
+  margin: 0 0 12px;
+}
+
+.energy-session__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 20px;
+}
+
+.energy-session__item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.energy-session__label {
+  font-size: var(--cid-font-sm);
+  color: #898987;
+}
+
+.energy-session__row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.energy-session__val {
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--cid-text-primary);
+  line-height: 1;
+}
+
+.energy-session__unit {
+  font-size: var(--cid-font-sm);
+  color: #898987;
+}
+
+.energy-session__delta {
+  font-size: var(--cid-font-sm);
+  color: #4CAF50;
+  margin-left: 4px;
 }

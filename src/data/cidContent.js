@@ -16,7 +16,7 @@ export const QUICK_CARDS = {
     hasChevron: true,
     modes: ['Eco', 'Comfort', 'Sport'],
     modesRow2: ['Hyper', 'Launch'],
-    activeMode: 'Comfort',
+    activeMode: 'Eco',
   },
   odometer: {
     title: 'Odometer',
@@ -28,7 +28,7 @@ export const QUICK_CARDS = {
     title: 'Headlights',
     size: 'half',
     options: ['Off', 'On', 'Auto'],
-    active: 'Auto',
+    active: 'Off',
   },
   mirrorAdjust: {
     title: 'Mirror Adjust',
@@ -73,5 +73,39 @@ export const QUICK_CARDS = {
     title: 'Display Sleep',
     size: 'quarter',
     status: 'Awake',
+  },
+};
+
+/* ── Doors Screen ── */
+export const DOORS_DATA = {
+  actions: [
+    { id: 'unlock', label: 'Unlock All', icon: 'lock' },
+    { id: 'pop', label: 'Pop All', icon: 'pop' },
+    { id: 'open', label: 'Open All', icon: 'open' },
+    { id: 'close', label: 'Close All', icon: 'close' },
+  ],
+  doors: [
+    { id: 'fl', label: 'Front Left', row: 'front', side: 'left' },
+    { id: 'fr', label: 'Front Right', row: 'front', side: 'right' },
+    { id: 'rl', label: 'Rear Left', row: 'rear', side: 'left' },
+    { id: 'rr', label: 'Rear Right', row: 'rear', side: 'right' },
+  ],
+  trunk: { id: 'trunk', label: 'Trunk' },
+  frunk: { id: 'frunk', label: 'Frunk' },
+};
+
+/* ── Energy Screen ── */
+export const ENERGY_DATA = {
+  range: {
+    current: 72,
+    target: 80,
+    duration: '3 hr 45 min',
+  },
+  chargingSession: {
+    energy: { value: '12', unit: 'kW', delta: '+0.025 kWh' },
+    rate: { value: '12', unit: 'mi/hr', delta: '+5 mi' },
+    voltage: { value: '239', unit: 'VDC' },
+    current: { value: '30', unit: 'A' },
+    estimatedDuration: '3 hr 45 min',
   },
 };
