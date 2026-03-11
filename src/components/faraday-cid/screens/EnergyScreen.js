@@ -1,17 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, animate } from 'framer-motion';
-import { cardVariants, stagger } from '../motionTokens';
+import { cardVariants, screenSlideVariants } from '../motionTokens';
 import { useLongPress } from '../useLongPress';
 import carRear from '../../../assets/faraday/doors_svg/Car-Rear.png';
 import carPortClosed from '../../../assets/faraday/doors_svg/Charge PortClosed.png';
-
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: stagger.navigation },
-  },
-  exit: {},
-};
 
 const RANGE_MI = 372;
 const TARGET_PCT = 82;
@@ -44,7 +36,7 @@ function ChargingBtn({ label, active, onComplete }) {
   );
 }
 
-function EnergyScreen() {
+function EnergyScreen({ direction }) {
   const [rangeVal, setRangeVal] = useState(0);
   const [isCharging, setIsCharging] = useState(true);
   const [energySaver, setEnergySaver] = useState(false);
@@ -64,7 +56,8 @@ function EnergyScreen() {
   return (
     <motion.div
       className="energy-screen"
-      variants={containerVariants}
+      variants={screenSlideVariants}
+      custom={direction}
       initial="hidden"
       animate="visible"
       exit="exit"

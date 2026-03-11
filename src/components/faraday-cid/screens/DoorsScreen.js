@@ -1,9 +1,10 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { cardVariants, stagger } from '../motionTokens';
+import { cardVariants, screenSlideVariants } from '../motionTokens';
 import { useLongPress } from '../useLongPress';
 import lockOpenSvg from '../../../assets/faraday/quick_svg/lock-open.svg';
-import lockLockedSvg from '../../../assets/faraday/quick_svg/lock_locked.svg';
+// lockLockedSvg reserved for future Lock All icon state
+// import lockLockedSvg from '../../../assets/faraday/quick_svg/lock_locked.svg';
 import popAllSvg from '../../../assets/faraday/doors_svg/popall.svg';
 import openAllSvg from '../../../assets/faraday/doors_svg/openall.svg';
 import closeAllSvg from '../../../assets/faraday/doors_svg/door-close.svg';
@@ -42,14 +43,6 @@ function easeOutDelays(steps, totalMs) {
   const sum = weights.reduce((a, b) => a + b, 0);
   return weights.map(w => (w / sum) * totalMs);
 }
-
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: stagger.navigation },
-  },
-  exit: {},
-};
 
 const BG_ON       = '#404144';
 const BG_OFF      = '#2A2B2E';
@@ -192,7 +185,7 @@ function useFrameAnimation() {
   return { frameIndex, frameRef, animating, animateToFrame };
 }
 
-function DoorsScreen() {
+function DoorsScreen({ direction }) {
   const [locked, setLocked] = useState(true);
   const [trunkOpen, setTrunkOpen] = useState(false);
   const { frameIndex, frameRef, animating, animateToFrame } = useFrameAnimation();
@@ -249,7 +242,8 @@ function DoorsScreen() {
   return (
     <motion.div
       className="doors-screen"
-      variants={containerVariants}
+      variants={screenSlideVariants}
+      custom={direction}
       initial="hidden"
       animate="visible"
       exit="exit"

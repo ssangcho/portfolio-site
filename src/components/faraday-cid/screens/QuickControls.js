@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+import { screenSlideVariants } from '../motionTokens';
 import CIDCardGrid from '../CIDCardGrid';
 import RangeBanner from '../cards/RangeBanner';
 import DriveModesCard from '../cards/DriveModesCard';
@@ -13,9 +15,15 @@ import SeatHeatCard from '../cards/SeatHeatCard';
 import RearDisplayCard from '../cards/RearDisplayCard';
 import DisplaySleepCard from '../cards/DisplaySleepCard';
 
-function QuickControls() {
+function QuickControls({ direction }) {
   return (
-    <>
+    <motion.div
+      variants={screenSlideVariants}
+      custom={direction}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
     <RangeBanner />
     <CIDCardGrid dense>
       {/* Row 1-2: Drive Modes spans 2 rows, Odometer + Mirror Adjust stack right */}
@@ -38,7 +46,7 @@ function QuickControls() {
       <RearDisplayCard />
       <DisplaySleepCard />
     </CIDCardGrid>
-    </>
+    </motion.div>
   );
 }
 

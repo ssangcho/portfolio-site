@@ -23,7 +23,7 @@ function DriverDisplaysCard() {
     const rect = el.getBoundingClientRect();
     const raw = ((clientX - rect.left) / rect.width) * 100;
     setPct(Math.min(Math.max(raw, MIN_PCT), MAX_PCT));
-  }, []);
+  }, [setPct]);
 
   const onDown = useCallback((e) => {
     dragging.current = true;

@@ -74,3 +74,30 @@ export const cardVariants = {
     transition: transitions.contentExit,
   },
 };
+
+// ── Directional Screen Slide Variants ─────────────────
+// direction: 1 = forward (→), -1 = backward (←)
+const SLIDE_DISTANCE = 60; // px — subtle slide, not full-screen swipe
+
+export const screenSlideVariants = {
+  hidden: (direction) => ({
+    opacity: 0,
+    x: direction * SLIDE_DISTANCE,
+  }),
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      x:       { duration: duration.refined, ease: easing.refinement },
+      opacity: { duration: duration.normal,  ease: easing.linear },
+    },
+  },
+  exit: (direction) => ({
+    opacity: 0,
+    x: direction * -SLIDE_DISTANCE,
+    transition: {
+      x:       { duration: duration.fast, ease: easing.accelerate },
+      opacity: { duration: duration.fast, ease: easing.linear },
+    },
+  }),
+};

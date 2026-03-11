@@ -32,8 +32,10 @@ function FaradayCID() {
   const [activeTab, setActiveTab] = useState(0);
   const [autoPlay, setAutoPlay] = useState(false);
   const [scale, setScale] = useState(1);
+  const [direction, setDirection] = useState(1); // 1 = right, -1 = left
   const contentRef = useRef(null);
   const shellRef = useRef(null);
+  const prevTabRef = useRef(0);
 
   // Fit shell to viewport via scale transform
   const fitToViewport = useCallback(() => {
@@ -55,6 +57,13 @@ function FaradayCID() {
     return () => document.body.classList.remove('cid-active');
   }, []);
 
+  // Track direction on tab change
+  const handleTabChange = useCallback((newTab) => {
+    setDirection(newTab > prevTabRef.current ? 1 : -1);
+    prevTabRef.current = newTab;
+    setActiveTab(newTab);
+  }, []);
+
   // Reset scroll on tab change
   useEffect(() => {
     if (contentRef.current) {
@@ -68,7 +77,10 @@ function FaradayCID() {
     const interval = setInterval(() => {
       setActiveTab((prev) => {
         const next = prev + 1;
-        return next > 2 ? 0 : next;
+        const wrapped = next > 2 ? 0 : next;
+        setDirection(wrapped === 0 ? -1 : 1);
+        prevTabRef.current = wrapped;
+        return wrapped;
       });
     }, 3000);
     return () => clearInterval(interval);
@@ -92,9 +104,9 @@ function FaradayCID() {
       <div className="cid-root">
         {autoPlay && <div className="cid-autoplay-dot" />}
         <div ref={shellRef} style={{ zoom: scale }}>
-          <CIDShell activeTab={activeTab} onTabChange={setActiveTab} contentRef={contentRef}>
-            <AnimatePresence mode="wait">
-              <ScreenComponent key={activeTab} />
+          <CIDShell activeTab={activeTab} onTabChange={handleTabChange} contentRef={contentRef}>
+            <AnimatePresence mode="wait" custom={direction}>
+              <ScreenComponent key={activeTab} direction={direction} />
             </AnimatePresence>
           </CIDShell>
         </div>
