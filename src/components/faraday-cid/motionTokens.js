@@ -82,19 +82,27 @@ const SLIDE_DISTANCE = 60; // px — subtle slide, not full-screen swipe
 export const screenSlideVariants = {
   hidden: (direction) => ({
     opacity: 0,
-    x: direction * SLIDE_DISTANCE,
+    x: direction ? direction * SLIDE_DISTANCE : 0,
   }),
-  visible: {
+  visible: (direction) => ({
     opacity: 1,
     x: 0,
-    transition: {
-      x:       { duration: duration.refined, ease: easing.refinement },
-      opacity: { duration: duration.normal,  ease: easing.linear },
-    },
-  },
+    transition: direction
+      ? {
+          // Tab switch: slide only, no children stagger
+          x:       { duration: duration.normal, ease: easing.refinement },
+          opacity: { duration: duration.fast,   ease: easing.linear },
+        }
+      : {
+          // Initial load: stagger children (landing animation)
+          when: 'beforeChildren',
+          staggerChildren: stagger.navigation,
+          opacity: { duration: duration.fast, ease: easing.linear },
+        },
+  }),
   exit: (direction) => ({
     opacity: 0,
-    x: direction * -SLIDE_DISTANCE,
+    x: direction ? direction * -SLIDE_DISTANCE : 0,
     transition: {
       x:       { duration: duration.fast, ease: easing.accelerate },
       opacity: { duration: duration.fast, ease: easing.linear },

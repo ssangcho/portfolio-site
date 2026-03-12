@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import CIDShell from '../components/faraday-cid/CIDShell';
-import { CIDStateProvider } from '../components/faraday-cid/CIDStateContext';
+import { CIDStateProvider, useCIDState } from '../components/faraday-cid/CIDStateContext';
 import QuickControls from '../components/faraday-cid/screens/QuickControls';
 import DoorsScreen from '../components/faraday-cid/screens/DoorsScreen';
 import EnergyScreen from '../components/faraday-cid/screens/EnergyScreen';
@@ -28,11 +28,12 @@ function PlaceholderScreen() {
   );
 }
 
-function FaradayCID() {
+function CIDInner() {
+  const { clearLanding } = useCIDState();
   const [activeTab, setActiveTab] = useState(0);
   const [autoPlay, setAutoPlay] = useState(false);
   const [scale, setScale] = useState(1);
-  const [direction, setDirection] = useState(1); // 1 = right, -1 = left
+  const [direction, setDirection] = useState(null); // null = initial load (no slide), 1 = right, -1 = left
   const contentRef = useRef(null);
   const shellRef = useRef(null);
   const prevTabRef = useRef(0);
@@ -59,10 +60,11 @@ function FaradayCID() {
 
   // Track direction on tab change
   const handleTabChange = useCallback((newTab) => {
+    clearLanding(); // First tab switch ends landing stagger
     setDirection(newTab > prevTabRef.current ? 1 : -1);
     prevTabRef.current = newTab;
     setActiveTab(newTab);
-  }, []);
+  }, [clearLanding]);
 
   // Reset scroll on tab change
   useEffect(() => {
@@ -75,6 +77,7 @@ function FaradayCID() {
   useEffect(() => {
     if (!autoPlay) return;
     const interval = setInterval(() => {
+      clearLanding();
       setActiveTab((prev) => {
         const next = prev + 1;
         const wrapped = next > 2 ? 0 : next;
@@ -84,7 +87,7 @@ function FaradayCID() {
       });
     }, 3000);
     return () => clearInterval(interval);
-  }, [autoPlay]);
+  }, [autoPlay, clearLanding]);
 
   // Keyboard: A to toggle auto-play
   useEffect(() => {
@@ -100,17 +103,23 @@ function FaradayCID() {
   const ScreenComponent = screens[activeTab] || PlaceholderScreen;
 
   return (
-    <CIDStateProvider>
-      <div className="cid-root">
-        {autoPlay && <div className="cid-autoplay-dot" />}
-        <div ref={shellRef} style={{ zoom: scale }}>
-          <CIDShell activeTab={activeTab} onTabChange={handleTabChange} contentRef={contentRef}>
-            <AnimatePresence mode="wait" custom={direction}>
-              <ScreenComponent key={activeTab} direction={direction} />
-            </AnimatePresence>
-          </CIDShell>
-        </div>
+    <div className="cid-root">
+      {autoPlay && <div className="cid-autoplay-dot" />}
+      <div ref={shellRef} style={{ zoom: scale }}>
+        <CIDShell activeTab={activeTab} onTabChange={handleTabChange} contentRef={contentRef}>
+          <AnimatePresence mode="wait" custom={direction}>
+            <ScreenComponent key={activeTab} direction={direction} />
+          </AnimatePresence>
+        </CIDShell>
       </div>
+    </div>
+  );
+}
+
+function FaradayCID() {
+  return (
+    <CIDStateProvider>
+      <CIDInner />
     </CIDStateProvider>
   );
 }

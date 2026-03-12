@@ -1,11 +1,13 @@
 import { motion } from 'framer-motion';
 import { cardVariants } from './motionTokens';
+import { useCIDState } from './CIDStateContext';
 
 function CIDCard({ title, size = 'half', hasChevron, style, titleStyle, children }) {
+  const { isLanding } = useCIDState();
   return (
     <motion.div
       className={`cid-card cid-card--${size}`}
-      variants={cardVariants}
+      variants={isLanding ? cardVariants : undefined}
       style={style}
     >
       {title && (

@@ -1,25 +1,8 @@
-import { motion } from 'framer-motion';
-import { stagger } from './motionTokens';
-
-function CIDCardGrid({ children, dense }) {
+function CIDCardGrid({ children }) {
   return (
-    <motion.div
-      className="cid-card-grid"
-      variants={{
-        hidden: {},
-        visible: {
-          transition: {
-            staggerChildren: dense ? stagger.dense : stagger.navigation,
-          },
-        },
-        exit: {},
-      }}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-    >
+    <div className="cid-card-grid">
       {children}
-    </motion.div>
+    </div>
   );
 }
 

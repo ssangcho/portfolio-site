@@ -14,10 +14,12 @@ export function CIDStateProvider({ children }) {
   const [doorLocked, setDoorLocked] = useState(false);
   const [chargeDoorOpen, setChargeDoorOpen] = useState(false);
   const [liftgateOpen, setLiftgateOpen] = useState(false);
+  const [isLanding, setIsLanding] = useState(true);
 
   const toggleDoorLocked = useCallback(() => setDoorLocked((v) => !v), []);
   const toggleChargeDoor = useCallback(() => setChargeDoorOpen((v) => !v), []);
   const toggleLiftgate = useCallback(() => setLiftgateOpen((v) => !v), []);
+  const clearLanding = useCallback(() => setIsLanding(false), []);
 
   return (
     <CIDStateContext.Provider
@@ -28,6 +30,7 @@ export function CIDStateProvider({ children }) {
         doorLocked, toggleDoorLocked,
         chargeDoorOpen, toggleChargeDoor,
         liftgateOpen, toggleLiftgate,
+        isLanding, clearLanding,
       }}
     >
       {children}

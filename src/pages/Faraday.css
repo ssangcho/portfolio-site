@@ -1,3 +1,8 @@
+/* ─── Tokens ─── */
+:root {
+  --video-radius: 4px;
+}
+
 /* ─── Faraday Hero ─── */
 .faraday-hero {
   padding-bottom: 32px;
@@ -124,6 +129,14 @@
   aspect-ratio: 4 / 3;
 }
 
+.section-video {
+  width: 100%;
+  margin-top: 32px;
+  border-radius: var(--video-radius);
+  display: block;
+  cursor: pointer;
+}
+
 /* ── Video Card + Popup ── */
 .video-card {
   width: 100%;
@@ -188,7 +201,7 @@
   aspect-ratio: 5 / 8;
   max-width: 90vw;
   background: #1a1a1a;
-  border-radius: 16px;
+  border-radius: var(--video-radius);
   overflow: hidden;
 }
 
@@ -250,7 +263,19 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 16px;
+  border-radius: var(--video-radius);
+}
+
+.video-popup--video {
+  width: 90vw;
+  max-width: 1200px;
+  height: auto;
+  aspect-ratio: auto;
+}
+
+.video-popup__video {
+  width: 100%;
+  display: block;
 }
 
 /* ─── Motion Token Table ─── */

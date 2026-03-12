@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, animate } from 'framer-motion';
-import { cardVariants, screenSlideVariants } from '../motionTokens';
+import { screenSlideVariants } from '../motionTokens';
 import { useLongPress } from '../useLongPress';
 import carRear from '../../../assets/faraday/doors_svg/Car-Rear.png';
 import carPortClosed from '../../../assets/faraday/doors_svg/Charge PortClosed.png';
@@ -63,7 +63,7 @@ function EnergyScreen({ direction }) {
       exit="exit"
     >
       {/* ── Range section ── */}
-      <motion.div className="energy-range" variants={cardVariants}>
+      <div className="energy-range">
         <div className="energy-range__row">
           <div className="energy-range__left">
             <span className="energy-range__label">Range</span>
@@ -106,10 +106,10 @@ function EnergyScreen({ direction }) {
             <span className="energy-range__target-arrow">›</span>
           </div>
         </motion.div>
-      </motion.div>
+      </div>
 
       {/* ── Charging section — 2 columns ── */}
-      <motion.div className="energy-charging" variants={cardVariants}>
+      <div className="energy-charging">
         <div className="energy-charging__left">
           <svg className={`energy-charging__bolt-icon${isCharging ? ' energy-charging__bolt-icon--active' : ''}`} width="20" height="24" viewBox="0 0 20 24" fill="none">
             <path d="M11 1L2 14h7l-1 9 9-13h-7l1-9z" stroke={isCharging ? '#4CAF50' : '#646669'} strokeWidth="1.5" strokeLinejoin="round" fill="none" />
@@ -133,10 +133,10 @@ function EnergyScreen({ direction }) {
             )}
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* ── Bottom cards — 2 columns ── */}
-      <motion.div className="energy-cards" variants={cardVariants}>
+      <div className="energy-cards">
         {/* Energy Saver */}
         <div className="energy-card">
           <div className="energy-card__header">
@@ -166,10 +166,10 @@ function EnergyScreen({ direction }) {
             <button className="energy-card__stepper-btn" onClick={() => setCurrentAmps((v) => Math.min(48, v + 1))}>+</button>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* ── Current Charging Session ── */}
-      <motion.div className="energy-session" variants={cardVariants}>
+      <div className="energy-session">
         <h3 className="energy-session__title">Current Charging Session</h3>
         <div className="energy-session__grid">
           <div className="energy-session__item">
@@ -209,7 +209,7 @@ function EnergyScreen({ direction }) {
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     </motion.div>
   );
 }

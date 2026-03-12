@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import Nav from '../components/Nav';
 import { faraday } from '../data/siteContent';
 import cidInterior from '../assets/faraday/CID_screenshot.jpg';
@@ -40,9 +40,20 @@ function ContextImage() {
   );
 }
 
+/* ─── ESC to close hook ─── */
+function useEscClose(open, setOpen) {
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e) => { if (e.key === 'Escape') setOpen(false); };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [open, setOpen]);
+}
+
 /* ─── Video Card with Popup ─── */
 function VideoCard({ label }) {
   const [open, setOpen] = useState(false);
+  useEscClose(open, setOpen);
 
   return (
     <>
@@ -69,9 +80,48 @@ function VideoCard({ label }) {
   );
 }
 
+/* ─── Section Video with Popup ─── */
+function SectionVideo({ src }) {
+  const [open, setOpen] = useState(false);
+  useEscClose(open, setOpen);
+
+  return (
+    <>
+      <video
+        className="section-video"
+        src={src}
+        autoPlay
+        loop
+        muted
+        playsInline
+        onClick={() => setOpen(true)}
+      />
+
+      {open && (
+        <div className="video-popup-overlay" onClick={() => setOpen(false)}>
+          <div className="video-popup video-popup--video" onClick={(e) => e.stopPropagation()}>
+            <button className="video-popup__close" onClick={() => setOpen(false)}>
+              &times;
+            </button>
+            <video
+              className="video-popup__video"
+              src={src}
+              autoPlay
+              loop
+              muted
+              playsInline
+            />
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
 /* ─── Image Card with Popup ─── */
 function ImageCard({ src, alt }) {
   const [open, setOpen] = useState(false);
+  useEscClose(open, setOpen);
 
   return (
     <>
@@ -265,9 +315,7 @@ function Faraday() {
         <hr className="case-divider" />
 
         <section className="section--full">
-          <div className="placeholder-video placeholder-video--tall">
-            <span>Three.js embed or AE capture — TBD</span>
-          </div>
+          <SectionVideo src={require('../assets/faraday/ff91_config_v1_720p.mp4')} />
         </section>
 
       </main>

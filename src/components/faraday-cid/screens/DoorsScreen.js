@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { cardVariants, screenSlideVariants } from '../motionTokens';
+import { screenSlideVariants } from '../motionTokens';
 import { useLongPress } from '../useLongPress';
 import lockOpenSvg from '../../../assets/faraday/quick_svg/lock-open.svg';
 // lockLockedSvg reserved for future Lock All icon state
@@ -249,7 +249,7 @@ function DoorsScreen({ direction }) {
       exit="exit"
     >
       {/* Action bar — 4 pill buttons */}
-      <motion.div className="doors-action-bar" variants={cardVariants}>
+      <div className="doors-action-bar">
         <ActionPill
           label={locked ? 'Unlock All' : 'Lock All'}
           icon={<img src={lockOpenSvg} alt="" className="doors-action-pill__svg" />}
@@ -273,10 +273,10 @@ function DoorsScreen({ direction }) {
           onComplete={handleClose}
           dim={locked || isClosed}
         />
-      </motion.div>
+      </div>
 
       {/* Vehicle area */}
-      <motion.div className="doors-vehicle-area" variants={cardVariants}>
+      <div className="doors-vehicle-area">
         {/* Car frame — trunk open overrides door sequence */}
         <img
           src={trunkOpen ? trunkOpenImg : FRAMES[frameIndex]}
@@ -343,7 +343,7 @@ function DoorsScreen({ direction }) {
             />
           </div>
         </div>
-      </motion.div>
+      </div>
     </motion.div>
   );
 }
