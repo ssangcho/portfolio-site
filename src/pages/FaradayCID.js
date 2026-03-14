@@ -138,7 +138,7 @@ function CIDInner() {
         }}
       >
         <CIDShell activeTab={activeTab} onTabChange={handleTabChange} contentRef={contentRef}>
-          <AnimatePresence mode="wait" custom={direction}>
+          <AnimatePresence custom={direction}>
             <ScreenComponent key={activeTab} direction={direction} />
           </AnimatePresence>
         </CIDShell>

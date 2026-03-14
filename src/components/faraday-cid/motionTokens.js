@@ -12,7 +12,7 @@ export const duration = {
   instant:  0.05,   //  50ms — feedback snap
   fast:     0.15,   // 150ms — exit, quick feedback
   control:  0.20,   // 200ms — precision control interactions
-  normal:   0.25,   // 250ms — indicator slide
+  normal:   0.30,   // 300ms — indicator slide
   refined:  0.40,   // 400ms — luxury content enter, relaxed
   dissolve: 0.35,   // 350ms — luxury icon dissolve (+50ms hold)
   slow:     0.40,   // 400ms — max navigation budget
@@ -37,7 +37,7 @@ export const easing = {
 
 // ── Stagger ───────────────────────────────────────────
 export const stagger = {
-  navigation: 0.06,   // 60ms — refined card cascade, visible entrance
+  navigation: 0.04,   // 40ms — refined card cascade, visible entrance
   dense:      0.05,   // 50ms — 12+ cards, relaxed pace
 };
 
@@ -112,8 +112,8 @@ export const screenSlideVariants = {
     left: 0,
     right: 0,
     transition: {
-      x:       { duration: duration.fast, ease: easing.accelerate },
-      opacity: { duration: duration.fast, ease: easing.linear },
+      x:       { duration: duration.normal, ease: easing.refinement },
+      opacity: { duration: duration.fast,   ease: easing.linear },
     },
   }),
 };

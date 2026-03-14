@@ -90,7 +90,7 @@ export const faraday = {
       { name: 'duration.slow',    value: '400ms',                             usage: 'Max transition budget (NHTSA)' },
       { name: 'ease.precision',   value: 'cubic-bezier(0, 0, 0, 1)',         usage: 'Direct controls (sharp response)' },
       { name: 'ease.refinement',  value: 'cubic-bezier(0.05, 0.7, 0.1, 1)',  usage: 'System transitions (luxury deceleration)' },
-      { name: 'stagger.step',     value: '35ms',                              usage: 'Per card delay (12 cards \u2264 420ms)' },
+      { name: 'stagger.navigation', value: '40ms',                              usage: 'Per card delay (12 cards \u2264 440ms)' },
     ],
   },
   timingCalc: {

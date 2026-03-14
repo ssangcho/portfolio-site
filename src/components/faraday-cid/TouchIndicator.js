@@ -53,13 +53,15 @@ export default function TouchIndicator({ shellRef, scale = 1 }) {
   useEffect(() => {
     const el = shellRef?.current;
     if (!el) return;
-    el.addEventListener('mousedown', handleDown, true);
-    window.addEventListener('mousemove', handleMove, true);
-    window.addEventListener('mouseup', handleUp, true);
+    el.addEventListener('pointerdown', handleDown, true);
+    window.addEventListener('pointermove', handleMove, true);
+    window.addEventListener('pointerup', handleUp, true);
+    window.addEventListener('pointercancel', handleUp, true);
     return () => {
-      el.removeEventListener('mousedown', handleDown, true);
-      window.removeEventListener('mousemove', handleMove, true);
-      window.removeEventListener('mouseup', handleUp, true);
+      el.removeEventListener('pointerdown', handleDown, true);
+      window.removeEventListener('pointermove', handleMove, true);
+      window.removeEventListener('pointerup', handleUp, true);
+      window.removeEventListener('pointercancel', handleUp, true);
     };
   }, [shellRef, handleDown, handleMove, handleUp]);
 
