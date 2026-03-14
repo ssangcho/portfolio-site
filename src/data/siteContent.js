@@ -3,14 +3,15 @@
 
 export const site = {
   name: 'Sangcho',
-  tagline: 'Visual & Motion',
+  tagline: 'Product UI Motion',
   navLinks: [
     { label: 'Works', to: '/' },
-    { label: 'About', href: 'https://ssangcho.com/about/' },
+    { label: 'About', to: '/about' },
+    { label: 'Resume', href: '/SangchoShin_Resume.pdf', external: true },
   ],
   footerLinks: [
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/sangchoshin/' },
-    { label: 'Email', href: 'mailto:ssangcho@gmail.com' },
+    { label: 'Email', email: ['ssangcho', 'gmail.com'] },
   ],
   projects: [
     { label: 'All', to: '/' },

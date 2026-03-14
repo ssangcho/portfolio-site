@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { site } from '../data/siteContent';
 import './Footer.css';
 
-function Footer() {
+function Footer({ hideProjects = false }) {
   const { pathname } = useLocation();
   const wrapRef = useRef(null);
 
@@ -22,40 +22,60 @@ function Footer() {
   const bottomOpacity = useTransform(scrollYProgress, [0.6, 0.9], [0, 1]);
 
   return (
-    <div className="footer-wrap" ref={wrapRef}>
+    <div className={`footer-wrap${hideProjects ? ' footer-wrap--compact' : ''}`} ref={wrapRef}>
       <footer className="footer">
-        <div className="footer-line-track">
-          <motion.div className="footer-line-fill" style={{ width: lineWidth }} />
-        </div>
+        {!hideProjects && (
+          <div className="footer-line-track">
+            <motion.div className="footer-line-fill" style={{ width: lineWidth }} />
+          </div>
+        )}
 
-        <motion.nav
-          className="footer-projects"
-          style={{ opacity: contentOpacity, scale: fontSize }}
-        >
-          {site.projects.map((p) => {
-            const active = pathname === p.to;
-            return (
-              <Link
-                key={p.to}
-                to={p.to}
-                className={`footer-project-link${active ? ' is-active' : ''}`}
-              >
-                {p.label}
-              </Link>
-            );
-          })}
-        </motion.nav>
+        {!hideProjects && (
+          <motion.nav
+            className="footer-projects"
+            style={{ opacity: contentOpacity, scale: fontSize }}
+          >
+            {site.projects.map((p) => {
+              const active = pathname === p.to;
+              return (
+                <Link
+                  key={p.to}
+                  to={p.to}
+                  className={`footer-project-link${active ? ' is-active' : ''}`}
+                  onClick={() => {
+                    if (active) window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                >
+                  {p.label}
+                </Link>
+              );
+            })}
+          </motion.nav>
+        )}
         <motion.div
           className="footer-bottom"
           style={{ opacity: bottomOpacity }}
         >
           <span className="footer-copy">&copy; 2026 Sangcho Shin</span>
           <div className="footer-social">
-            {site.footerLinks.map((link) => (
-              <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer">
-                {link.label}
-              </a>
-            ))}
+            {site.footerLinks.map((link) =>
+              link.email ? (
+                <a
+                  key={link.label}
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.location.href = `mailto:${link.email[0]}@${link.email[1]}`;
+                  }}
+                >
+                  {link.label}
+                </a>
+              ) : (
+                <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer">
+                  {link.label}
+                </a>
+              )
+            )}
           </div>
         </motion.div>
       </footer>

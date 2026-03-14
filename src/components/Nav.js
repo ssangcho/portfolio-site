@@ -21,13 +21,17 @@ function Nav({ intro = false }) {
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
 
+  const anim = (delay) =>
+    intro
+      ? { variants: slideUp, initial: 'hidden', animate: 'visible', custom: delay }
+      : {};
+
   useEffect(() => {
     const onScroll = () => {
       if (ticking.current) return;
       ticking.current = true;
       requestAnimationFrame(() => {
         const y = window.scrollY;
-        // threshold 가 10px 넘어야 반응 (jitter 방지)
         if (Math.abs(y - lastScrollY.current) > 10) {
           setScrollHidden(y > lastScrollY.current && y > 80);
           lastScrollY.current = y;
@@ -50,75 +54,25 @@ function Nav({ intro = false }) {
       transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
       <Link to="/" className="nav-brand">
-        {intro ? (
-          <motion.div
-            variants={slideUp}
-            initial="hidden"
-            animate="visible"
-            custom={0}
-          >
-            <Logo className="logo" />
-          </motion.div>
-        ) : (
-          <Logo className="logo" />
-        )}
+        <Logo className="logo" />
         <div className="nav-brand-text">
-          {intro ? (
-            <>
-              <motion.span
-                className="nav-brand-name"
-                variants={slideUp}
-                initial="hidden"
-                animate="visible"
-                custom={0.15}
-              >
-                {site.name}
-              </motion.span>
-              <motion.span
-                className="nav-brand-sub"
-                variants={slideUp}
-                initial="hidden"
-                animate="visible"
-                custom={0.3}
-              >
-                {site.tagline}
-              </motion.span>
-            </>
-          ) : (
-            <>
-              <span className="nav-brand-name">{site.name}</span>
-              <span className="nav-brand-sub">{site.tagline}</span>
-            </>
-          )}
+          <motion.span className="nav-brand-name" {...anim(0.15)}>
+            {site.name}
+          </motion.span>
+          <motion.span className="nav-brand-sub" {...anim(0.3)}>
+            {site.tagline}
+          </motion.span>
         </div>
       </Link>
-      {intro ? (
-        <motion.div
-          className="nav-links"
-          variants={slideUp}
-          initial="hidden"
-          animate="visible"
-          custom={0.4}
-        >
-          {site.navLinks.map((link) =>
-            link.to ? (
-              <Link key={link.label} to={link.to}>{link.label}</Link>
-            ) : (
-              <a key={link.label} href={link.href}>{link.label}</a>
-            )
-          )}
-        </motion.div>
-      ) : (
-        <div className="nav-links">
-          {site.navLinks.map((link) =>
-            link.to ? (
-              <Link key={link.label} to={link.to}>{link.label}</Link>
-            ) : (
-              <a key={link.label} href={link.href}>{link.label}</a>
-            )
-          )}
-        </div>
-      )}
+      <motion.div className="nav-links" {...anim(0.4)}>
+        {site.navLinks.map((link) =>
+          link.to ? (
+            <Link key={link.label} to={link.to} onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}>{link.label}</Link>
+          ) : (
+            <a key={link.label} href={link.href} target={link.external ? '_blank' : undefined} rel={link.external ? 'noopener noreferrer' : undefined}>{link.label}</a>
+          )
+        )}
+      </motion.div>
     </motion.nav>
   );
 }

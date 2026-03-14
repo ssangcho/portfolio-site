@@ -4,6 +4,11 @@
   padding-bottom: 160px;
 }
 
+.footer-wrap--compact {
+  padding-top: 24px;
+  padding-bottom: 40px;
+}
+
 /* ─── Footer ─── */
 .footer {
   max-width: 1100px;
@@ -37,7 +42,7 @@
 }
 
 .footer-project-link {
-  font-size: 1rem;
+  font-size: .9rem;
   font-weight: 400;
   color: var(--gray-300);
   text-decoration: none;

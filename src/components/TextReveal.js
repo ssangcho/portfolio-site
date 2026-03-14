@@ -16,7 +16,7 @@ const charVariants = {
 };
 
 function TypeReveal({ text, delay = 0, className = '' }) {
-  const chars = text.split('');
+  const words = text.split(' ');
 
   return (
     <motion.span
@@ -24,17 +24,30 @@ function TypeReveal({ text, delay = 0, className = '' }) {
       initial="hidden"
       animate="visible"
       transition={{ staggerChildren: 0.012, delayChildren: delay }}
-      style={{ display: 'inline-block' }}
+      style={{ display: 'inline' }}
     >
-      {chars.map((ch, i) => (
-        <motion.span
-          key={i}
-          variants={charVariants}
-          transition={{ duration: 0.15 }}
-          style={{ display: 'inline-block', whiteSpace: 'pre' }}
-        >
-          {ch}
-        </motion.span>
+      {words.map((word, wi) => (
+        <span key={wi} style={{ whiteSpace: 'nowrap', display: 'inline-block' }}>
+          {word.split('').map((ch, ci) => (
+            <motion.span
+              key={ci}
+              variants={charVariants}
+              transition={{ duration: 0.15 }}
+              style={{ display: 'inline-block', whiteSpace: 'pre' }}
+            >
+              {ch}
+            </motion.span>
+          ))}
+          {wi < words.length - 1 && (
+            <motion.span
+              variants={charVariants}
+              transition={{ duration: 0.15 }}
+              style={{ display: 'inline-block', whiteSpace: 'pre' }}
+            >
+              {' '}
+            </motion.span>
+          )}
+        </span>
       ))}
     </motion.span>
   );

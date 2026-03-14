@@ -84,7 +84,7 @@ function Landing() {
           <ThumbCard key={card.to} {...card} index={i} />
         ))}
       </main>
-      <Footer />
+      <Footer hideProjects />
     </div>
   );
 }
