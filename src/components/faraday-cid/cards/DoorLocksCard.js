@@ -19,9 +19,8 @@ function DoorLocksCard() {
   const { doorLocked: locked, toggleDoorLocked: toggle } = useCIDState();
   const { progress, pressing, filled, handlers } = useLongPress(toggle, 1500);
 
-  // Current state bg
-  const currentBg = locked ? BG_DISABLED : BG_ACTIVE;
-  // Wipe always uses mid-tone (idle)
+  const currentBg = locked ? BG_IDLE : BG_ACTIVE;
+  const wipeBg = locked ? BG_ACTIVE : BG_IDLE;
   const showWipe = pressing || filled;
 
   return (
@@ -56,7 +55,7 @@ function DoorLocksCard() {
           <div
             className="cid-wipe-mask"
             style={{
-              background: BG_IDLE,
+              background: wipeBg,
               clipPath: filled
                 ? 'inset(0 0 0 0)'
                 : `inset(0 ${100 - progress * 100}% 0 0)`,

@@ -9,7 +9,12 @@ import toggleSolutionMp4 from '../assets/videos/MotionLogic_01_Toggle02_B_delive
 import heartLottieData from '../assets/lottie/Heart_opt1_400.json';
 import toggleLottieData from '../assets/lottie/Arbnb_Toggle3_400.json';
 import TimingNote from '../components/TimingNote';
+import RoleBlock from '../components/RoleBlock';
+import { TypeReveal, ScrollReveal } from '../components/TextReveal';
+import LazyVideo from '../components/LazyVideo';
 import Nav from '../components/Nav';
+import Footer from '../components/Footer';
+import { airbnb } from '../data/siteContent';
 import '../App.css';
 
 function HeartToggle() {
@@ -236,14 +241,18 @@ function Airbnb() {
       <Nav />
 
       <header className="hero">
-        <h1>Airbnb UI Motion Studies</h1>
+        <h1><TypeReveal text="Airbnb UI Motion Studies" delay={0.2} /></h1>
       </header>
 
       <main className="case-study">
 
-        <h2 className="case-title">01_WISHLIST HEART</h2>
-        <p className="case-subtitle">Redesigning the save moment</p>
-        <hr className="case-divider" />
+        <RoleBlock data={airbnb.role} />
+
+        <ScrollReveal>
+          <h2 className="case-title">01_WISHLIST HEART</h2>
+          <p className="case-subtitle">Redesigning the save moment</p>
+          <hr className="case-divider" />
+        </ScrollReveal>
 
         <section className="section--full">
           <div className="block-challenge">
@@ -256,9 +265,7 @@ function Airbnb() {
                 </p>
               </div>
               <div className="card">
-                <video autoPlay loop muted playsInline className="media media--challenge">
-                  <source src={heartMp4} type="video/mp4" />
-                </video>
+                <LazyVideo src={heartMp4} className="media media--challenge" />
               </div>
             </div>
           </div>
@@ -282,9 +289,7 @@ function Airbnb() {
         <section className="section section--full">
           <h3 className="section-label">Motion Logic</h3>
           <p className="section-desc">Saving a place is a small emotional peak. The extra 200ms isn't decoration. It's the moment of delight that makes the action feel real.</p>
-          <video autoPlay loop muted playsInline className="full-video">
-            <source src={motionLogicMp4} type="video/mp4" />
-          </video>
+          <LazyVideo src={motionLogicMp4} className="full-video" />
           <div className="timing-notes">
             <TimingNote label="PRESS"   ms={150} desc="Fast enough to feel responsive, not accidental." />
             <TimingNote label="RELEASE" ms={400} desc="Overshoots on purpose. The rebound is how the brain reads completion." />
@@ -294,9 +299,11 @@ function Airbnb() {
 
         <hr className="case-divider-thick" />
 
-        <h2 className="case-title">02_TRANSLATION TOGGLE</h2>
-        <p className="case-subtitle">Confirmation through motion</p>
-        <hr className="case-divider" />
+        <ScrollReveal>
+          <h2 className="case-title">02_TRANSLATION TOGGLE</h2>
+          <p className="case-subtitle">Confirmation through motion</p>
+          <hr className="case-divider" />
+        </ScrollReveal>
 
         <section className="section--full">
           <div className="block-challenge">
@@ -307,9 +314,7 @@ function Airbnb() {
             </p>
             <div className="toggle-compare">
               <div className="compare-block">
-                <video autoPlay loop muted playsInline className="full-video">
-                  <source src={toggleCurrentMp4} type="video/mp4" />
-                </video>
+                <LazyVideo src={toggleCurrentMp4} className="full-video" />
                 <p className="compare-desc"><span className="compare-label-inline">Current: </span>Toggle on, card dismisses in 250ms (cut). User has no time to register the confirmation.</p>
               </div>
             </div>
@@ -321,9 +326,7 @@ function Airbnb() {
 
             <div className="toggle-compare">
               <div className="compare-block">
-                <video autoPlay loop muted playsInline className="full-video">
-                  <source src={toggleSolutionMp4} type="video/mp4" />
-                </video>
+                <LazyVideo src={toggleSolutionMp4} className="full-video" />
                 <p className="compare-desc"><span className="compare-label-inline">Solution: </span>Toggle on, hold 500ms, fade out 200ms. Action feels acknowledged before disappearing.</p>
               </div>
             </div>
@@ -352,12 +355,15 @@ function Airbnb() {
 
         <hr className="case-divider-thick" />
 
-        <h2 className="case-title">03_GIFT CARDS</h2>
-        <p className="case-subtitle">Making a premium product feel premium</p>
-        <hr className="case-divider" />
+        <ScrollReveal>
+          <h2 className="case-title">03_GIFT CARDS</h2>
+          <p className="case-subtitle">Making a premium product feel premium</p>
+          <hr className="case-divider" />
+        </ScrollReveal>
         <GiftCards />
 
       </main>
+      <Footer />
     </div>
   );
 }

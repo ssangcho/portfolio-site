@@ -1,8 +1,15 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useRef, useCallback } from 'react';
 import Nav from '../components/Nav';
+import Footer from '../components/Footer';
+import RoleBlock from '../components/RoleBlock';
+import { motion } from 'framer-motion';
+import { TypeReveal, ScrollReveal } from '../components/TextReveal';
+import LazyVideo from '../components/LazyVideo';
+import EasingCompare from '../components/EasingCompare';
 import { faraday } from '../data/siteContent';
 import cidInterior from '../assets/faraday/CID_screenshot.jpg';
-import cidDoors from '../assets/faraday/door.png';
+import ffScreen from '../assets/faraday/A_2.mp4';
+import challengeCVideo from '../assets/faraday/C_2.mp4';
 import './Faraday.css';
 
 /* ─── Context Image with Parallax ─── */
@@ -40,183 +47,6 @@ function ContextImage() {
   );
 }
 
-/* ─── ESC to close hook ─── */
-function useEscClose(open, setOpen) {
-  useEffect(() => {
-    if (!open) return;
-    const handler = (e) => { if (e.key === 'Escape') setOpen(false); };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, [open, setOpen]);
-}
-
-/* ─── Video Card with Popup ─── */
-function VideoCard({ label }) {
-  const [open, setOpen] = useState(false);
-  useEscClose(open, setOpen);
-
-  return (
-    <>
-      <div className="video-card" onClick={() => setOpen(true)}>
-        <div className="video-card__inner">
-          <span>{label}</span>
-        </div>
-        <span className="video-card__hint">Click to expand</span>
-      </div>
-
-      {open && (
-        <div className="video-popup-overlay" onClick={() => setOpen(false)}>
-          <div className="video-popup" onClick={(e) => e.stopPropagation()}>
-            <button className="video-popup__close" onClick={() => setOpen(false)}>
-              &times;
-            </button>
-            <div className="video-popup__content">
-              <span>{label}</span>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
-  );
-}
-
-/* ─── Section Video with Popup ─── */
-function SectionVideo({ src }) {
-  const [open, setOpen] = useState(false);
-  useEscClose(open, setOpen);
-
-  return (
-    <>
-      <video
-        className="section-video"
-        src={src}
-        autoPlay
-        loop
-        muted
-        playsInline
-        onClick={() => setOpen(true)}
-      />
-
-      {open && (
-        <div className="video-popup-overlay" onClick={() => setOpen(false)}>
-          <div className="video-popup video-popup--video" onClick={(e) => e.stopPropagation()}>
-            <button className="video-popup__close" onClick={() => setOpen(false)}>
-              &times;
-            </button>
-            <video
-              className="video-popup__video"
-              src={src}
-              autoPlay
-              loop
-              muted
-              playsInline
-            />
-          </div>
-        </div>
-      )}
-    </>
-  );
-}
-
-/* ─── Image Card with Popup ─── */
-function ImageCard({ src, alt }) {
-  const [open, setOpen] = useState(false);
-  useEscClose(open, setOpen);
-
-  return (
-    <>
-      <div className="image-card" onClick={() => setOpen(true)}>
-        <img src={src} alt={alt} className="cs-row__img" />
-      </div>
-
-      {open && (
-        <div className="video-popup-overlay" onClick={() => setOpen(false)}>
-          <div className="video-popup video-popup--img" onClick={(e) => e.stopPropagation()}>
-            <button className="video-popup__close" onClick={() => setOpen(false)}>
-              &times;
-            </button>
-            <img src={src} alt={alt} className="video-popup__img" />
-          </div>
-        </div>
-      )}
-    </>
-  );
-}
-
-/* ─── Motion Token Table ─── */
-function TokenTable() {
-  return (
-    <div className="token-table-wrap">
-      <table className="token-table">
-        <thead>
-          <tr>
-            <th>Token</th>
-            <th>Value</th>
-            <th>Usage</th>
-          </tr>
-        </thead>
-        <tbody>
-          {faraday.tokenSystem.tokens.map((t) => (
-            <tr key={t.name}>
-              <td className="token-name">{t.name}</td>
-              <td className="token-value">{t.value}</td>
-              <td className="token-usage">{t.usage}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-/* ─── Timing Calculation Diagram ─── */
-function TimingCalc() {
-  return (
-    <div className="timing-calc">
-      <div className="calc-flow">
-        <div className="calc-step">
-          <span className="calc-token">duration.normal</span>
-          <span className="calc-label">Tab indicator slides</span>
-          <div className="calc-bar calc-bar--300" />
-        </div>
-        <div className="calc-step">
-          <span className="calc-token">duration.fast</span>
-          <span className="calc-label">Previous content fades out</span>
-          <div className="calc-bar calc-bar--150" />
-        </div>
-        <div className="calc-step">
-          <span className="calc-token">duration.normal + stagger.step x N</span>
-          <span className="calc-label">New content staggers in</span>
-          <div className="calc-bar calc-bar--300-stagger" />
-        </div>
-      </div>
-      <div className="calc-total">
-        <span className="calc-total-label">Total transition</span>
-        <span className="calc-total-value">&#8804; 400ms (duration.slow)</span>
-      </div>
-      <p className="calc-rationale">{faraday.timingCalc.rationale}</p>
-    </div>
-  );
-}
-
-/* ─── Sync Timing Spec ─── */
-function SyncSpec() {
-  return (
-    <div className="sync-spec">
-      {faraday.mobileSync.steps.map((s) => (
-        <div className="sync-row" key={s.label}>
-          <div className="sync-tag">
-            <span className="sync-label">{s.label}</span>
-            <span className="sync-divider">|</span>
-            <span className="sync-ms">{s.ms}</span>
-          </div>
-          <p className="sync-desc">{s.desc}</p>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 /* ─── Main Page ─── */
 function Faraday() {
   return (
@@ -224,101 +54,139 @@ function Faraday() {
       <Nav />
 
       <header className="hero faraday-hero">
-        <h1>{faraday.hero.title.map((line, i) => (
-          <span key={i}>{line}{i < faraday.hero.title.length - 1 && <br />}</span>
-        ))}</h1>
-        <p className="faraday-hero-sub">{faraday.hero.subtitle}</p>
+        <h1>
+          <TypeReveal text={faraday.hero.title[0]} delay={0.2} />
+          <br />
+          <TypeReveal text={faraday.hero.title[1]} delay={0.6} />
+        </h1>
+        <motion.p
+          className="faraday-hero-sub"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          {faraday.hero.subtitle}
+        </motion.p>
       </header>
 
       <main className="case-study faraday-case">
 
+        <RoleBlock data={faraday.role} />
+
         {/* ── Section 00: Context ── */}
-        <section className="faraday-context">
-          <h2 className="section-label">{faraday.context.label}</h2>
-          <p className="section-desc">{faraday.context.desc}</p>
-          <ContextImage />
-        </section>
+        <ScrollReveal>
+          <section className="faraday-context">
+            <h2 className="section-label">{faraday.context.label}</h2>
+            <p className="section-desc">{faraday.context.desc}</p>
+            <ContextImage />
+          </section>
+        </ScrollReveal>
 
         <hr className="case-divider-thick" />
 
-        {/* ── Section 01: Tab Navigation ── */}
-        <h2 className="case-title">{faraday.tabNav.title}</h2>
-        <p className="case-subtitle">{faraday.tabNav.subtitle}</p>
-        <hr className="case-divider" />
+        {/* ── Section 01: CID Motion System ── */}
+        <ScrollReveal>
+          <h2 className="case-title">{faraday.section01.title}</h2>
+          <p className="case-subtitle">{faraday.section01.subtitle}</p>
+          <hr className="case-divider" />
+        </ScrollReveal>
 
-        <section className="section--full cs-row">
-          <div className="cs-row__text">
-            <div className="block-challenge">
-              <h3 className="section-label">Challenge</h3>
-              <p className="section-desc">{faraday.tabNav.challenge}</p>
+        {/* Challenge A: Navigation Choreography */}
+        <ScrollReveal>
+          <section className="section--full">
+            <div className="challenge-header">
+              <span className="challenge-letter">a</span>
+              <h4 className="challenge-name">{faraday.challengeA.label}</h4>
             </div>
-            <div className="block-solution">
-              <h3 className="section-label">Solution</h3>
-              <p className="section-desc">{faraday.tabNav.solution}</p>
+            <div className="cs-row">
+              <div className="cs-row__text">
+                <div className="block-challenge">
+                  <h3 className="section-label">Challenge</h3>
+                  <p className="section-desc">{faraday.challengeA.challenge}</p>
+                </div>
+                <div className="block-solution">
+                  <h3 className="section-label">Solution</h3>
+                  <p className="section-desc">{faraday.challengeA.solution}</p>
+                </div>
+              </div>
+              <div className="cs-row__media">
+                <LazyVideo className="cs-row__video" src={ffScreen} />
+              </div>
             </div>
-          </div>
-          <div className="cs-row__media">
-            <ImageCard src={cidDoors} alt="CID Doors screen" />
-          </div>
-        </section>
+          </section>
+        </ScrollReveal>
 
-        {/* ── Motion Token System ── */}
-        <section className="section--full faraday-tokens">
-          <h3 className="section-label">{faraday.tokenSystem.label}</h3>
-          <p className="section-desc">{faraday.tokenSystem.desc}</p>
-          <TokenTable />
-        </section>
+        {/* Challenge B: Brand Motion Identity */}
+        <ScrollReveal>
+          <section className="section--full">
+            <div className="challenge-header">
+              <span className="challenge-letter">b</span>
+              <h4 className="challenge-name">{faraday.challengeB.label}</h4>
+            </div>
+            <div className="cs-row cs-row--reverse">
+              <div className="cs-row__text">
+                <div className="block-challenge">
+                  <h3 className="section-label">Challenge</h3>
+                  <p className="section-desc">{faraday.challengeB.challenge}</p>
+                </div>
+                <div className="block-solution">
+                  <h3 className="section-label">Solution</h3>
+                  <p className="section-desc">{faraday.challengeB.solution}</p>
+                </div>
+              </div>
+              <div className="cs-row__media">
+                <EasingCompare />
+              </div>
+            </div>
+          </section>
+        </ScrollReveal>
 
-        {/* ── Timing Calculation ── */}
-        <section className="section--full faraday-calc">
-          <h3 className="section-label">{faraday.timingCalc.label}</h3>
-          <p className="section-desc">{faraday.timingCalc.desc}</p>
-          <TimingCalc />
-        </section>
+        {/* Challenge C: State Feedback */}
+        <ScrollReveal>
+          <section className="section--full">
+            <div className="challenge-header">
+              <span className="challenge-letter">c</span>
+              <h4 className="challenge-name">{faraday.challengeC.label}</h4>
+            </div>
+            <div className="cs-row">
+              <div className="cs-row__text">
+                <div className="block-challenge">
+                  <h3 className="section-label">Challenge</h3>
+                  <p className="section-desc">{faraday.challengeC.challenge}</p>
+                </div>
+                <div className="block-solution">
+                  <h3 className="section-label">Solution</h3>
+                  <p className="section-desc">{faraday.challengeC.solution}</p>
+                </div>
+              </div>
+              <div className="cs-row__media">
+                <LazyVideo className="cs-row__video" src={challengeCVideo} />
+              </div>
+            </div>
+          </section>
+        </ScrollReveal>
 
         <hr className="case-divider-thick" />
 
-        {/* ── Section 02: Mobile Sync ── */}
-        <h2 className="case-title">{faraday.mobileSync.title}</h2>
-        <p className="case-subtitle">{faraday.mobileSync.subtitle}</p>
-        <hr className="case-divider" />
+        {/* ── Section 02: Configurator ── */}
+        <ScrollReveal>
+          <h2 className="case-title">{faraday.configurator.title}</h2>
+          <p className="case-subtitle">{faraday.configurator.subtitle}</p>
+          <hr className="case-divider" />
+        </ScrollReveal>
 
-        <section className="section--full cs-row">
-          <div className="cs-row__text">
-            <div className="block-challenge">
-              <h3 className="section-label">Challenge</h3>
-              <p className="section-desc">{faraday.mobileSync.challenge}</p>
-            </div>
-            <div className="block-solution">
-              <h3 className="section-label">Solution</h3>
-              <p className="section-desc">{faraday.mobileSync.solution}</p>
-            </div>
-          </div>
-          <div className="cs-row__media">
-            <VideoCard
-              label="AE Video — Mobile ↔ CID Sync (placeholder)"
+        <ScrollReveal>
+          <section className="section--full">
+            <p className="section-desc">{faraday.configurator.context}</p>
+            <LazyVideo
+              className="section-video"
+              src={require('../assets/faraday/ff91_config_v1_720p.mp4')}
             />
-          </div>
-        </section>
-
-        <section className="section--full">
-          <h3 className="section-label">{faraday.mobileSync.specLabel}</h3>
-          <p className="section-desc">{faraday.mobileSync.specDesc}</p>
-          <SyncSpec />
-        </section>
-
-        <hr className="case-divider-thick" />
-
-        {/* ── Section 03: Configurator (TBD) ── */}
-        <h2 className="case-title">{faraday.configurator.title}</h2>
-        <p className="case-subtitle">{faraday.configurator.subtitle}</p>
-        <hr className="case-divider" />
-
-        <section className="section--full">
-          <SectionVideo src={require('../assets/faraday/ff91_config_v1_720p.mp4')} />
-        </section>
+          </section>
+        </ScrollReveal>
 
       </main>
+      <Footer />
     </div>
   );
 }

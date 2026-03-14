@@ -29,8 +29,19 @@ function CIDShell({ activeTab, onTabChange, contentRef, children }) {
   }, [activeTab, onTabChange]);
 
   // Pointer events (mouse + desktop)
+  // Skip swipe when interacting with controls (buttons, sliders, toggles)
+  const isInteractive = (el) => {
+    const tag = el.tagName;
+    if (tag === 'BUTTON' || tag === 'INPUT') return true;
+    return el.closest('button, input, [role="button"], [role="slider"], .cid-brightness-track, .energy-card__stepper, .energy-card__toggle, .energy-charging__stop, .doors-btn, .doors-icon-tile, .doors-action-pill-wrap');
+  };
+
   const onPointerDown = useCallback((e) => {
     if (e.button !== 0) return;
+    if (isInteractive(e.target)) {
+      startRef.current = null;
+      return;
+    }
     startRef.current = { x: e.clientX, y: e.clientY, t: Date.now() };
   }, []);
 

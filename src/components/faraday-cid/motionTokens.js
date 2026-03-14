@@ -83,14 +83,17 @@ export const screenSlideVariants = {
   hidden: (direction) => ({
     opacity: 0,
     x: direction ? direction * SLIDE_DISTANCE : 0,
+    y: 0,
   }),
   visible: (direction) => ({
     opacity: 1,
     x: 0,
+    y: 0,
     transition: direction
       ? {
           // Tab switch: slide only, no children stagger
           x:       { duration: duration.normal, ease: easing.refinement },
+          y:       { duration: 0 },
           opacity: { duration: duration.fast,   ease: easing.linear },
         }
       : {
@@ -103,6 +106,11 @@ export const screenSlideVariants = {
   exit: (direction) => ({
     opacity: 0,
     x: direction ? direction * -SLIDE_DISTANCE : 0,
+    y: 0,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
     transition: {
       x:       { duration: duration.fast, ease: easing.accelerate },
       opacity: { duration: duration.fast, ease: easing.linear },

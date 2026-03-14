@@ -23,12 +23,9 @@ function HeadlightsCard() {
   const [indicator, setIndicator] = useState({ x: 0, width: 0 });
 
   const measure = useCallback(() => {
-    const container = containerRef.current;
     const activeEl = pillRefs.current[active];
-    if (!container || !activeEl) return;
-    const cRect = container.getBoundingClientRect();
-    const aRect = activeEl.getBoundingClientRect();
-    setIndicator({ x: aRect.left - cRect.left, width: aRect.width });
+    if (!activeEl) return;
+    setIndicator({ x: activeEl.offsetLeft, width: activeEl.offsetWidth });
   }, [active]);
 
   useEffect(() => { measure(); }, [measure]);

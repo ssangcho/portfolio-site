@@ -47,7 +47,7 @@ function EnergyScreen({ direction }) {
     if (hasAnimated.current) return;
     hasAnimated.current = true;
     animate(0, RANGE_MI, {
-      duration: 1.2,
+      duration: 0.4,
       ease: [0.25, 0.1, 0.25, 1],
       onUpdate: (v) => setRangeVal(Math.round(v)),
     });
@@ -83,7 +83,7 @@ function EnergyScreen({ direction }) {
             className="energy-range__bar-fill"
             initial={{ width: '0%' }}
             animate={{ width: `${FILL_PCT}%` }}
-            transition={{ duration: 1.2, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
           />
           <motion.div
             className="energy-range__bar-target"

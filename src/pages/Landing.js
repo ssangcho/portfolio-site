@@ -1,8 +1,10 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import Nav from '../components/Nav';
+import Footer from '../components/Footer';
 import { landing } from '../data/siteContent';
-import faradayThumb from '../assets/faraday/cid-quick-controls.png';
+import faradayThumb from '../assets/faraday/CID_screenshot.jpg';
 import airbnbThumb from '../assets/airbnb/Card02.png';
 import './Landing.css';
 
@@ -11,7 +13,18 @@ const thumbImages = {
   'landing-thumb--airbnb': airbnbThumb,
 };
 
-function ThumbCard({ to, thumbClass, title, desc }) {
+const ease = [0.22, 1, 0.36, 1];
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 32 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease, delay: 0.5 + i * 0.15 },
+  }),
+};
+
+function ThumbCard({ to, thumbClass, title, desc, index }) {
   const thumbRef = useRef(null);
   const innerRef = useRef(null);
 
@@ -20,7 +33,7 @@ function ThumbCard({ to, thumbClass, title, desc }) {
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
     if (innerRef.current) {
-      innerRef.current.style.transform = `translate(${x * -12}px, ${y * -12}px) scale(1.08)`;
+      innerRef.current.style.transform = `translate(${x * -6}px, ${y * -6}px) scale(1.03)`;
     }
   };
 
@@ -31,39 +44,47 @@ function ThumbCard({ to, thumbClass, title, desc }) {
   };
 
   return (
-    <Link to={to} className="landing-card">
-      <div
-        className={`landing-thumb ${thumbClass}`}
-        ref={thumbRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-      >
-        <div className="landing-thumb-inner" ref={innerRef}>
-          <img
-            src={thumbImages[thumbClass]}
-            alt={title}
-            className="landing-thumb-img"
-          />
+    <motion.div
+      variants={cardVariants}
+      initial="hidden"
+      animate="visible"
+      custom={index}
+    >
+      <Link to={to} className="landing-card">
+        <div
+          className={`landing-thumb ${thumbClass}`}
+          ref={thumbRef}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+        >
+          <div className="landing-thumb-inner" ref={innerRef}>
+            <img
+              src={thumbImages[thumbClass]}
+              alt={title}
+              className="landing-thumb-img"
+            />
+          </div>
         </div>
-      </div>
-      <div className="landing-card-info">
-        <h2 className="landing-card-title">{title}</h2>
-        <p className="landing-card-desc">{desc}</p>
-      </div>
-    </Link>
+        <div className="landing-card-info">
+          <h2 className="landing-card-title">{title}</h2>
+          <p className="landing-card-desc">{desc}</p>
+        </div>
+      </Link>
+    </motion.div>
   );
 }
 
 function Landing() {
   return (
     <div className="app">
-      <Nav />
+      <Nav intro />
 
       <main className="landing-grid">
-        {landing.cards.map((card) => (
-          <ThumbCard key={card.to} {...card} />
+        {landing.cards.map((card, i) => (
+          <ThumbCard key={card.to} {...card} index={i} />
         ))}
       </main>
+      <Footer />
     </div>
   );
 }

@@ -15,7 +15,7 @@ function RangeBanner() {
     hasAnimated.current = true;
 
     animate(0, RANGE_PCT, {
-      duration: 1.2,
+      duration: 0.4,
       ease: EASE,
       onUpdate: (v) => setPct(String(Math.round(v)).padStart(2, '0')),
     });
@@ -51,7 +51,7 @@ function RangeBanner() {
           className="cid-range-banner__bar-fill"
           initial={{ width: '0%' }}
           animate={{ width: `${RANGE_PCT}%` }}
-          transition={{ duration: 1.2, ease: EASE }}
+          transition={{ duration: 0.4, ease: EASE }}
         >
           {/* Leading circle at the end of fill */}
           <div className="cid-range-banner__bar-dot" />

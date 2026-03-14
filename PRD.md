@@ -39,6 +39,7 @@ ssangcho.studio → App.js (Airbnb 풀페이지, 라우터 없음)
 ssangcho.studio/          → Landing (썸네일 그리드)
 ssangcho.studio/airbnb    → Airbnb 케이스 스터디 (기존 그대로)
 ssangcho.studio/faraday   → Faraday CID 케이스 스터디 (신규)
+ssangcho.studio/medical   → Medical Scheduling Platform 케이스 스터디 (신규 — Ane4All 기반)
 ```
 
 ---
@@ -247,8 +248,12 @@ src/
 ## 6. 추후 확장 가능한 것들
 
 ### 케이스 스터디 추가
-- 3번째 썸네일: GM Automotive UI (현 계약 작업 중 공개 가능한 부분)
-- 4번째: Micro-interaction 모음 (Drive Mode, Door Lock 등)
+- 3번째 썸네일: **Medical Scheduling Platform** (Ane4All 기반, anonymized)
+  - SaaS Dashboard motion — data loading choreography, multi-step surgery flow, table filtering
+  - 프로덕트명/병원명 비공개, dummy data 사용
+  - "A platform connecting specialists with hospitals for surgical scheduling and billing"
+  - Consumer + Automotive + **SaaS** = 3개 다른 도메인으로 range 증명
+- 4번째 (여유 시): Fox+ Streaming UI or GM Automotive UI
 
 ### 사이트 기능
 - **다크 모드** — Automotive UI는 다크 배경이 자연스러움

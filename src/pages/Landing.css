@@ -30,7 +30,7 @@
 }
 
 .landing-card:hover .landing-thumb {
-  transform: scale(1.02);
+  transform: scale(1.01);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
 }
 
@@ -58,6 +58,12 @@
   height: 100%;
   object-fit: cover;
   pointer-events: none;
+}
+
+.landing-thumb--airbnb .landing-thumb-img {
+  width: 115%;
+  height: 115%;
+  object-position: center;
 }
 
 /* ─── Card Info (no hover movement) ─── */

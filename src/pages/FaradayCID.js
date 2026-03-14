@@ -5,6 +5,7 @@ import { CIDStateProvider, useCIDState } from '../components/faraday-cid/CIDStat
 import QuickControls from '../components/faraday-cid/screens/QuickControls';
 import DoorsScreen from '../components/faraday-cid/screens/DoorsScreen';
 import EnergyScreen from '../components/faraday-cid/screens/EnergyScreen';
+import TouchIndicator from '../components/faraday-cid/TouchIndicator';
 import './FaradayCID.css';
 
 /* Fixed design dimensions — shell scales to fit */
@@ -37,6 +38,8 @@ function CIDInner() {
   const contentRef = useRef(null);
   const shellRef = useRef(null);
   const prevTabRef = useRef(0);
+
+  const [userZoom, setUserZoom] = useState(1); // manual zoom for recording
 
   // Fit shell to viewport via scale transform
   const fitToViewport = useCallback(() => {
@@ -89,11 +92,25 @@ function CIDInner() {
     return () => clearInterval(interval);
   }, [autoPlay, clearLanding]);
 
-  // Keyboard: A to toggle auto-play
+  // Keyboard: A to toggle auto-play, +/- to zoom for recording
   useEffect(() => {
     const handleKey = (e) => {
       if (e.key === 'a' || e.key === 'A') {
         setAutoPlay((prev) => !prev);
+      }
+      // Zoom in: = or + key
+      if (e.key === '=' || e.key === '+') {
+        e.preventDefault();
+        setUserZoom((prev) => Math.min(prev + 0.25, 3));
+      }
+      // Zoom out: - key
+      if (e.key === '-') {
+        e.preventDefault();
+        setUserZoom((prev) => Math.max(prev - 0.25, 0.5));
+      }
+      // Reset zoom: 0 key
+      if (e.key === '0') {
+        setUserZoom(1);
       }
     };
     window.addEventListener('keydown', handleKey);
@@ -102,15 +119,30 @@ function CIDInner() {
 
   const ScreenComponent = screens[activeTab] || PlaceholderScreen;
 
+  const finalScale = scale * userZoom;
+
   return (
     <div className="cid-root">
       {autoPlay && <div className="cid-autoplay-dot" />}
-      <div ref={shellRef} style={{ zoom: scale }}>
+      {userZoom !== 1 && (
+        <div className="cid-zoom-badge">{Math.round(userZoom * 100)}%</div>
+      )}
+      <div
+        ref={shellRef}
+        style={{
+          transform: `scale(${finalScale})`,
+          transformOrigin: 'center center',
+          width: DESIGN_W,
+          height: DESIGN_H,
+          position: 'relative',
+        }}
+      >
         <CIDShell activeTab={activeTab} onTabChange={handleTabChange} contentRef={contentRef}>
           <AnimatePresence mode="wait" custom={direction}>
             <ScreenComponent key={activeTab} direction={direction} />
           </AnimatePresence>
         </CIDShell>
+        <TouchIndicator shellRef={shellRef} scale={finalScale} />
       </div>
     </div>
   );

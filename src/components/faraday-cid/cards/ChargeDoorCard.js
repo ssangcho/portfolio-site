@@ -20,7 +20,8 @@ function ChargeDoorCard() {
   const { progress, pressing, filled, handlers } = useLongPress(toggle, 1500);
 
   const isClosed = !open;
-  const currentBg = isClosed ? BG_DISABLED : BG_ACTIVE;
+  const currentBg = isClosed ? BG_IDLE : BG_ACTIVE;
+  const wipeBg = isClosed ? BG_ACTIVE : BG_IDLE;
   const showWipe = pressing || filled;
 
   return (
@@ -55,7 +56,7 @@ function ChargeDoorCard() {
           <div
             className="cid-wipe-mask"
             style={{
-              background: BG_IDLE,
+              background: wipeBg,
               clipPath: filled
                 ? 'inset(0 0 0 0)'
                 : `inset(0 ${100 - progress * 100}% 0 0)`,

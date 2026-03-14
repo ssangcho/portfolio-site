@@ -90,9 +90,24 @@ body.cid-active {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #F0F0F0;
+  background: #000000;
   font-family: var(--cid-font);
-  overflow: hidden;
+  overflow: auto;
+}
+
+/* ── Zoom badge (recording helper) ── */
+.cid-zoom-badge {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  padding: 4px 10px;
+  border-radius: 6px;
+  z-index: 9999;
+  pointer-events: none;
 }
 
 /* ══════════════════════════════════════
@@ -133,6 +148,7 @@ body.cid-active {
   -ms-overflow-style: none;
   scrollbar-width: none;
   touch-action: pan-y;
+  position: relative;
 }
 
 .cid-content-area::-webkit-scrollbar {
@@ -786,6 +802,38 @@ body.cid-active {
 @keyframes cid-pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.3; }
+}
+
+/* ── Touch indicator (white circle tap feedback) ── */
+.cid-touch-dot {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+/* Held down — fade in + slight scale */
+.cid-touch-dot--hold {
+  animation: cid-touch-in 150ms ease-out forwards;
+}
+
+@keyframes cid-touch-in {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Released — fade out */
+.cid-touch-dot--fade {
+  animation: cid-touch-out 350ms ease-out forwards;
+}
+
+@keyframes cid-touch-out {
+  0%   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.15); }
 }
 
 /* ══════════════════════════════════════

@@ -7,6 +7,16 @@
   box-sizing: border-box;
 }
 
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app > main {
+  flex: 1;
+}
+
 /* ─── Type Scale (Inter) ─── */
 :root {
   --font: 'Inter', -apple-system, sans-serif;
@@ -21,15 +31,61 @@
   --p:  0.9375rem; /* 15px */
   --sm: 0.8125rem; /* 13px */
 
-  /* Colors */
-  --bg:        #ffffff;
-  --text-primary:   #1a1a1a;  /* 거의 블랙, 100% 아님 */
-  --text-secondary: #4a4a4a;  /* dark grey */
-  --text-muted:     #8a8a8a;  /* medium grey */
-  --text-light:     #b0b0b0;  /* light grey */
-  --accent:    #b84445;   /* 로고 레드 */
-  --card-bg:   #ffffff;
-  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  /* ── Primitive Scale ── */
+  --white:    #ffffff;
+  --black:    #000000;
+
+  --gray-50:  #fafafa;
+  --gray-100: #f5f4f2;
+  --gray-150: #f0efed;
+  --gray-200: #eae8e4;
+  --gray-250: #e8e5e1;
+  --gray-300: #d8d5d0;
+  --gray-350: #d0ceca;
+  --gray-400: #ccc9c3;
+  --gray-450: #c0bdb8;
+  --gray-500: #b0b0b0;
+  --gray-600: #8a8a8a;
+  --gray-700: #6a6a6a;
+  --gray-800: #4a4a4a;
+  --gray-900: #1a1a1a;
+
+  --red-500:  #b84445;
+  --pink-500: #D40861;
+
+  /* ── Semantic Tokens ── */
+
+  /* Background */
+  --bg:           var(--white);
+  --bg-subtle:    var(--gray-50);
+  --bg-muted:     var(--gray-100);
+  --bg-tint:      var(--gray-150);
+  --bg-dark:      var(--gray-900);
+  --bg-black:     var(--black);
+
+  /* Text */
+  --text-primary:   var(--gray-900);
+  --text-secondary: var(--gray-800);
+  --text-dim:       var(--gray-700);
+  --text-muted:     var(--gray-600);
+  --text-light:     var(--gray-500);
+  --text-inverse:   var(--white);
+
+  /* Border & Divider */
+  --border:         var(--gray-350);
+  --border-strong:  var(--gray-300);
+  --border-light:   var(--gray-250);
+  --border-faint:   var(--gray-200);
+  --border-dashed:  var(--gray-400);
+  --border-focus:   var(--gray-450);
+
+  /* Brand */
+  --accent:         var(--red-500);
+  --accent-airbnb:  var(--pink-500);
+
+  /* Utility */
+  --card-bg:        var(--white);
+  --card-shadow:    0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 body {
@@ -84,7 +140,7 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
 .nav-brand-name {
   font-size: 1.3rem;
   font-weight: 400;
-  color: #6a6a6a;
+  color: var(--text-dim);
   letter-spacing: 0.01em;
   line-height: 1.2;
 }
@@ -150,7 +206,7 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
 
 .case-divider {
   border: none;
-  border-top: 1px solid #d8d5d0;
+  border-top: 1px solid var(--border-strong);
   margin: 0 0 40px 0;
 }
 
@@ -326,7 +382,7 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
 
 .spec-divider {
   height: 1px;
-  background: #d8d5d0;
+  background: var(--border-strong);
 }
 
 /* ─── MotionSpec ─── */
@@ -453,7 +509,7 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
 .ms-ruler {
   position: relative;
   height: 36px;
-  border-top: 1px dashed #ccc9c3;
+  border-top: 1px dashed var(--border-dashed);
 }
 
 .ms-marker {
@@ -530,7 +586,7 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
 /* ─── Block Challenge ─── */
 .block-challenge {
   width: 100%;
-  background: #fafafa;
+  background: var(--bg-subtle);
   border: 1px solid transparent;
   border-radius: 16px;
   padding: 48px;
@@ -539,12 +595,12 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
 }
 
 .block-challenge:hover {
-  border-color: #d8d5d0;
+  border-color: var(--border-strong);
 }
 
 .block-solution {
   width: 100%;
-  border: 1px solid #e8e5e1;
+  border: 1px solid var(--border-light);
   border-radius: 16px;
   padding: 48px;
   margin-bottom: 64px;
@@ -552,13 +608,13 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
 }
 
 .block-solution:hover {
-  border-color: #c0bdb8;
+  border-color: var(--border-focus);
 }
 
 .case-divider-thick {
   border: none;
-  border-top: 1px solid #e8e5e1;
-  box-shadow: 0 3px 0 #e8e5e1;
+  border-top: 1px solid var(--border-light);
+  box-shadow: 0 3px 0 var(--border-light);
   margin: 240px auto 200px;
   width: 70%;
 }
@@ -626,7 +682,7 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
   position: relative;
   display: flex;
   align-items: center;
-  background: #f0efed;
+  background: var(--bg-tint);
   border-radius: 999px;
   padding: 8px 20px;
   width: 180px;
@@ -635,7 +691,7 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
 
 .tn-tag--sub {
   background: transparent;
-  border: 1px solid #d0ceca;
+  border: 1px solid var(--border);
 }
 
 .tn-label {
@@ -649,7 +705,7 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
 .tn-divider {
   position: absolute;
   left: 92px;
-  color: #d0ceca;
+  color: var(--border);
   font-weight: 200;
   font-size: 0.75rem;
 }
@@ -674,15 +730,15 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
 /* 섹션 전체 — 길게 잡아야 sticky가 충분히 작동 */
 .gc-scroll-section {
   position: relative;
-  height: 280vh;
-  margin-top: 130px;
+  height: 198vh;
+  margin-top: 120px;
   margin-bottom: 64px;
 }
 
 /* sticky 뷰포트 — 화면에 고정 */
 .gc-sticky {
   position: sticky;
-  top: 80px;
+  top: -10px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -721,7 +777,7 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
   max-width: 380px;
   margin-left: auto;
   padding: 32px 36px;
-  background: #fafafa;
+  background: var(--bg-subtle);
   border-radius: 16px;
 }
 
@@ -734,14 +790,15 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
   max-width: 380px;
   margin-right: auto;
   padding: 32px 36px;
-  border: 1px solid #d0ceca;
+  background: var(--bg);
+  border: 1px solid var(--border);
   border-radius: 16px;
 }
 
 .gc-title {
   font-size: 6rem;
   font-weight: 600;
-  color: #22222;
+  color: var(--text-primary);
   letter-spacing: -0.03em;
   line-height: .9;
   margin: 0;
@@ -791,8 +848,8 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: #D40861;
-  color: #ffffff;
+  background: var(--accent-airbnb);
+  color: var(--text-inverse);
   border: none;
   border-radius: 999px;
   padding: 14px 28px;

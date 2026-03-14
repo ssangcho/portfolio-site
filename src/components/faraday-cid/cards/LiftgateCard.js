@@ -7,19 +7,19 @@ import liftgateOpenedSvg from '../../../assets/faraday/quick_svg/liftgate-opened
 
 const data = QUICK_CARDS.liftgate;
 
-const ICON_FILTER_IDLE = 'brightness(0) saturate(100%) invert(85%) sepia(4%) saturate(200%) hue-rotate(210deg) brightness(95%) contrast(90%)';
-const ICON_DELAY = 'opacity 150ms linear 150ms';
-
-// Liftgate: Closed = Idle (normal), Open = Active (attention)
 const BG_ACTIVE = '#404144';
 const BG_IDLE   = '#2A2B2E';
+
+const ICON_FILTER_DISABLED = 'brightness(0) saturate(100%) invert(42%) sepia(5%) saturate(350%) hue-rotate(190deg) brightness(93%) contrast(88%)';
+const ICON_DELAY = 'opacity 150ms linear 150ms';
 
 function LiftgateCard() {
   const { liftgateOpen: open, toggleLiftgate: toggle } = useCIDState();
   const { progress, pressing, filled, handlers } = useLongPress(toggle, 1500);
 
-  const currentBg = open ? BG_ACTIVE : BG_IDLE;
-  const wipeBg = open ? BG_IDLE : BG_ACTIVE;
+  const isClosed = !open;
+  const currentBg = isClosed ? BG_IDLE : BG_ACTIVE;
+  const wipeBg = isClosed ? BG_ACTIVE : BG_IDLE;
   const showWipe = pressing || filled;
 
   return (
@@ -27,8 +27,8 @@ function LiftgateCard() {
       <CIDCard
         title={data.title}
         size={data.size}
-        titleStyle={{ color: '#C9C9D1' }}
         style={{ background: currentBg }}
+        titleStyle={{ color: isClosed ? '#646669' : undefined }}
       >
         <div className="cid-card__footer">
           <div style={{ position: 'relative', width: 'var(--cid-icon-md)', height: 'var(--cid-icon-md)', flexShrink: 0 }}>
@@ -36,16 +36,16 @@ function LiftgateCard() {
               src={liftgateClosedSvg}
               alt=""
               className="cid-icon cid-icon--md"
-              style={{ position: 'absolute', top: 0, left: 0, opacity: open ? 0 : 1, filter: ICON_FILTER_IDLE, transition: ICON_DELAY }}
+              style={{ position: 'absolute', top: 0, left: 0, opacity: isClosed ? 1 : 0, filter: isClosed ? ICON_FILTER_DISABLED : 'none', transition: ICON_DELAY }}
             />
             <img
               src={liftgateOpenedSvg}
               alt=""
               className="cid-icon cid-icon--md"
-              style={{ position: 'absolute', top: 0, left: 0, opacity: open ? 1 : 0, filter: ICON_FILTER_IDLE, transition: ICON_DELAY }}
+              style={{ position: 'absolute', top: 0, left: 0, opacity: open ? 1 : 0, transition: ICON_DELAY }}
             />
           </div>
-          <span className="cid-card__status" style={{ color: '#898987' }}>
+          <span className="cid-card__status" style={{ color: isClosed ? '#646669' : undefined }}>
             {open ? 'Open' : 'Closed'}
           </span>
         </div>
