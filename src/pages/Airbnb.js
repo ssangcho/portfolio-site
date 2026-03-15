@@ -81,7 +81,7 @@ function Card3D({ glb, folder, scrollRef, scrollRotY, scrollPosY }) {
     x: { value: folder === 'Card01' ? -0.9 : 1.0, min: -5, max: 5, step: 0.1 },
     z: { value: folder === 'Card01' ? 0 : 0.5, min: -3, max: 3, step: 0.1 },
     scale: { value: folder === 'Card01' ? 0.29 : 0.32, min: 0.1, max: 3, step: 0.05 },
-    rotX: { value: folder === 'Card01' ? -8 : -21, min: -90, max: 90, step: 1 },
+    rotX: { value: folder === 'Card01' ? -8 : -12, min: -90, max: 90, step: 1 },
   });
 
   const mat = useControls(folder + ' Mat', {
