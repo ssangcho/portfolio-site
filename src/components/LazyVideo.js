@@ -30,12 +30,33 @@ function LazyVideo({ src, className = '', rootMargin = '200px' }) {
     return () => observer.disconnect();
   }, [rootMargin]);
 
+  /* Ensure muted attribute is set via DOM (React bug workaround)
+     and call play() imperatively for mobile autoplay */
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !inView) return;
+
+    el.muted = true;
+    el.setAttribute('playsinline', '');
+    el.setAttribute('webkit-playsinline', '');
+
+    const tryPlay = () => {
+      el.play().catch(() => {});
+    };
+
+    if (el.readyState >= 2) {
+      tryPlay();
+    } else {
+      el.addEventListener('loadeddata', tryPlay, { once: true });
+    }
+  }, [inView]);
+
   return (
     <video
       ref={ref}
       className={className}
       src={inView ? src : undefined}
-      autoPlay={inView}
+      autoPlay
       loop
       muted
       playsInline
