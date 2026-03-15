@@ -24,12 +24,12 @@ import '../App.css';
 function SceneLights() {
   const light = useControls('Lighting', {
     ambientIntensity: { value: 3.0, min: 0, max: 3, step: 0.1 },
-    dirIntensity: { value: 0.3, min: 0, max: 3, step: 0.1 },
-    dirX: { value: 8.0, min: -10, max: 10, step: 0.5 },
-    dirY: { value: 5.0, min: -10, max: 10, step: 0.5 },
-    dirZ: { value: 5.0, min: -10, max: 10, step: 0.5 },
+    dirIntensity: { value: 0.5, min: 0, max: 3, step: 0.1 },
+    dirX: { value: 1.5, min: -10, max: 10, step: 0.5 },
+    dirY: { value: 2.5, min: -10, max: 10, step: 0.5 },
+    dirZ: { value: 5.5, min: -10, max: 10, step: 0.5 },
     envPreset: { value: 'city', options: ['city', 'studio', 'sunset', 'dawn', 'night', 'warehouse', 'forest', 'apartment', 'lobby', 'park'] },
-    shadowRadius: { value: 4, min: 0, max: 20, step: 0.5 },
+    shadowRadius: { value: 14.5, min: 0, max: 20, step: 0.5 },
   });
 
   return (
@@ -58,8 +58,8 @@ function SceneLights() {
 function WallShadow() {
   const shadow = useControls('Shadow', {
     posZ: { value: -3.0, min: -8, max: 0, step: 0.1 },
-    opacity: { value: 0.25, min: 0, max: 1, step: 0.05 },
-    width: { value: 16, min: 1, max: 30, step: 1 },
+    opacity: { value: 0.10, min: 0, max: 1, step: 0.05 },
+    width: { value: 22, min: 1, max: 30, step: 1 },
     height: { value: 12, min: 1, max: 20, step: 1 },
   });
 
@@ -79,7 +79,7 @@ function Card3D({ glb, folder, scrollRef, scrollRotY, scrollPosY }) {
 
   const pos = useControls(folder, {
     x: { value: folder === 'Card01' ? -0.9 : 1.0, min: -5, max: 5, step: 0.1 },
-    z: { value: folder === 'Card01' ? 0 : 0.5, min: -3, max: 3, step: 0.1 },
+    z: { value: folder === 'Card01' ? -0.7 : 0.5, min: -3, max: 3, step: 0.1 },
     scale: { value: folder === 'Card01' ? 0.29 : 0.32, min: 0.1, max: 3, step: 0.05 },
     rotX: { value: folder === 'Card01' ? -8 : -21, min: -90, max: 90, step: 1 },
   });
