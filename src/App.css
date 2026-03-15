@@ -5,6 +5,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .app {
@@ -57,9 +58,9 @@
 
   /* Background */
   --bg:           var(--white);
-  --bg-subtle:    var(--gray-50);
-  --bg-muted:     var(--gray-100);
-  --bg-tint:      var(--gray-150);
+  --bg-subtle:    var(--gray-100);
+  --bg-muted:     var(--gray-150);
+  --bg-tint:      var(--gray-200);
   --bg-dark:      var(--gray-900);
   --bg-black:     var(--black);
 
@@ -583,6 +584,19 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
   box-shadow: var(--card-shadow);
 }
 
+/* ─── CS Row Inline (1:1 side-by-side) ─── */
+.cs-row-inline {
+  display: flex;
+  gap: 24px;
+}
+
+.cs-row-inline .block-challenge,
+.cs-row-inline .block-solution {
+  flex: 1;
+  margin-bottom: 0;
+  padding: 24px;
+}
+
 /* ─── Block Challenge ─── */
 .block-challenge {
   width: 100%;
@@ -727,27 +741,30 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
 
 /* ─── Gift Cards ─── */
 
-/* 섹션 전체 — 길게 잡아야 sticky가 충분히 작동 */
+/* 섹션 전체 */
 .gc-scroll-section {
   position: relative;
-  height: 198vh;
+  height: auto;
   margin-top: 120px;
   margin-bottom: 64px;
 }
 
-/* sticky 뷰포트 — 화면에 고정 */
+/* 카드 컨테이너 — sticky 해제, 위치잡기용 */
 .gc-sticky {
-  position: sticky;
-  top: -10px;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   padding: 60px 0 0;
   gap: 0;
+  /* gc-3d-card absolute 기준 */
+  isolation: isolate;
 }
 
 .gc-text-top {
+  position: relative;
+  z-index: 5;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -814,11 +831,10 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
 /* 카드 전체 영역 — 전체 너비, 카드들이 좌/우로 stagger */
 .gc-cards-wrap {
   position: relative;
-  width: 100%;
-  height: 680px;
-  perspective: 900px;
-  perspective-origin: 50% 40%;
-  transform-style: preserve-3d;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  height: 90vh;
+  min-height: 700px;
 }
 
 .gc-img {
@@ -844,6 +860,14 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
   z-index: 3;
 }
 
+/* 3D GLB card — transparent canvas, layer-like */
+.gc-3d-card {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
 .gc-cta {
   display: inline-flex;
   align-items: center;
@@ -857,8 +881,24 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
   font-weight: 600;
   font-family: var(--font);
   cursor: pointer;
-  box-shadow: none;
-  transform-origin: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: text-shadow 0.3s ease,
+              box-shadow 0.3s ease,
+              transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.gc-cta:hover {
+  transform: scale(1.01);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 1),
+               0 0 20px rgba(255, 255, 255, 0.9),
+               0 0 40px rgba(255, 255, 255, 0.5),
+               0 0 60px rgba(255, 56, 92, 0.3);
+  box-shadow: 0 4px 16px rgba(255, 56, 92, 0.3);
+}
+
+.gc-cta:active {
+  transform: scale(0.96);
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ─── Responsive (Mobile) ─── */
@@ -910,6 +950,10 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
     padding: 24px;
   }
 
+  .cs-row-inline {
+    flex-direction: column;
+  }
+
   .section--full {
     margin-top: 64px;
     margin-bottom: 40px;
@@ -950,7 +994,30 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
     right: 8%;
   }
 
+  .gc-3d-card {
+    inset: 0;
+  }
+
   .gc-title {
     font-size: 3rem;
+  }
+
+  /* Gift Cards: disable sticky on mobile, natural flow */
+  .gc-scroll-section--mobile {
+    height: auto;
+    margin-top: 60px;
+    margin-bottom: 0;
+  }
+
+  .gc-scroll-section--mobile .gc-sticky {
+    position: static;
+  }
+
+  .gc-scroll-section--mobile .gc-cards-wrap {
+    height: 320px;
+  }
+
+  .gc-scroll-section--mobile .gc-after {
+    padding-top: 60px;
   }
 }

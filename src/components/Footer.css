@@ -44,7 +44,7 @@
 .footer-project-link {
   font-size: .9rem;
   font-weight: 400;
-  color: var(--gray-300);
+  color: var(--gray-400);
   text-decoration: none;
   transition: color 0.2s ease;
 }
@@ -70,7 +70,7 @@
 
 .footer-copy {
   font-size: 0.7rem;
-  color: var(--gray-300);
+  color: var(--text-muted);
 }
 
 .footer-social {
