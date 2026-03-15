@@ -69,7 +69,7 @@ function Nav({ intro = false }) {
           link.to ? (
             <Link key={link.label} to={link.to} onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}>{link.label}</Link>
           ) : (
-            <a key={link.label} href={link.href} target={link.external ? '_blank' : undefined} rel={link.external ? 'noopener noreferrer' : undefined}>{link.label}</a>
+            <a key={link.label} href={link.href} download={link.download || undefined} target={link.external ? '_blank' : undefined} rel={link.external ? 'noopener noreferrer' : undefined}>{link.label}</a>
           )
         )}
       </motion.div>

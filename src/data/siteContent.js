@@ -7,7 +7,7 @@ export const site = {
   navLinks: [
     { label: 'Works', to: '/' },
     { label: 'About', to: '/about' },
-    { label: 'Resume', href: '/SangchoShin_Resume.pdf', external: true },
+    { label: 'Resume', href: '/SangchoShin_Resume.pdf', download: true },
   ],
   footerLinks: [
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/sangchoshin/' },

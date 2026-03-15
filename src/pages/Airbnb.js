@@ -18,7 +18,7 @@ import { airbnb } from '../data/siteContent';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, Environment } from '@react-three/drei';
 import * as THREE from 'three';
-import { useControls } from 'leva';
+import { useControls, Leva } from 'leva';
 import '../App.css';
 
 function SceneLights() {
@@ -319,6 +319,7 @@ function GiftCards() {
 function Airbnb() {
   return (
     <div className="app">
+      <Leva hidden />
       <Nav />
 
       <header className="hero">
