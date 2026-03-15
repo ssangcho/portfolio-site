@@ -25,11 +25,11 @@ function SceneLights() {
   const light = useControls('Lighting', {
     ambientIntensity: { value: 3.0, min: 0, max: 3, step: 0.1 },
     dirIntensity: { value: 0.3, min: 0, max: 3, step: 0.1 },
-    dirX: { value: 8.0, min: -10, max: 10, step: 0.5 },
+    dirX: { value: 3.5, min: -10, max: 10, step: 0.5 },
     dirY: { value: 5.0, min: -10, max: 10, step: 0.5 },
     dirZ: { value: 5.0, min: -10, max: 10, step: 0.5 },
     envPreset: { value: 'city', options: ['city', 'studio', 'sunset', 'dawn', 'night', 'warehouse', 'forest', 'apartment', 'lobby', 'park'] },
-    shadowRadius: { value: 4, min: 0, max: 20, step: 0.5 },
+    shadowRadius: { value: 9.0, min: 0, max: 20, step: 0.5 },
   });
 
   return (
@@ -57,8 +57,8 @@ function SceneLights() {
 
 function WallShadow() {
   const shadow = useControls('Shadow', {
-    posZ: { value: -3.0, min: -8, max: 0, step: 0.1 },
-    opacity: { value: 0.25, min: 0, max: 1, step: 0.05 },
+    posZ: { value: -0.6, min: -8, max: 0, step: 0.1 },
+    opacity: { value: 0.05, min: 0, max: 1, step: 0.05 },
     width: { value: 16, min: 1, max: 30, step: 1 },
     height: { value: 12, min: 1, max: 20, step: 1 },
   });
