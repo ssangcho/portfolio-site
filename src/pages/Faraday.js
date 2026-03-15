@@ -166,6 +166,32 @@ function Faraday() {
           </section>
         </ScrollReveal>
 
+        <hr className="case-divider" />
+
+        {/* ── Interactive Prototype ── */}
+        <motion.div
+          className="faraday-proto-bg"
+          initial={{ backgroundColor: '#ffffff', color: '#1a1a1a' }}
+          whileInView={{ backgroundColor: '#0a0a0a', color: '#ffffff' }}
+          viewport={{ once: false, amount: 0.7 }}
+          transition={{ duration: 0.8, ease: 'easeInOut' }}
+        >
+          <section className="section--full faraday-prototype-section">
+            <h3 className="section-label">Interactive Prototype</h3>
+            <p className="section-desc">
+              Try it. Tap the tabs below.
+            </p>
+            <div className="cid-embed-wrapper">
+              <iframe
+                src="/faraday/prototype"
+                title="CID Interactive Prototype"
+                className="cid-embed-iframe"
+                scrolling="no"
+              />
+            </div>
+          </section>
+        </motion.div>
+
         <hr className="case-divider-thick" />
 
         {/* ── Section 02: Configurator ── */}

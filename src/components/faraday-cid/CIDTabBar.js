@@ -10,12 +10,9 @@ function CIDTabBar({ activeIndex, onTabChange }) {
   const measureTab = useCallback(() => {
     const el = tabRefs.current[activeIndex];
     if (el) {
-      const parent = el.parentElement;
-      const parentRect = parent.getBoundingClientRect();
-      const tabRect = el.getBoundingClientRect();
       setIndicator({
-        x: tabRect.left - parentRect.left,
-        width: tabRect.width,
+        x: el.offsetLeft,
+        width: el.offsetWidth,
       });
     }
   }, [activeIndex]);

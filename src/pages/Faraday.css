@@ -685,6 +685,48 @@
   margin: 0;
 }
 
+/* ─── Prototype Embed ─── */
+.faraday-proto-bg {
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding: 120px calc(50vw - 50%);
+  overflow: hidden;
+}
+
+.faraday-proto-bg .section-label,
+.faraday-proto-bg .section-desc {
+  color: inherit;
+}
+
+.faraday-prototype-section {
+  margin: 0;
+}
+
+.cid-embed-wrapper {
+  width: 100%;
+  max-width: 550px;
+  margin: 32px auto 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #000;
+}
+
+.cid-embed-iframe {
+  width: 100%;
+  aspect-ratio: 600 / 960;
+  border: none;
+  display: block;
+  background: #000;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .faraday-prototype-section {
+    display: none;
+  }
+}
+
 /* ─── Responsive ─── */
 @media (max-width: 768px) {
   .cs-row,

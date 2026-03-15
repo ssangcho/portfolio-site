@@ -92,7 +92,7 @@ body.cid-active {
   justify-content: center;
   background: #000000;
   font-family: var(--cid-font);
-  overflow: auto;
+  overflow: hidden;
 }
 
 /* ── Zoom badge (recording helper) ── */
@@ -109,6 +109,7 @@ body.cid-active {
   z-index: 9999;
   pointer-events: none;
 }
+
 
 /* ══════════════════════════════════════
    SHELL

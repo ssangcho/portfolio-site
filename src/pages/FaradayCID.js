@@ -34,19 +34,16 @@ function CIDInner() {
   const [activeTab, setActiveTab] = useState(0);
   const [autoPlay, setAutoPlay] = useState(false);
   const [scale, setScale] = useState(1);
-  const [direction, setDirection] = useState(null); // null = initial load (no slide), 1 = right, -1 = left
+  const [direction, setDirection] = useState(null);
   const contentRef = useRef(null);
   const shellRef = useRef(null);
   const prevTabRef = useRef(0);
+  const [userZoom, setUserZoom] = useState(1);
 
-  const [userZoom, setUserZoom] = useState(1); // manual zoom for recording
-
-  // Fit shell to viewport via scale transform
   const fitToViewport = useCallback(() => {
     const vw = window.innerWidth;
     const vh = window.innerHeight;
-    const s = Math.min(vw / DESIGN_W, vh / DESIGN_H, 1);
-    setScale(s);
+    setScale(Math.min(vw / DESIGN_W, vh / DESIGN_H, 1));
   }, []);
 
   useEffect(() => {
@@ -55,28 +52,24 @@ function CIDInner() {
     return () => window.removeEventListener('resize', fitToViewport);
   }, [fitToViewport]);
 
-  // Dark background for prototype page only
   useEffect(() => {
     document.body.classList.add('cid-active');
     return () => document.body.classList.remove('cid-active');
   }, []);
 
-  // Track direction on tab change
   const handleTabChange = useCallback((newTab) => {
-    clearLanding(); // First tab switch ends landing stagger
+    clearLanding();
     setDirection(newTab > prevTabRef.current ? 1 : -1);
     prevTabRef.current = newTab;
     setActiveTab(newTab);
   }, [clearLanding]);
 
-  // Reset scroll on tab change
   useEffect(() => {
     if (contentRef.current) {
       contentRef.current.scrollTop = 0;
     }
   }, [activeTab]);
 
-  // Auto-play mode: cycle tabs 0 → 1 → 2
   useEffect(() => {
     if (!autoPlay) return;
     const interval = setInterval(() => {
@@ -92,23 +85,19 @@ function CIDInner() {
     return () => clearInterval(interval);
   }, [autoPlay, clearLanding]);
 
-  // Keyboard: A to toggle auto-play, +/- to zoom for recording
   useEffect(() => {
     const handleKey = (e) => {
       if (e.key === 'a' || e.key === 'A') {
         setAutoPlay((prev) => !prev);
       }
-      // Zoom in: = or + key
       if (e.key === '=' || e.key === '+') {
         e.preventDefault();
         setUserZoom((prev) => Math.min(prev + 0.25, 3));
       }
-      // Zoom out: - key
       if (e.key === '-') {
         e.preventDefault();
         setUserZoom((prev) => Math.max(prev - 0.25, 0.5));
       }
-      // Reset zoom: 0 key
       if (e.key === '0') {
         setUserZoom(1);
       }
@@ -118,7 +107,6 @@ function CIDInner() {
   }, []);
 
   const ScreenComponent = screens[activeTab] || PlaceholderScreen;
-
   const finalScale = scale * userZoom;
 
   return (
