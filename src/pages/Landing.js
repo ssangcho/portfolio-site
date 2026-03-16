@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import { landing } from '../data/siteContent';
+import { trackCaseStudyView } from '../analytics';
 import faradayThumb from '../assets/faraday/CID_screenshot.jpg';
 import airbnbThumb from '../assets/airbnb/Card02.png';
 import './Landing.css';
@@ -50,7 +51,7 @@ function ThumbCard({ to, thumbClass, title, desc, index }) {
       animate="visible"
       custom={index}
     >
-      <Link to={to} className="landing-card">
+      <Link to={to} className="landing-card" onClick={() => trackCaseStudyView(title)}>
         <div
           className={`landing-thumb ${thumbClass}`}
           ref={thumbRef}

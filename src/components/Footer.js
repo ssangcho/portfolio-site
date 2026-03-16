@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { site } from '../data/siteContent';
+import { trackOutboundClick } from '../analytics';
 import './Footer.css';
 
 function Footer({ hideProjects = false }) {
@@ -71,7 +72,13 @@ function Footer({ hideProjects = false }) {
                   {link.label}
                 </a>
               ) : (
-                <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer">
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackOutboundClick(link.href, link.label)}
+                >
                   {link.label}
                 </a>
               )
