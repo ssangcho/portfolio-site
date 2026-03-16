@@ -1,4 +1,4 @@
-const GA_ID = 'G-6EF17VMZ6L';
+const GA_ID = 'G-129YLFMLWT';
 
 function gtag() {
   window.dataLayer = window.dataLayer || [];
