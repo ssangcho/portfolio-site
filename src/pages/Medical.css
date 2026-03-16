@@ -1,0 +1,59 @@
+/* ─── Medical Hero ─── */
+.medical-hero {
+  padding-bottom: 32px;
+}
+
+.medical-hero-sub {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin-top: 12px;
+  letter-spacing: 0.01em;
+}
+
+/* ─── Context Section ─── */
+.medical-context {
+  margin-bottom: 64px;
+}
+
+/* ─── Portal Color Bar ─── */
+.medical-portal-bar {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.portal-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #fff;
+}
+
+.portal-chip--hospital {
+  background: #73B463;
+}
+
+.portal-chip--admin {
+  background: #40B8A6;
+}
+
+.portal-chip--doctor {
+  background: #1E91D9;
+}
+
+/* ─── Flow Placeholder ─── */
+.medical-flow-placeholder {
+  margin-top: 24px;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .medical-portal-bar {
+    gap: 8px;
+  }
+}
