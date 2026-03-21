@@ -33,12 +33,12 @@ function SectionBlock({ num, data, reverse, mediaLabel, video }) {
         <div className={`cs-row${reverse ? ' cs-row--reverse' : ''}`}>
           <div className="cs-row__text">
             <div className="block-challenge">
-              <h3 className="section-label">Discovery</h3>
-              <p className="section-desc">{data.discovery}</p>
+              <h3 className="section-label">Challenge</h3>
+              <p className="section-desc">{data.challenge}</p>
             </div>
             <div className="block-solution">
-              <h3 className="section-label">Design Decision</h3>
-              <p className="section-desc">{data.decision}</p>
+              <h3 className="section-label">Solution</h3>
+              <p className="section-desc">{data.solution}</p>
             </div>
           </div>
           <div className="cs-row__media">
@@ -147,12 +147,12 @@ function Medical() {
             </div>
             <div className="medical-split-cards">
               <div className="block-challenge">
-                <h3 className="section-label">Discovery</h3>
-                <p className="section-desc">{d.challenge01.discovery}</p>
+                <h3 className="section-label">Challenge</h3>
+                <p className="section-desc">{d.challenge01.challenge}</p>
               </div>
               <div className="block-solution">
-                <h3 className="section-label">Design Decision</h3>
-                <p className="section-desc">{d.challenge01.decision}</p>
+                <h3 className="section-label">Solution</h3>
+                <p className="section-desc">{d.challenge01.solution}</p>
               </div>
             </div>
             <div className="medical-full-video">
@@ -178,20 +178,12 @@ function Medical() {
             </div>
             <div className="medical-split-cards">
               <div className="block-challenge">
-                <h3 className="section-label">Discovery</h3>
-                <p className="section-desc">{d.challenge02.discovery}</p>
+                <h3 className="section-label">Challenge</h3>
+                <p className="section-desc">{d.challenge02.challenge}</p>
               </div>
               <div className="block-solution">
-                <h3 className="section-label">Design Decision</h3>
-                <p className="section-desc">{d.challenge02.decision}</p>
-                <div className="wave-list">
-                  {d.challenge02.waves.map((w, i) => (
-                    <div key={i} className="wave-item">
-                      <span className="wave-label">Wave {i + 1} / {w.label}</span>
-                      <span className="wave-desc">{w.desc}</span>
-                    </div>
-                  ))}
-                </div>
+                <h3 className="section-label">Solution</h3>
+                <p className="section-desc">{d.challenge02.solution}</p>
               </div>
             </div>
             <div className="medical-full-video">
@@ -217,20 +209,12 @@ function Medical() {
             </div>
             <div className="medical-split-cards">
               <div className="block-challenge">
-                <h3 className="section-label">Discovery</h3>
-                <p className="section-desc">{d.challenge03.discovery}</p>
+                <h3 className="section-label">Challenge</h3>
+                <p className="section-desc">{d.challenge03.challenge}</p>
               </div>
               <div className="block-solution">
-                <h3 className="section-label">Design Decision</h3>
-                <p className="section-desc">{d.challenge03.decision}</p>
-                <div className="phase-list">
-                  {d.challenge03.phases.map((p, i) => (
-                    <div key={i} className="phase-item">
-                      <span className="phase-label">{p.label}</span>
-                      <span className="phase-desc">{p.desc}</span>
-                    </div>
-                  ))}
-                </div>
+                <h3 className="section-label">Solution</h3>
+                <p className="section-desc">{d.challenge03.solution}</p>
               </div>
             </div>
             <div className="medical-full-video">
@@ -256,12 +240,12 @@ function Medical() {
             </div>
             <div className="medical-split-cards">
               <div className="block-challenge">
-                <h3 className="section-label">Discovery</h3>
-                <p className="section-desc">{d.challenge04.discovery}</p>
+                <h3 className="section-label">Challenge</h3>
+                <p className="section-desc">{d.challenge04.challenge}</p>
               </div>
               <div className="block-solution">
-                <h3 className="section-label">Design Decision</h3>
-                <p className="section-desc">{d.challenge04.decision}</p>
+                <h3 className="section-label">Solution</h3>
+                <p className="section-desc">{d.challenge04.solution}</p>
               </div>
             </div>
             <div className="medical-full-video">
@@ -287,12 +271,12 @@ function Medical() {
             </div>
             <div className="medical-split-cards">
               <div className="block-challenge">
-                <h3 className="section-label">Discovery</h3>
-                <p className="section-desc">{d.challenge05.discovery}</p>
+                <h3 className="section-label">Challenge</h3>
+                <p className="section-desc">{d.challenge05.challenge}</p>
               </div>
               <div className="block-solution">
-                <h3 className="section-label">Design Decision</h3>
-                <p className="section-desc">{d.challenge05.decision}</p>
+                <h3 className="section-label">Solution</h3>
+                <p className="section-desc">{d.challenge05.solution}</p>
               </div>
             </div>
             <div className="medical-full-video">
@@ -303,11 +287,25 @@ function Medical() {
 
         <hr className="case-divider" />
 
-        {/* ── Motion Token Table ── */}
+        {/* ── Motion Token System ── */}
         <ScrollReveal>
           <section className="section--full">
             <h3 className="section-label">{d.tokenSystem.label}</h3>
             <p className="section-desc">{d.tokenSystem.desc}</p>
+
+            {/* Highlight Cards */}
+            <div className="token-highlights">
+              {d.tokenSystem.highlights.map((h) => (
+                <div key={h.name} className="token-highlight">
+                  <div className="token-highlight__header">
+                    <span className="token-highlight__title">{h.title}</span>
+                    <code className="token-highlight__value">{h.value}</code>
+                  </div>
+                  <p className="token-highlight__why">{h.why}</p>
+                </div>
+              ))}
+            </div>
+
             <div className="token-table-wrap">
               <table className="token-table">
                 <thead>
