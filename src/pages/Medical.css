@@ -425,19 +425,23 @@
   }
 }
 
-/* ── Hero demo link ── */
+/* ── Hero demo link (capsule) ── */
 .medical-hero-demo-link {
-  display: inline-block;
-  margin-top: 16px;
-  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 28px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
   color: var(--text-muted);
   text-decoration: none;
-  border-bottom: 1px solid var(--border);
+  border: 1px solid var(--border);
+  border-radius: 999px;
   transition: color 0.2s, border-color 0.2s;
 }
 .medical-hero-demo-link:hover {
   color: var(--text);
-  border-color: var(--text);
+  border-color: var(--text-muted);
 }
 
 /* ── Bottom demo CTA ── */
@@ -452,17 +456,17 @@
 .medical-demo-cta__label {
   font-size: 0.85rem;
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
   margin: 0;
 }
 .medical-demo-cta__btn {
-  display: inline-block;
-  padding: 12px 28px;
-  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  font-size: 1.05rem;
   color: var(--text);
   border: 1px solid var(--border-strong);
-  border-radius: 6px;
+  border-radius: 999px;
   text-decoration: none;
   transition: background 0.2s, color 0.2s;
 }

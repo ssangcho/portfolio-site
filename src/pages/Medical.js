@@ -85,7 +85,10 @@ function Medical() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.0 }}
         >
-          Try it live →
+          Try it live
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
         </motion.a>
       </header>
 
@@ -343,14 +346,17 @@ function Medical() {
         {/* ── Demo CTA ── */}
         <ScrollReveal>
           <section className="medical-demo-cta">
-            <p className="medical-demo-cta__label">See it in action</p>
+            <p className="medical-demo-cta__label">No referral needed.</p>
             <a
               href="https://oncall.ssangcho.studio"
               target="_blank"
               rel="noopener noreferrer"
               className="medical-demo-cta__btn"
             >
-              Try OnCall →
+              Try OnCall
+              <svg width="12" height="12" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </a>
           </section>
         </ScrollReveal>
