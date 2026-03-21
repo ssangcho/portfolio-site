@@ -391,10 +391,10 @@
 
 .token-highlight__header {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+  flex-direction: column;
+  align-items: flex-start;
   margin-bottom: 12px;
-  gap: 12px;
+  gap: 6px;
 }
 
 .token-highlight__title {
