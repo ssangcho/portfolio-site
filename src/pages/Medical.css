@@ -383,8 +383,8 @@
 }
 
 .token-highlight {
-  background: var(--bg-elevated, #1a1a1a);
-  border: 1px solid var(--border, #2a2a2a);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 20px;
 }
@@ -400,13 +400,13 @@
 .token-highlight__title {
   font-weight: 600;
   font-size: 0.9rem;
-  color: var(--text, #fff);
+  color: var(--text-primary);
 }
 
 .token-highlight__value {
   font-size: 0.75rem;
-  color: var(--text-muted, #888);
-  background: var(--bg, #111);
+  color: var(--text-muted);
+  background: var(--bg-muted);
   padding: 2px 8px;
   border-radius: 4px;
   white-space: nowrap;
@@ -415,7 +415,7 @@
 .token-highlight__why {
   font-size: 0.85rem;
   line-height: 1.6;
-  color: var(--text-secondary, #aaa);
+  color: var(--text-secondary);
   margin: 0;
 }
 
