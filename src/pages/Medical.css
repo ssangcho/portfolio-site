@@ -424,3 +424,49 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Hero demo link ── */
+.medical-hero-demo-link {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.2s, border-color 0.2s;
+}
+.medical-hero-demo-link:hover {
+  color: var(--text);
+  border-color: var(--text);
+}
+
+/* ── Bottom demo CTA ── */
+.medical-demo-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 64px 0 32px;
+  text-align: center;
+}
+.medical-demo-cta__label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+.medical-demo-cta__btn {
+  display: inline-block;
+  padding: 12px 28px;
+  font-size: 1rem;
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.medical-demo-cta__btn:hover {
+  background: var(--text);
+  color: var(--bg);
+}
