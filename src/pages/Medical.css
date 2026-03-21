@@ -433,15 +433,17 @@
   margin-top: 28px;
   padding: 6px 14px;
   font-size: 0.82rem;
-  color: var(--text-muted);
+  color: #fff;
+  background: #40B8A6;
   text-decoration: none;
-  border: 1px solid var(--border);
+  border: none;
   border-radius: 999px;
-  transition: color 0.2s, border-color 0.2s;
+  animation: oncall-pulse 2.8s ease-in-out infinite;
+  transition: background 0.2s;
 }
 .medical-hero-demo-link:hover {
-  color: var(--text);
-  border-color: var(--text-muted);
+  background: #33a394;
+  animation: none;
 }
 
 /* ── Bottom demo CTA ── */
@@ -464,16 +466,16 @@
   gap: 8px;
   padding: 14px 32px;
   font-size: 1.05rem;
-  color: #40B8A6;
-  border: 1.5px solid #40B8A6;
+  color: #fff;
+  background: #40B8A6;
+  border: none;
   border-radius: 999px;
   text-decoration: none;
   animation: oncall-pulse 2.8s ease-in-out infinite;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s;
 }
 .medical-demo-cta__btn:hover {
-  background: #40B8A6;
-  color: #fff;
+  background: #33a394;
   animation: none;
 }
 
