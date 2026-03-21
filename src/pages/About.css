@@ -1,23 +1,9 @@
-/* ─── About: Scroll-driven reveal ─── */
-
-.about-scroll {
-  height: 200vh;
-  position: relative;
-}
-
-.about-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  align-items: flex-start;
-  padding-top: 25vh;
-}
+/* ─── About ─── */
 
 .about-content {
   max-width: 640px;
   margin: 0 auto;
-  padding: 0 48px;
+  padding: 25vh 48px 80px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -41,7 +27,7 @@
   font-weight: 300;
   color: var(--text-primary);
   line-height: 1.55;
-  letter-spacing: -0.02em;  /* 음수=좁게, 양수=넓게 */
+  letter-spacing: -0.02em;
 }
 
 /* ── Industry keywords ── */
@@ -70,39 +56,6 @@
   line-height: 1.7;
 }
 
-/* ── Code badges ── */
-.spec-badges {
-  display: flex;
-  gap: 10px;
-}
-
-.code-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 10px;
-  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
-  font-size: 0.7rem;
-  font-weight: 400;
-  color: var(--text-muted);
-  background: transparent;
-  border: 1px solid var(--border-light);
-  border-radius: 4px;
-  letter-spacing: 0.02em;
-  transition: background-color 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s cubic-bezier(0.22, 1, 0.36, 1), color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  cursor: default;
-}
-
-.code-badge--active {
-  background-color: var(--badge-color) !important;
-  border-color: var(--badge-color) !important;
-  color: #ffffff !important;
-}
-
-.code-badge:hover {
-  border-color: var(--text-muted);
-  color: var(--text-primary);
-}
-
 /* ── Bridge text ── */
 .bridge-line {
   font-size: var(--p);
@@ -111,38 +64,9 @@
   line-height: 1.7;
 }
 
-/* ── Scroll hint ── */
-.scroll-hint {
-  position: absolute;
-  top: 50%;
-  margin-top: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 20px;
-  height: 32px;
-  border: 1.5px solid var(--text-muted);
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  padding-top: 6px;
-  pointer-events: none;
-}
-
-.scroll-hint-dot {
-  width: 3px;
-  height: 6px;
-  background: var(--text-muted);
-  border-radius: 2px;
-}
-
-/* ─── Bottom: Experience ─── */
-.about-bottom {
-  max-width: 640px;
-  margin: -20vh auto 0;
-  padding: 0 48px 80px;
-}
-
+/* ── Experience ── */
 .about-experience {
+  margin-top: 2rem;
   padding-top: 16px;
   border-top: 1px solid var(--border-light);
 }
@@ -175,7 +99,7 @@
 /* ─── Responsive ─── */
 @media (max-width: 768px) {
   .about-content {
-    padding: 0 16px;
+    padding: 20vh 24px 80px;
   }
 
   .intro-line {
@@ -185,22 +109,5 @@
   .industry-word {
     font-size: clamp(2rem, 11vw, 3.5rem);
     padding: 2px 6px;
-  }
-
-  .about-bottom {
-    padding: 0 16px 80px;
-  }
-
-  .spec-badges {
-    gap: 8px;
-  }
-
-  .code-badge {
-    font-size: 0.65rem;
-    padding: 2px 8px;
-  }
-
-  .about-bottom {
-    padding: 0 24px 80px;
   }
 }
