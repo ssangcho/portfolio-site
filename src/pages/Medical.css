@@ -464,13 +464,20 @@
   gap: 8px;
   padding: 14px 32px;
   font-size: 1.05rem;
-  color: var(--text);
-  border: 1px solid var(--border-strong);
+  color: #40B8A6;
+  border: 1.5px solid #40B8A6;
   border-radius: 999px;
   text-decoration: none;
+  animation: oncall-pulse 2.8s ease-in-out infinite;
   transition: background 0.2s, color 0.2s;
 }
 .medical-demo-cta__btn:hover {
-  background: var(--text);
-  color: var(--bg);
+  background: #40B8A6;
+  color: #fff;
+  animation: none;
+}
+
+@keyframes oncall-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(64, 184, 166, 0.4); }
+  50%       { box-shadow: 0 0 0 10px rgba(64, 184, 166, 0); }
 }
