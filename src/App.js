@@ -5,6 +5,7 @@ import Landing from './pages/Landing';
 import Airbnb from './pages/Airbnb';
 import Faraday from './pages/Faraday';
 import FaradayCID from './pages/FaradayCID';
+import Medical from './pages/Medical';
 import About from './pages/About';
 import GlbTest from './pages/GlbTest';
 import { trackPageView, initScrollTracking, initEngagementTimer } from './analytics';
@@ -44,6 +45,7 @@ function App() {
         <Route path="/airbnb" element={<Airbnb />} />
         <Route path="/faraday" element={<Faraday />} />
         <Route path="/faraday/prototype" element={<FaradayCID />} />
+        <Route path="/medical" element={<Medical />} />
         <Route path="/about" element={<About />} />
         <Route path="/glb-test" element={<GlbTest />} />
       </Routes>
