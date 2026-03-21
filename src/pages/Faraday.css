@@ -270,6 +270,7 @@
 .cs-row__media {
   display: flex;
   align-items: start;
+  align-self: start;
   overflow: hidden;
   border-radius: 16px;
 }

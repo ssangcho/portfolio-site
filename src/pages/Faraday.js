@@ -94,12 +94,12 @@ function Faraday() {
         {/* Challenge A: Navigation Choreography */}
         <ScrollReveal>
           <section className="section--full">
-            <div className="challenge-header">
-              <span className="challenge-letter">a</span>
-              <h4 className="challenge-name">{faraday.challengeA.label}</h4>
-            </div>
             <div className="cs-row">
               <div className="cs-row__text">
+                <div className="challenge-header">
+                  <span className="challenge-letter">a</span>
+                  <h4 className="challenge-name">{faraday.challengeA.label}</h4>
+                </div>
                 <div className="block-challenge">
                   <h3 className="section-label">Challenge</h3>
                   <p className="section-desc">{faraday.challengeA.challenge}</p>
@@ -109,7 +109,7 @@ function Faraday() {
                   <p className="section-desc">{faraday.challengeA.solution}</p>
                 </div>
               </div>
-              <div className="cs-row__media">
+              <div className="cs-row__media" style={{marginTop: '21px'}}>
                 <LazyVideo className="cs-row__video" src={ffScreen} />
               </div>
             </div>
@@ -119,12 +119,12 @@ function Faraday() {
         {/* Challenge B: Brand Motion Identity */}
         <ScrollReveal>
           <section className="section--full">
-            <div className="challenge-header">
-              <span className="challenge-letter">b</span>
-              <h4 className="challenge-name">{faraday.challengeB.label}</h4>
-            </div>
             <div className="cs-row cs-row--reverse">
               <div className="cs-row__text">
+                <div className="challenge-header">
+                  <span className="challenge-letter">b</span>
+                  <h4 className="challenge-name">{faraday.challengeB.label}</h4>
+                </div>
                 <div className="block-challenge">
                   <h3 className="section-label">Challenge</h3>
                   <p className="section-desc">{faraday.challengeB.challenge}</p>
@@ -144,12 +144,12 @@ function Faraday() {
         {/* Challenge C: State Feedback */}
         <ScrollReveal>
           <section className="section--full">
-            <div className="challenge-header">
-              <span className="challenge-letter">c</span>
-              <h4 className="challenge-name">{faraday.challengeC.label}</h4>
-            </div>
             <div className="cs-row">
               <div className="cs-row__text">
+                <div className="challenge-header">
+                  <span className="challenge-letter">c</span>
+                  <h4 className="challenge-name">{faraday.challengeC.label}</h4>
+                </div>
                 <div className="block-challenge">
                   <h3 className="section-label">Challenge</h3>
                   <p className="section-desc">{faraday.challengeC.challenge}</p>
@@ -159,7 +159,7 @@ function Faraday() {
                   <p className="section-desc">{faraday.challengeC.solution}</p>
                 </div>
               </div>
-              <div className="cs-row__media">
+              <div className="cs-row__media" style={{marginTop: '34px'}}>
                 <LazyVideo className="cs-row__video" src={challengeCVideo} />
               </div>
             </div>
