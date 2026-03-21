@@ -15,7 +15,8 @@ export const site = {
   ],
   projects: [
     { label: 'All', to: '/' },
-    { label: 'Faraday CID Motion System', to: '/faraday' },
+    { label: 'Faraday EV CID Motion System', to: '/faraday' },
+    { label: 'OnCall Medical Platform', to: '/medical' },
     { label: 'Airbnb UI Motion Studies', to: '/airbnb' },
   ],
 };
@@ -25,8 +26,14 @@ export const landing = {
     {
       to: '/faraday',
       thumbClass: 'landing-thumb--faraday',
-      title: 'Faraday CID Motion System',
+      title: 'Faraday EV CID Motion System',
       desc: 'Motion system for in-vehicle touchscreen under NHTSA timing constraints',
+    },
+    {
+      to: '/medical',
+      thumbClass: 'landing-thumb--medical',
+      title: 'OnCall Medical Platform',
+      desc: 'Gusto meets Uber, a scheduling and payroll platform for hospitals and doctors',
     },
     {
       to: '/airbnb',
@@ -43,6 +50,153 @@ export const airbnb = {
     scope: 'Visual design, micro-interaction design, Lottie animation, scroll-driven motion prototype',
     tools: 'After Effects, Lottie',
     type: 'Concept',
+  },
+};
+
+export const medical = {
+  hero: {
+    title: ['OnCall', 'Medical Platform'],
+    subtitle: 'Gusto meets Uber. A scheduling and payroll platform for hospitals and freelance anesthesiologists.',
+  },
+  role: {
+    role: 'Product Designer / Motion Lead',
+    scope: 'End-to-end product design, motion system, interactive prototype with real data',
+    tools: 'Figma, Claude Code: React, Framer Motion, Supabase',
+    type: 'Live Product (anonymized)',
+  },
+
+  /* ── Research & Discovery ── */
+  research: {
+    label: 'Research & Discovery',
+    before: {
+      headline: ['20+ cases a day.', 'All-day process.'],
+      parties: [
+        { name: 'Hospitals', pain: 'request and wait.' },
+        { name: 'Coordinators', pain: 'call, check, retry.' },
+        { name: 'Doctors', pain: 'no control over their own schedule.' },
+      ],
+    },
+    after: {
+      headline: ['20+ cases a day.', 'Minutes process.'],
+      subtitle: 'One platform. Real-time. Accurate. Automated.',
+    },
+    portals: [
+      {
+        name: 'Hospital',
+        quote: 'We just need a doctor for our surgery.',
+        desc: 'One page, mobile-first. Request, check status, done.',
+      },
+      {
+        name: 'Coordinator',
+        quote: 'By the time I confirm one doctor, three things have changed.',
+        desc: '20+ assignments a day from one screen. AI for the routine ones.',
+      },
+      {
+        name: 'Doctor',
+        quote: 'Where do I go, and how much am I making?',
+        desc: 'Today\'s cases with directions. Earnings at a glance. Block days in one tap.',
+      },
+    ],
+    myRole: 'I worked alongside the people running this. Designed every animation to get each user to their answer faster. Nothing moves without a reason.',
+  },
+
+  /* ── 01. First Impression ── */
+  section01: {
+    title: '01_FIRST IMPRESSION',
+    subtitle: 'Three portals, one entry point',
+  },
+  challenge01: {
+    label: 'Portal Selection',
+    discovery: 'Three user types, one landing screen. Find your door in under a second.',
+    decision: 'Three panels, three colors. Hospital and Doctor are mobile-first. Admin is desktop for data-heavy drag-and-drop. Motion here is wayfinding, not decoration.',
+  },
+
+  /* ── 02. At a Glance ── */
+  section02: {
+    title: '02_AT A GLANCE',
+    subtitle: 'What matters most, shown first',
+  },
+  challenge02: {
+    label: 'Information Hierarchy',
+    discovery: '7am. A coordinator needs three numbers: unassigned cases, time to next surgery, weekly revenue. Everything at once means scanning instead of acting.',
+    decision: 'The screen builds in order of urgency.',
+    waves: [
+      { label: 'Status', desc: 'Donut fills. Unassigned count climbs.' },
+      { label: 'Urgency', desc: 'Flip clock counts down to the next surgery.' },
+      { label: 'Detail', desc: 'Revenue bars grow. Table rows cascade.' },
+    ],
+  },
+
+  /* ── 03. AI-Assisted Workflow ── */
+  section03: {
+    title: '03_AI-ASSISTED WORKFLOW',
+    subtitle: 'Making automation feel trustworthy',
+  },
+  challenge03: {
+    label: 'AI Assignment',
+    discovery: '20 cases a day. Each with a different time, hospital, specialty, and shifting availability. AI auto-assign handles the routine ones. But if you press a button and a number quietly changes, you don\'t trust it.',
+    decision: 'Four phases, each one communicating something. Countdown = "working." Amber to green = "done." Pulse = "confirmed."',
+    phases: [
+      { label: 'Trigger', desc: '15 unassigned. Donut is amber.' },
+      { label: 'Processing', desc: 'Spinner. The system is thinking.' },
+      { label: 'Countdown', desc: '15, 12, 8, 3, 0. Amber shrinks, green grows.' },
+      { label: 'Completion', desc: 'Green pulse. "All covered."' },
+    ],
+  },
+
+  /* ── 04. Direct Manipulation ── */
+  section04: {
+    title: '04_HUMAN IN THE LOOP',
+    subtitle: 'Drag-and-drop assignment for edge cases',
+  },
+  challenge04: {
+    label: 'Drag & Drop',
+    discovery: 'Healthcare. You don\'t hand assignments to an algorithm. The coordinator sees the case, picks the doctor, places them. This happens dozens of times a day. It has to feel instant on the 100th drop.',
+    decision: 'Drag, highlight, drop, confirm. The row pulses twice so your eye catches what just changed.',
+  },
+
+  /* ── 05. The Doctor's View ── */
+  section05: {
+    title: '05_THE DOCTOR\'S VIEW',
+    subtitle: 'Designed for a one-person business',
+  },
+  challenge05: {
+    label: 'Doctor Dashboard',
+    discovery: 'Freelancers, not employees. No PTO forms. Block a day and it\'s done. Schedule = income. At 6am they need two things: "Where do I go today?" and "How much have I made?"',
+    decision: 'Built around right now. Surgery time is the biggest text. Maps pin for directions. Done cases fade. Next case pulses. Earnings in a bar chart. Block a day in one tap.',
+  },
+
+  /* ── Token System ── */
+  tokenSystem: {
+    label: 'Motion Token System',
+    desc: 'Every animation tuned so it still feels fast on the 100th interaction.',
+    tokens: [
+      { name: 'duration.instant',   value: '50ms',          usage: 'Hover, press: instant feedback' },
+      { name: 'duration.fast',      value: '150ms',         usage: 'Dismiss, close, chip return' },
+      { name: 'duration.normal',    value: '250ms',         usage: 'Modal open, form expand' },
+      { name: 'duration.emphasis',  value: '300ms',         usage: 'Status color pulse' },
+      { name: 'duration.counter',   value: '600ms',         usage: 'Stat counter count-up' },
+      { name: 'ease.enter',         value: 'ease-out',      usage: 'Elements appearing' },
+      { name: 'ease.exit',          value: 'ease-in',       usage: 'Elements leaving' },
+      { name: 'ease.counter',       value: 'easeOutCubic',  usage: 'Counter: fast start, decelerate' },
+      { name: 'duration.drag',      value: '120ms',         usage: 'Drag pickup scale + shadow lift' },
+      { name: 'ease.drop',          value: 'cubic-bezier(.2,1.4,.4,1)', usage: 'Drop settle: overshoot then snap into place' },
+      { name: 'stagger.chip',       value: '30ms',          usage: 'Stat chip cascade' },
+      { name: 'stagger.row',        value: '30ms',          usage: 'Table row cascade' },
+    ],
+  },
+
+  /* ── Outcome ── */
+  outcome: {
+    label: 'Outcome',
+    stats: [
+      { label: 'Portals', value: '3', desc: 'Hospital, Admin, Doctor' },
+      { label: 'Hospitals', value: '20', desc: 'LA area, real addresses' },
+      { label: 'Surgery Cases', value: '640+', desc: '' },
+      { label: 'Active Doctors', value: '45', desc: '' },
+      { label: 'Motion Tokens', value: '12', desc: '' },
+      { label: 'Interaction Target', value: '<400ms', desc: 'Every transition' },
+    ],
   },
 };
 

@@ -53,6 +53,10 @@
   background: linear-gradient(135deg, #fafafa 0%, #f0efed 100%);
 }
 
+.landing-thumb--medical {
+  background: linear-gradient(135deg, #e8f5f3 0%, #d4edea 50%, #c0e5e0 100%);
+}
+
 .landing-thumb-img {
   width: 100%;
   height: 100%;
