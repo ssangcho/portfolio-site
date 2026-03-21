@@ -76,6 +76,17 @@ function Medical() {
         >
           {d.hero.subtitle}
         </motion.p>
+        <motion.a
+          href="https://oncall.ssangcho.studio"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="medical-hero-demo-link"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 1.0 }}
+        >
+          Try it live →
+        </motion.a>
       </header>
 
       <main className="case-study medical-case">
@@ -329,6 +340,20 @@ function Medical() {
           </section>
         </ScrollReveal>
 
+        {/* ── Demo CTA ── */}
+        <ScrollReveal>
+          <section className="medical-demo-cta">
+            <p className="medical-demo-cta__label">See it in action</p>
+            <a
+              href="https://oncall.ssangcho.studio"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="medical-demo-cta__btn"
+            >
+              Try OnCall →
+            </a>
+          </section>
+        </ScrollReveal>
 
       </main>
       <Footer />
