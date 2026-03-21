@@ -8,7 +8,7 @@ import { medical } from '../data/siteContent';
 import './Medical.css';
 
 /* ─── Video Assets ─── */
-import videoLanding from '../assets/medical/Landing2.mp4';
+import videoLanding from '../assets/medical/Landing.mp4';
 import videoDash from '../assets/medical/Dash.mp4';
 import videoDoctor from '../assets/medical/Doctor.mp4';
 import videoAI from '../assets/medical/AI.mp4';
