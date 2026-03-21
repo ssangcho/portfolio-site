@@ -6,11 +6,13 @@ import Footer from '../components/Footer';
 import { landing } from '../data/siteContent';
 import { trackCaseStudyView } from '../analytics';
 import faradayThumb from '../assets/faraday/CID_screenshot.jpg';
+import medicalThumb from '../assets/medical/OC_landing.jpg';
 import airbnbThumb from '../assets/airbnb/Card02.png';
 import './Landing.css';
 
 const thumbImages = {
   'landing-thumb--faraday': faradayThumb,
+  'landing-thumb--medical': medicalThumb,
   'landing-thumb--airbnb': airbnbThumb,
 };
 
