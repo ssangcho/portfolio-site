@@ -1,5 +1,4 @@
-import { useState, useRef, useEffect, useMemo, Suspense } from 'react';
-import { motion } from 'framer-motion';
+import { useRef, useEffect, useMemo, Suspense } from 'react';
 import card01Glb from '../assets/airbnb/card01.glb';
 import card02Glb from '../assets/airbnb/card02.glb';
 import heartMp4 from '../assets/videos/Airbnb_heartORIGINAL.mp4';
@@ -124,10 +123,9 @@ function Card3D({ glb, folder, scrollRef, scrollRotY, scrollPosY }) {
 }
 
 function HeartToggle() {
-  const [isFaved, setIsFaved] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
   const animRef = useRef(null);
   const containerRef = useRef(null);
+  const stateRef = useRef({ isFaved: false, phase: 'idle' }); // idle | pressing | releasing
 
   useEffect(() => {
     import('lottie-web').then((lottie) => {
@@ -142,40 +140,59 @@ function HeartToggle() {
     });
 
     return () => {
-      animRef.current?.destroy();
+      if (animRef.current) {
+        animRef.current.destroy();
+        animRef.current = null;
+      }
     };
   }, []);
 
-  const handleMouseDown = () => {
-    if (isPlaying || !animRef.current) return;
-    setIsPlaying(true);
+  const playRelease = () => {
+    if (!animRef.current) return;
+    const s = stateRef.current;
+    s.phase = 'releasing';
+    const segment = s.isFaved ? [42, 52] : [9, 34];
+    animRef.current.playSegments(segment, true);
 
-    if (!isFaved) {
-      animRef.current.playSegments([1, 9], true);
-      animRef.current.addEventListener('complete', () => {
-        animRef.current.pause();
-      }, { once: true });
-    } else {
-      animRef.current.playSegments([34, 42], true);
-      animRef.current.addEventListener('complete', () => {
-        animRef.current.pause();
-      }, { once: true });
-    }
+    const onDone = () => {
+      animRef.current.removeEventListener('complete', onDone);
+      s.isFaved = !s.isFaved;
+      s.phase = 'idle';
+    };
+    animRef.current.addEventListener('complete', onDone);
+  };
+
+  const handleMouseDown = () => {
+    const s = stateRef.current;
+    if (s.phase !== 'idle' || !animRef.current) return;
+    s.phase = 'pressing';
+
+    const segment = s.isFaved ? [34, 42] : [1, 9];
+    animRef.current.playSegments(segment, true);
+
+    const onPressComplete = () => {
+      animRef.current.removeEventListener('complete', onPressComplete);
+      animRef.current.pause();
+      if (s.phase === 'releasing') {
+        // mouseUp already fired while pressing
+        playRelease();
+      } else {
+        s.phase = 'pressed';
+      }
+    };
+    animRef.current.addEventListener('complete', onPressComplete);
   };
 
   const handleMouseUp = () => {
+    const s = stateRef.current;
     if (!animRef.current) return;
-
-    if (!isFaved) {
-      animRef.current.playSegments([9, 34], true);
+    if (s.phase === 'idle') return;
+    if (s.phase === 'pressed') {
+      playRelease();
     } else {
-      animRef.current.playSegments([42, 52], true);
+      // still pressing — mark so onPressComplete triggers release
+      s.phase = 'releasing';
     }
-
-    animRef.current.addEventListener('complete', () => {
-      setIsFaved(!isFaved);
-      setIsPlaying(false);
-    }, { once: true });
   };
 
   return (
@@ -183,6 +200,7 @@ function HeartToggle() {
       className="lottie-heart"
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
     >
       <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
     </div>
@@ -190,10 +208,9 @@ function HeartToggle() {
 }
 
 function ToggleInteractive() {
-  const [isOn, setIsOn] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
   const animRef = useRef(null);
   const containerRef = useRef(null);
+  const stateRef = useRef({ isOn: false, playing: false });
 
   useEffect(() => {
     import('lottie-web').then((lottie) => {
@@ -208,24 +225,27 @@ function ToggleInteractive() {
     });
 
     return () => {
-      animRef.current?.destroy();
+      if (animRef.current) {
+        animRef.current.destroy();
+        animRef.current = null;
+      }
     };
   }, []);
 
   const handleClick = () => {
-    if (isPlaying || !animRef.current) return;
-    setIsPlaying(true);
+    const s = stateRef.current;
+    if (s.playing || !animRef.current) return;
+    s.playing = true;
 
-    if (!isOn) {
-      animRef.current.playSegments([0, 30], true);
-    } else {
-      animRef.current.playSegments([30, 60], true);
-    }
+    const segment = s.isOn ? [30, 60] : [0, 30];
+    animRef.current.playSegments(segment, true);
 
-    animRef.current.addEventListener('complete', () => {
-      setIsOn(!isOn);
-      setIsPlaying(false);
-    }, { once: true });
+    const onDone = () => {
+      animRef.current.removeEventListener('complete', onDone);
+      s.isOn = !s.isOn;
+      s.playing = false;
+    };
+    animRef.current.addEventListener('complete', onDone);
   };
 
   return (
