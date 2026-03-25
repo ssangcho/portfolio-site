@@ -600,8 +600,7 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
 /* ─── Block Challenge ─── */
 .block-challenge {
   width: 100%;
-  background: var(--bg-subtle);
-  border: 1px solid transparent;
+  border: 1px solid var(--border-light);
   border-radius: 16px;
   padding: 48px;
   margin-bottom: 64px;
@@ -609,7 +608,7 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
 }
 
 .block-challenge:hover {
-  border-color: var(--border-strong);
+  border-color: var(--border-focus);
 }
 
 .block-solution {
@@ -623,6 +622,17 @@ p  { font-size: var(--p);  font-weight: 400; color: var(--text-secondary); line-
 
 .block-solution:hover {
   border-color: var(--border-focus);
+}
+
+.block-solution .section-label::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--red-500);
+  border-radius: 50%;
+  margin-right: 8px;
+  vertical-align: middle;
 }
 
 .case-divider-thick {
