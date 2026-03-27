@@ -2,10 +2,6 @@ import { useState, useRef, useEffect, useMemo, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import card01Glb from '../assets/airbnb/card01.glb';
 import card02Glb from '../assets/airbnb/card02.glb';
-import heartMp4 from '../assets/videos/Airbnb_heartORIGINAL.mp4';
-import motionLogicMp4 from '../assets/videos/MotionLogic_02_delivery.mp4';
-import toggleCurrentMp4 from '../assets/videos/MotionLogic_01_Toggle02_A_delivery.mp4';
-import toggleSolutionMp4 from '../assets/videos/MotionLogic_01_Toggle02_B_delivery.mp4';
 import heartLottieData from '../assets/lottie/Heart_opt1_400.json';
 import toggleLottieData from '../assets/lottie/Arbnb_Toggle3_400.json';
 import TimingNote from '../components/TimingNote';
@@ -20,6 +16,13 @@ import { useGLTF, Environment } from '@react-three/drei';
 import * as THREE from 'three';
 import { useControls, Leva } from 'leva';
 import '../App.css';
+
+/* ─── Video Assets (Cloudflare R2) ─── */
+const R2 = 'https://pub-c444b0ce9ea248a68357dd4ef54fa858.r2.dev/portfolio';
+const heartMp4 = `${R2}/videos/Airbnb_heartORIGINAL.mp4`;
+const motionLogicMp4 = `${R2}/videos/MotionLogic_02_delivery.mp4`;
+const toggleCurrentMp4 = `${R2}/videos/MotionLogic_01_Toggle02_A_delivery.mp4`;
+const toggleSolutionMp4 = `${R2}/videos/MotionLogic_01_Toggle02_B_delivery.mp4`;
 
 function SceneLights() {
   const light = useControls('Lighting', {

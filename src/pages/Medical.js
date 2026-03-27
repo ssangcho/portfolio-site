@@ -7,12 +7,13 @@ import { TypeReveal, ScrollReveal } from '../components/TextReveal';
 import { medical } from '../data/siteContent';
 import './Medical.css';
 
-/* ─── Video Assets ─── */
-import videoLanding from '../assets/medical/Landing.mp4';
-import videoDash from '../assets/medical/Dash.mp4';
-import videoDoctor from '../assets/medical/Doctor.mp4';
-import videoAI from '../assets/medical/AI.mp4';
-import videoDnD from '../assets/medical/dnd.mp4';
+/* ─── Video Assets (Cloudflare R2) ─── */
+const R2_BASE = 'https://pub-c444b0ce9ea248a68357dd4ef54fa858.r2.dev/portfolio';
+const videoLanding = `${R2_BASE}/medical/Landing.mp4`;
+const videoDash = `${R2_BASE}/medical/Dash.mp4`;
+const videoDoctor = `${R2_BASE}/medical/Doctor.mp4`;
+const videoAI = `${R2_BASE}/medical/AI.mp4`;
+const videoDnD = `${R2_BASE}/medical/dnd.mp4`;
 
 /* ─── Portal Icons ─── */
 const portalIcons = {

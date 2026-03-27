@@ -8,9 +8,12 @@ import LazyVideo from '../components/LazyVideo';
 import EasingCompare from '../components/EasingCompare';
 import { faraday } from '../data/siteContent';
 import cidInterior from '../assets/faraday/CID_screenshot.jpg';
-import ffScreen from '../assets/faraday/A_2.mp4';
-import challengeCVideo from '../assets/faraday/C_2.mp4';
 import './Faraday.css';
+
+/* ─── Video Assets (Cloudflare R2) ─── */
+const R2 = 'https://pub-c444b0ce9ea248a68357dd4ef54fa858.r2.dev/portfolio';
+const ffScreen = `${R2}/faraday/A_2.mp4`;
+const challengeCVideo = `${R2}/faraday/C_2.mp4`;
 
 /* ─── Context Image with Parallax ─── */
 function ContextImage() {
@@ -206,7 +209,7 @@ function Faraday() {
             <p className="section-desc">{faraday.configurator.context}</p>
             <LazyVideo
               className="section-video"
-              src={require('../assets/faraday/ff91_config_v1_720p.mp4')}
+              src={`${R2}/faraday/ff91_config_v1_720p.mp4`}
             />
           </section>
         </ScrollReveal>
