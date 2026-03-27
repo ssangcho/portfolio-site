@@ -241,15 +241,30 @@ function ToggleInteractive() {
 function GiftCards() {
   const sectionRef  = useRef(null);
   const scrollProgress = useRef(0);
+  const [nearView, setNearView] = useState(false);
+  const canvasRef = useRef(null);
+
+  /* Mount Canvas only when section is near viewport (1 screen margin) */
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setNearView(true); io.disconnect(); } },
+      { rootMargin: '100% 0px' }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
       const vh = window.innerHeight;
-      // 0 = section top hits viewport bottom, 1 = section bottom hits viewport top
       const raw = (vh - rect.top) / (rect.height + vh);
       scrollProgress.current = Math.max(0, Math.min(1, raw));
+      /* Invalidate canvas only when scrolling */
+      if (canvasRef.current) canvasRef.current.invalidate();
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
@@ -292,27 +307,34 @@ function GiftCards() {
           height: '100%',
           zIndex: 1,
         }}>
-          <Canvas camera={{ position: [0, 0, 6], fov: 50 }} shadows>
-            <color attach="background" args={['#ffffff']} />
-            <Suspense fallback={null}>
-              <SceneLights />
-              <WallShadow />
-              <Card3D
-                glb={card01Glb}
-                folder="Card01"
-                scrollRef={scrollProgress}
-                scrollRotY={[43, 10]}
-                scrollPosY={[-0.3, 0.0]}
-              />
-              <Card3D
-                glb={card02Glb}
-                folder="Card02"
-                scrollRef={scrollProgress}
-                scrollRotY={[11, -28]}
-                scrollPosY={[-2.5, -0.3]}
-              />
-            </Suspense>
-          </Canvas>
+          {nearView && (
+            <Canvas
+              camera={{ position: [0, 0, 6], fov: 50 }}
+              shadows
+              frameloop="demand"
+              onCreated={(state) => { canvasRef.current = state; }}
+            >
+              <color attach="background" args={['#ffffff']} />
+              <Suspense fallback={null}>
+                <SceneLights />
+                <WallShadow />
+                <Card3D
+                  glb={card01Glb}
+                  folder="Card01"
+                  scrollRef={scrollProgress}
+                  scrollRotY={[43, 10]}
+                  scrollPosY={[-0.3, 0.0]}
+                />
+                <Card3D
+                  glb={card02Glb}
+                  folder="Card02"
+                  scrollRef={scrollProgress}
+                  scrollRotY={[11, -28]}
+                  scrollPosY={[-2.5, -0.3]}
+                />
+              </Suspense>
+            </Canvas>
+          )}
         </div>
       </div>
     </section>
