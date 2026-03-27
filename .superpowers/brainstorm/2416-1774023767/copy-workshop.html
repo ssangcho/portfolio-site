@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copy Workshop</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #fafafa;
+    color: #1a1a1a;
+    padding: 48px 40px 100px;
+    -webkit-font-smoothing: antialiased;
+    max-width: 840px;
+    margin: 0 auto;
+  }
+
+  .tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #40B8A6;
+    margin-bottom: 6px;
+  }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .intro {
+    font-size: 0.88rem;
+    color: #6a6a6a;
+    line-height: 1.6;
+    margin-bottom: 48px;
+  }
+
+  /* Sections */
+  .ws-section {
+    margin-bottom: 56px;
+  }
+  .ws-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #b0b0b0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eae8e4;
+  }
+  .ws-context {
+    font-size: 0.82rem;
+    color: #6a6a6a;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    background: #fff;
+    border-radius: 8px;
+    border-left: 3px solid #e8e5e1;
+  }
+  .ws-context strong { color: #4a4a4a; }
+
+  /* Copy blocks */
+  .copy-block {
+    background: #fff;
+    border-radius: 10px;
+    padding: 28px 28px 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.15s;
+  }
+  .copy-block:hover { border-color: #d5f0eb; }
+  .copy-block.selected { border-color: #40B8A6; }
+
+  .copy-block-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .copy-letter {
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #40B8A6;
+    letter-spacing: 0.05em;
+    background: #f0faf8;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .copy-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4a4a4a;
+  }
+
+  /* The actual copy display */
+  .copy-display {
+    padding: 20px 24px;
+    background: #faf9f7;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+  .copy-display.dark {
+    background: #2a2a2a;
+    color: #fff;
+  }
+  .copy-display.light {
+    background: #fff;
+    border: 1px solid #f0efed;
+  }
+
+  .copy-line {
+    font-size: 1rem;
+    line-height: 1.8;
+    font-weight: 400;
+  }
+  .copy-line .num {
+    font-weight: 800;
+    font-size: 1.2rem;
+  }
+  .copy-line .accent {
+    color: #e97319;
+    font-weight: 700;
+  }
+  .dark .copy-line .accent {
+    color: #e97319;
+  }
+  .copy-line .teal {
+    color: #40B8A6;
+    font-weight: 700;
+  }
+  .copy-line .dim { color: #8a8a8a; }
+  .copy-line .strike {
+    text-decoration: line-through;
+    color: #b0b0b0;
+  }
+  .copy-line .quiet {
+    color: #6a6a6a;
+    font-size: 0.85rem;
+  }
+  .dark .copy-line .quiet { color: #8a8a8a; }
+  .dark .copy-line { color: #e8e5e1; }
+
+  .copy-divider {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin: 12px 0;
+  }
+  .light .copy-divider {
+    border-top-color: #f0efed;
+  }
+
+  .copy-note {
+    font-size: 0.78rem;
+    color: #8a8a8a;
+    line-height: 1.5;
+    padding-left: 2px;
+  }
+
+  /* Mapping visual */
+  .mapping {
+    display: grid;
+    grid-template-columns: 1fr 32px 1fr;
+    gap: 0;
+    align-items: center;
+  }
+  .map-left {
+    text-align: right;
+    padding-right: 12px;
+  }
+  .map-arrow {
+    text-align: center;
+    color: #d0ceca;
+    font-size: 1rem;
+  }
+  .map-right {
+    padding-left: 12px;
+  }
+  .map-row {
+    display: contents;
+  }
+  .map-left .copy-line { color: #8a8a8a; }
+  .map-right .copy-line .teal { font-weight: 700; }
+
+  /* Formula emphasis */
+  .formula-visual {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .fv-num {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .fv-op {
+    font-size: 1rem;
+    font-weight: 300;
+    color: #6a6a6a;
+  }
+  .dark .fv-op { color: #6a6a6a; }
+  .fv-label {
+    font-size: 0.72rem;
+    color: #8a8a8a;
+    margin-left: -4px;
+  }
+  .fv-eq {
+    font-size: 1rem;
+    font-weight: 300;
+    color: #e97319;
+  }
+  .fv-result {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #e97319;
+  }
+
+  /* Selection bar */
+  .sel-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #1a1a1a;
+    color: #fff;
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    z-index: 100;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+  .sel-bar.visible { transform: translateY(0); }
+  .sel-bar .picked { color: #40B8A6; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<p class="tag">Copy Workshop</p>
+<h1>Before / After Copy</h1>
+<p class="intro">
+  비주얼 빼고 글만. 클릭해서 선택. Mix & match OK.
+</p>
+
+<!-- ═══════════════════════════════════════════
+     BEFORE SIDE
+     ═══════════════════════════════════════════ -->
+<div class="ws-section">
+  <p class="ws-label">Before Side — The Problem</p>
+
+  <div class="ws-context">
+    <strong>핵심 혼선:</strong> "5 min으로 의사 배치? 빠르잖아?" →
+    아니, 그건 결정(이 의사 이 수술)일 뿐.
+    실제로 걸리는 건 전화, 가용 확인, 조율, 확인, 업데이트 —
+    <strong>결정 5분, 프로세스 1시간+.</strong>
+    이걸 20+ 번/일. 곱하기가 임팩트.
+  </div>
+
+  <!-- Before A -->
+  <div class="copy-block" data-group="before" data-choice="before-a" onclick="pick(this)">
+    <div class="copy-block-head">
+      <span class="copy-letter">A</span>
+      <span class="copy-name">"The decision is fast. The process isn't."</span>
+    </div>
+    <div class="copy-display dark">
+      <p class="copy-line quiet" style="margin-bottom:8px;">Assigning a doctor to a surgery?</p>
+      <p class="copy-line"><span class="num" style="color:#fff">5 minutes.</span></p>
+      <br>
+      <p class="copy-line quiet" style="margin-bottom:8px;">Coordinating it — calls, availability, confirmations, schedule updates?</p>
+      <p class="copy-line"><span class="num accent">1+ hour.</span></p>
+      <hr class="copy-divider">
+      <p class="copy-line quiet" style="margin-bottom:6px;">This happens</p>
+      <div class="formula-visual">
+        <span class="fv-num accent">20+</span>
+        <span class="fv-label">times a day</span>
+        <span class="fv-op">=</span>
+        <span class="fv-result">20+ hrs/day</span>
+        <span class="fv-label">lost to process</span>
+      </div>
+    </div>
+    <p class="copy-note">
+      먼저 오해를 풀어줌 ("5분이면 빠르잖아?" → 아님). 질문→답 구조라 자연스럽게 읽힘. 마지막에 곱하기로 임팩트.
+    </p>
+  </div>
+
+  <!-- Before B -->
+  <div class="copy-block" data-group="before" data-choice="before-b" onclick="pick(this)">
+    <div class="copy-block-head">
+      <span class="copy-letter">B</span>
+      <span class="copy-name">"5 min decision. 1+ hr overhead. 20× a day."</span>
+    </div>
+    <div class="copy-display dark">
+      <div class="formula-visual" style="margin-bottom:16px;">
+        <span class="fv-num" style="color:#fff">5 min</span>
+        <span class="fv-label">decision</span>
+        <span class="fv-op">&times;</span>
+        <span class="fv-num accent">1+ hr</span>
+        <span class="fv-label">overhead</span>
+        <span class="fv-op">&times;</span>
+        <span class="fv-num accent">20+</span>
+        <span class="fv-label">cases/day</span>
+      </div>
+      <hr class="copy-divider">
+      <div class="formula-visual">
+        <span class="fv-eq">=</span>
+        <span class="fv-result">20+ hrs</span>
+        <span class="fv-label" style="color:#e97319">daily, lost to coordination</span>
+      </div>
+    </div>
+    <p class="copy-note">
+      설명 없이 숫자만. Pitch deck 스타일. "decision" vs "overhead" 단어가 핵심 구분. 빠르게 읽힘.
+    </p>
+  </div>
+
+  <!-- Before C -->
+  <div class="copy-block" data-group="before" data-choice="before-c" onclick="pick(this)">
+    <div class="copy-block-head">
+      <span class="copy-letter">C</span>
+      <span class="copy-name">"The decision takes 5 minutes. Everything around it takes 20 hours."</span>
+    </div>
+    <div class="copy-display dark">
+      <p class="copy-line" style="margin-bottom: 16px;">
+        <span class="quiet">Picking the right doctor for a surgery takes</span>
+        <span class="num" style="color:#fff"> 5 minutes.</span>
+      </p>
+      <p class="copy-line" style="margin-bottom: 16px;">
+        <span class="quiet">The phone calls, availability checks, schedule juggling,<br>and confirmations across three parties? That takes</span>
+        <span class="num accent"> 1+ hour.</span>
+        <span class="quiet"> Per case.</span>
+      </p>
+      <p class="copy-line">
+        <span class="quiet">Multiply by</span>
+        <span class="num accent"> 20+ cases a day.</span>
+      </p>
+      <hr class="copy-divider">
+      <p class="copy-line" style="font-size:0.85rem;">
+        <span class="accent" style="font-weight:800; font-size:1.3rem;">20+ hours</span>
+        <span class="quiet"> every day, burned on coordination.</span>
+      </p>
+    </div>
+    <p class="copy-note">
+      가장 서사적. 한 문장씩 문제를 쌓아감. "5분 결정 → 1시간 프로세스 → ×20 = 폭발" 스토리. Hiring manager가 읽어도 바로 이해.
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     AFTER SIDE
+     ═══════════════════════════════════════════ -->
+<div class="ws-section">
+  <p class="ws-label">After Side — The Solution</p>
+
+  <div class="ws-context">
+    <strong>핵심 과제:</strong> Before의 pain을 직접 뒤집어야 함.
+    "One platform" 같은 추상 statement보다
+    <strong>A → B 변환이 눈에 보여야</strong> 설득력.
+    아래 detail items (D&D, audit trail 등)는 일단 유지, 나중에 컷 고려.
+  </div>
+
+  <!-- After A -->
+  <div class="copy-block" data-group="after" data-choice="after-a" onclick="pick(this)">
+    <div class="copy-block-head">
+      <span class="copy-letter">A</span>
+      <span class="copy-name">Direct Flip — 숫자 대 숫자</span>
+    </div>
+    <div class="copy-display light">
+      <p class="copy-line" style="margin-bottom:14px;font-weight:700;font-size:1.05rem;">
+        <span class="teal">One platform. Zero phone calls.</span>
+      </p>
+      <p class="copy-line" style="margin-bottom:8px;">
+        <span class="strike">1+ hr coordination</span>
+        &nbsp;→&nbsp;
+        <span class="teal">Drag, drop, done.</span>
+      </p>
+      <p class="copy-line" style="margin-bottom:8px;">
+        <span class="strike">3 disconnected tools</span>
+        &nbsp;→&nbsp;
+        <span class="teal">1 shared system</span>
+      </p>
+      <p class="copy-line" style="margin-bottom:8px;">
+        <span class="strike">No audit trail</span>
+        &nbsp;→&nbsp;
+        <span class="teal">Every change tracked</span>
+      </p>
+      <hr class="copy-divider">
+      <p class="copy-line quiet" style="font-size:0.82rem;">
+        Hospital requests. Admin assigns. Doctor confirms. All in one place.
+      </p>
+    </div>
+    <p class="copy-note">
+      Before의 pain을 취소선 → 솔루션으로 1:1 매핑.
+      Headline이 가장 큰 변화 요약. 마지막 문장이 3-portal 설명.
+    </p>
+  </div>
+
+  <!-- After B -->
+  <div class="copy-block" data-group="after" data-choice="after-b" onclick="pick(this)">
+    <div class="copy-block-head">
+      <span class="copy-letter">B</span>
+      <span class="copy-name">Parallel Rhythm — 리듬감</span>
+    </div>
+    <div class="copy-display light">
+      <p class="copy-line" style="font-size:1.15rem;font-weight:700;line-height:1.7;margin-bottom:4px;">
+        <span class="teal">One</span> platform. <span class="teal">One</span> source of truth.
+      </p>
+      <p class="copy-line" style="font-size:1.15rem;font-weight:700;line-height:1.7;margin-bottom:14px;">
+        <span class="teal">Zero</span> phone calls.
+      </p>
+      <p class="copy-line" style="margin-bottom:6px;">
+        <span class="quiet">Assign by drag & drop. See availability in real time.</span>
+      </p>
+      <p class="copy-line">
+        <span class="quiet">Every change tracked. Three portals, one shared system.</span>
+      </p>
+    </div>
+    <p class="copy-note">
+      "One, One, Zero" 리듬. Statement가 기억에 남음.
+      Detail은 아래에 quiet 톤으로.
+      단점: Before의 시간과 직접 매핑은 안 됨.
+    </p>
+  </div>
+
+  <!-- After C -->
+  <div class="copy-block" data-group="after" data-choice="after-c" onclick="pick(this)">
+    <div class="copy-block-head">
+      <span class="copy-letter">C</span>
+      <span class="copy-name">Time Payoff — 시간 절약 중심</span>
+    </div>
+    <div class="copy-display light">
+      <p class="copy-line" style="font-weight:700;font-size:1.1rem;margin-bottom:14px;">
+        <span class="teal">20+ hours back.</span> Every day.
+      </p>
+      <p class="copy-line" style="margin-bottom:8px;">
+        <span class="quiet">Phone calls, spreadsheets, back-and-forth?</span>
+        <span class="teal" style="font-weight:600;"> Replaced.</span>
+      </p>
+      <p class="copy-line" style="margin-bottom:8px;">
+        <span class="quiet">Availability guesswork?</span>
+        <span class="teal" style="font-weight:600;"> Real-time.</span>
+      </p>
+      <p class="copy-line" style="margin-bottom:8px;">
+        <span class="quiet">Schedule conflicts?</span>
+        <span class="teal" style="font-weight:600;"> Impossible.</span>
+      </p>
+      <hr class="copy-divider">
+      <p class="copy-line quiet" style="font-size:0.82rem;">
+        One platform for hospitals, coordinators, and doctors. Every change tracked.
+      </p>
+    </div>
+    <p class="copy-note">
+      Before의 "20+ hrs lost"를 바로 뒤집음: "20+ hours back."
+      Pain → one-word answer 패턴. 광고 카피 느낌. 가장 punchy.
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     RECOMMENDED COMBO
+     ═══════════════════════════════════════════ -->
+<div class="ws-section">
+  <p class="ws-label">Recommended Combo</p>
+  <div style="background:#fff;border-radius:10px;padding:24px 28px;box-shadow:0 1px 4px rgba(0,0,0,0.04);">
+    <p style="font-size:0.88rem;font-weight:600;color:#1a1a1a;margin-bottom:12px;">
+      Before C + After C
+    </p>
+    <p style="font-size:0.82rem;color:#6a6a6a;line-height:1.7;">
+      <strong style="color:#4a4a4a;">Why:</strong>
+      Before C가 스토리로 문제를 쌓아서 "20+ hrs"에 도달 →
+      After C가 바로 "20+ hours back"으로 뒤집음.
+      같은 숫자가 양쪽에서 반복되면서 A→B 전환이 즉각적.
+      <br><br>
+      Before B (pitch deck)도 강력하지만 context 없이 숫자만 보면
+      "5 min decision × 1+ hr overhead" 관계가 바로 안 잡힐 수 있음.
+      Before C는 한 줄씩 설명하면서 같은 공식을 전달.
+    </p>
+  </div>
+</div>
+
+<div class="sel-bar" id="selBar">
+  Selected: <span class="picked" id="selText">—</span>
+</div>
+
+<script>
+  const picks = {};
+  function pick(el) {
+    const group = el.dataset.group;
+    document.querySelectorAll(`.copy-block[data-group="${group}"]`).forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    const letter = el.querySelector('.copy-letter').textContent;
+    const name = el.querySelector('.copy-name').textContent;
+    picks[group] = `${group.charAt(0).toUpperCase() + group.slice(1)} ${letter}: ${name}`;
+    const parts = [];
+    if (picks.before) parts.push(picks.before);
+    if (picks.after) parts.push(picks.after);
+    document.getElementById('selText').textContent = parts.join('  +  ');
+    document.getElementById('selBar').classList.add('visible');
+  }
+</script>
+
+</body>
+</html>

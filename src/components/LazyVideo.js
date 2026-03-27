@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 
 /*
   LazyVideo — Only loads video when it enters viewport.
+  Pauses when scrolled out of view to save CPU.
   Drop-in replacement for <video autoPlay loop muted playsInline>.
 
   Usage:
@@ -10,8 +11,9 @@ import { useRef, useState, useEffect } from 'react';
 
 function LazyVideo({ src, className = '', rootMargin = '200px' }) {
   const ref = useRef(null);
-  const [inView, setInView] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
+  /* Load video when near viewport (one-time) */
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
@@ -19,7 +21,7 @@ function LazyVideo({ src, className = '', rootMargin = '200px' }) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setInView(true);
+          setLoaded(true);
           observer.disconnect();
         }
       },
@@ -30,33 +32,35 @@ function LazyVideo({ src, className = '', rootMargin = '200px' }) {
     return () => observer.disconnect();
   }, [rootMargin]);
 
-  /* Ensure muted attribute is set via DOM (React bug workaround)
-     and call play() imperatively for mobile autoplay */
+  /* Play/pause based on visibility — prevents multiple offscreen videos decoding */
   useEffect(() => {
     const el = ref.current;
-    if (!el || !inView) return;
+    if (!el || !loaded) return;
 
     el.muted = true;
     el.setAttribute('playsinline', '');
     el.setAttribute('webkit-playsinline', '');
 
-    const tryPlay = () => {
-      el.play().catch(() => {});
-    };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.play().catch(() => {});
+        } else {
+          el.pause();
+        }
+      },
+      { rootMargin: '50px' }
+    );
 
-    if (el.readyState >= 2) {
-      tryPlay();
-    } else {
-      el.addEventListener('loadeddata', tryPlay, { once: true });
-    }
-  }, [inView]);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [loaded]);
 
   return (
     <video
       ref={ref}
       className={className}
-      src={inView ? src : undefined}
-      autoPlay
+      src={loaded ? src : undefined}
       loop
       muted
       playsInline
