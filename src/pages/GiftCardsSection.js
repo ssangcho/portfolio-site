@@ -24,8 +24,8 @@ function SceneLights() {
         position={[light.dirX, light.dirY, light.dirZ]}
         intensity={light.dirIntensity}
         castShadow
-        shadow-mapSize-width={4096}
-        shadow-mapSize-height={4096}
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
         shadow-bias={-0.0005}
         shadow-camera-near={0.1}
         shadow-camera-far={20}

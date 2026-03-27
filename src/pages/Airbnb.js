@@ -18,8 +18,8 @@ const motionLogicMp4 = `${R2}/videos/MotionLogic_02_delivery.mp4`;
 const toggleCurrentMp4 = `${R2}/videos/MotionLogic_01_Toggle02_A_delivery.mp4`;
 const toggleSolutionMp4 = `${R2}/videos/MotionLogic_01_Toggle02_B_delivery.mp4`;
 
-/* ─── Lazy-load Three.js Gift Cards (keeps ~600KB off initial bundle) ─── */
-const GiftCards = lazy(() => import('./GiftCardsSection'));
+/* ─── Lazy-load Three.js Gift Cards (prefetch during idle time) ─── */
+const GiftCards = lazy(() => import(/* webpackPrefetch: true */ './GiftCardsSection'));
 
 function HeartToggle() {
   const [isFaved, setIsFaved] = useState(false);
