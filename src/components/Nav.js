@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ReactComponent as Logo } from '../assets/common/SanPavicon.svg';
 import { site } from '../data/siteContent';
+import { trackResumeDownload } from '../analytics';
 
 const ease = [0.22, 1, 0.36, 1];
 
@@ -69,7 +70,7 @@ function Nav({ intro = false }) {
           link.to ? (
             <Link key={link.label} to={link.to} onClick={() => window.scrollTo({ top: 0, behavior: 'instant' })}>{link.label}</Link>
           ) : (
-            <a key={link.label} href={link.href} download={link.download || undefined} target={link.external ? '_blank' : undefined} rel={link.external ? 'noopener noreferrer' : undefined}>{link.label}</a>
+            <a key={link.label} href={link.href} download={link.download || undefined} target={link.external ? '_blank' : undefined} rel={link.external ? 'noopener noreferrer' : undefined} onClick={link.download ? () => trackResumeDownload() : undefined}>{link.label}</a>
           )
         )}
       </motion.div>

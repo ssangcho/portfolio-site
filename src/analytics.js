@@ -33,6 +33,28 @@ export function trackOutboundClick(url, label) {
   });
 }
 
+// Resume download
+export function trackResumeDownload() {
+  trackEvent('resume_download', {
+    page_path: window.location.pathname,
+  });
+}
+
+// Email click
+export function trackEmailClick() {
+  trackEvent('email_click', {
+    page_path: window.location.pathname,
+  });
+}
+
+// Demo click (OnCall "Try it live")
+export function trackDemoClick(label) {
+  trackEvent('demo_click', {
+    demo_label: label,
+    page_path: window.location.pathname,
+  });
+}
+
 // Scroll depth tracking
 export function initScrollTracking() {
   const thresholds = [25, 50, 75, 90];

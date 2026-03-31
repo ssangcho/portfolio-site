@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { site } from '../data/siteContent';
-import { trackOutboundClick } from '../analytics';
+import { trackOutboundClick, trackEmailClick } from '../analytics';
 import './Footer.css';
 
 function Footer({ hideProjects = false }) {
@@ -66,6 +66,7 @@ function Footer({ hideProjects = false }) {
                   href="#"
                   onClick={(e) => {
                     e.preventDefault();
+                    trackEmailClick();
                     window.location.href = `mailto:${link.email[0]}@${link.email[1]}`;
                   }}
                 >

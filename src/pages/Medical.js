@@ -5,6 +5,7 @@ import LazyVideo from '../components/LazyVideo';
 import { motion } from 'framer-motion';
 import { TypeReveal, ScrollReveal } from '../components/TextReveal';
 import { medical } from '../data/siteContent';
+import { trackDemoClick } from '../analytics';
 import './Medical.css';
 
 /* ─── Video Assets (Cloudflare R2) ─── */
@@ -85,6 +86,7 @@ function Medical() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.0 }}
+          onClick={() => trackDemoClick('Try it live - Hero')}
         >
           Try it live
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -353,6 +355,7 @@ function Medical() {
               target="_blank"
               rel="noopener noreferrer"
               className="medical-demo-cta__btn"
+              onClick={() => trackDemoClick('Try OnCall - CTA')}
             >
               Try OnCall
               <svg width="12" height="12" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
