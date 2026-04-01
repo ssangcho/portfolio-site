@@ -1,6 +1,6 @@
 # Portfolio Site (ssangcho.studio)
 
-Last updated: 2026-03-27
+Last updated: 2026-04-01
 
 ## Context
 
@@ -18,12 +18,22 @@ Last updated: 2026-03-27
   - LazyVideo: viewport 벗어나면 pause 추가 (다중 비디오 동시 decode 방지)
   - Shadow map: 4096 → 1024
 - R2 credentials: `projects/18_SsangchoCom/site/.env`
+- **03-31 GA4 Key Event tracking 추가** (완료, push 완료):
+  - `resume_download` — Nav Resume 클릭 (`Nav.js`)
+  - `email_click` — Footer Email 클릭 (`Footer.js`)
+  - `demo_click` — Medical "Try it live" / "Try OnCall" 2개 버튼 (`Medical.js`)
+  - 함수: `src/analytics.js`에 `trackResumeDownload`, `trackEmailClick`, `trackDemoClick` 추가
+- **GA4 30일 데이터** (2026-03-31 기준): 83 active users, 1.9K events, US 30명, Motion 페이지 107 views
+- **04-01 Security hardening** (완료, push 완료):
+  - `robots.txt` — AI 봇 차단 (GPTBot, CCBot, anthropic-ai, Claude-Web, Google-Extended 등)
+  - `vercel.json` — security headers 추가 (X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Referrer-Policy, Permissions-Policy)
 
 ## TODO
 
 - [ ] **Airbnb 스크롤 stutter 해결** — dev 배포 후에도 버벅임 보고됨. 추가 조사 필요
   - 의심 원인: R2 dev URL rate limit, Three.js chunk 파싱 시 jank, framer-motion whileInView 다수
   - Chrome DevTools Performance 탭으로 실제 bottleneck 프로파일링 필요
+- [ ] **GA4 Key Event 마킹** — deploy 후 GA4 Admin > Events에서 `resume_download`, `email_click`, `demo_click`을 "Mark as key event" 토글 (첫 fire 후 24-48시간 대기 필요)
 - [ ] Medical Case Study — Motion Token 섹션 slowed-down 비디오
 - [ ] Medical Case Study — token reasoning 강화
 - [ ] SectionBlock / portalIcons unused warning 정리 (낮은 우선순위)
