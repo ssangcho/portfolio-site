@@ -10,3 +10,9 @@ yarn-debug.log*
 yarn-error.log*
 
 .vercel
+
+# Sensitive project files
+task.md
+CLAUDE.md
+PRD.md
+.superpowers
