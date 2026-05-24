@@ -5,7 +5,7 @@
       "headers": [
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "" },
-        { "key": "Content-Security-Policy", "value": "frame-ancestors 'self' https://ssangcho.com https://*.ssangcho.com" },
+        { "key": "Content-Security-Policy", "value": "frame-ancestors 'self' https://ssangcho.com https://*.ssangcho.com http://127.0.0.1:* http://localhost:*" },
         { "key": "X-XSS-Protection", "value": "1; mode=block" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
