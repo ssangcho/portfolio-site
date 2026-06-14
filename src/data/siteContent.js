@@ -232,7 +232,7 @@ export const faraday = {
   challengeA: {
     label: 'Navigation Choreography',
     challenge: 'When everything moves at once, the driver\'s eye has nowhere to go. A tab switch shouldn\'t require scanning the whole screen again.',
-    solution: 'I broke the transition into three phases: indicator slides first, old content fades, then new cards stagger in. One thing moves at a time, so the eye always knows where to land.',
+    solution: 'I led with the indicator: the bar slides to the new tab first, giving the eye a target before the content moves. The outgoing screen slides out as the new one slides in, with opacity fading faster than position. The slide gives the eye a path to follow instead of a hard cut.',
   },
   challengeB: {
     label: 'Brand Motion Identity',
@@ -250,8 +250,8 @@ export const faraday = {
     tokens: [
       { name: 'duration.fast',    value: '150ms',                             usage: 'Content exit, quick state change' },
       { name: 'duration.control', value: '200ms',                             usage: 'Direct control response (pill slide, slider)' },
-      { name: 'duration.normal',  value: '300ms',                             usage: 'Indicator move, content enter' },
-      { name: 'duration.slow',    value: '400ms',                             usage: 'Max transition budget (NHTSA)' },
+      { name: 'duration.normal',  value: '300ms',                             usage: 'Indicator move, screen slide' },
+      { name: 'duration.slow',    value: '400ms',                             usage: 'Content enter, max budget (NHTSA)' },
       { name: 'ease.precision',   value: 'cubic-bezier(0, 0, 0, 1)',         usage: 'Direct controls (sharp response)' },
       { name: 'ease.refinement',  value: 'cubic-bezier(0.05, 0.7, 0.1, 1)',  usage: 'System transitions (luxury deceleration)' },
       { name: 'stagger.navigation', value: '40ms',                              usage: 'Per card delay (12 cards \u2264 440ms)' },
