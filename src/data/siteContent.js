@@ -235,9 +235,9 @@ export const faraday = {
     solution: 'I led with the indicator: the bar slides to the new tab first, giving the eye a target before the content moves. The outgoing screen slides out as the new one slides in, with opacity fading faster than position. The slide gives the eye a path to follow instead of a hard cut.',
   },
   challengeB: {
-    label: 'Brand Motion Identity',
-    challenge: 'NHTSA\'s 2-second glance rule caps transitions at 400ms. Material Design defaults fit the budget, but they feel like every other car.',
-    solution: 'I defined two curve characters that share the same time budget.\nPrecision: fast and sharp, for controls the driver taps directly.\nRefinement: slow deceleration, for system-level transitions.\nSame duration, different feel.',
+    label: 'One Budget, Two Feels',
+    challenge: 'NHTSA\'s 2-second glance rule caps every transition at 400ms. Inside that budget, I still wanted a direct control to feel different from a system-level transition.',
+    solution: 'I mapped two M3 easing curves to two roles, same time budget, different feel.\nPrecision: fast and sharp, for controls the driver taps directly.\nRefinement: slow deceleration, for system-level transitions.\nThe curves are proven, what I tuned was where each one belongs and how long it runs.',
   },
   challengeC: {
     label: 'State Feedback',
@@ -246,14 +246,16 @@ export const faraday = {
   },
   tokenSystem: {
     label: 'Motion Token System',
-    desc: 'Every duration, easing, and delay is a named token. If something feels off on any screen, you can trace it back to one value and fix it there.',
+    desc: 'Every duration, easing, and delay is a named token. Two character curves anchor the system, Precision and Refinement, each with a situational variant. Five easing tokens in all, two characters at the core. If something feels off on any screen, you can trace it back to one value and fix it there.',
     tokens: [
       { name: 'duration.fast',    value: '150ms',                             usage: 'Content exit, quick state change' },
       { name: 'duration.control', value: '200ms',                             usage: 'Direct control response (pill slide, slider)' },
       { name: 'duration.normal',  value: '300ms',                             usage: 'Indicator move, screen slide' },
       { name: 'duration.slow',    value: '400ms',                             usage: 'Content enter, max budget (NHTSA)' },
-      { name: 'ease.precision',   value: 'cubic-bezier(0, 0, 0, 1)',         usage: 'Direct controls (sharp response)' },
-      { name: 'ease.refinement',  value: 'cubic-bezier(0.05, 0.7, 0.1, 1)',  usage: 'System transitions (luxury deceleration)' },
+      { name: 'ease.precision',     value: 'cubic-bezier(0, 0, 0, 1)',         usage: 'Direct controls (sharp response)' },
+      { name: 'ease.refinement',    value: 'cubic-bezier(0.05, 0.7, 0.1, 1)',  usage: 'System transitions (luxury deceleration)' },
+      { name: 'ease.precisionSnap', value: 'cubic-bezier(0, 0, 0.2, 0.8)',     usage: 'Precision variant: slider micro-settle' },
+      { name: 'ease.refinementFade', value: 'cubic-bezier(0.1, 0, 0.4, 1)',    usage: 'Refinement variant: icon dissolve' },
       { name: 'stagger.navigation', value: '40ms',                              usage: 'Per card delay (12 cards \u2264 440ms)' },
     ],
   },
